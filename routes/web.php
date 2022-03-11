@@ -30,6 +30,6 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function (){
     Route::get('/', [App\Http\Controllers\AdminController::class, 'index'])->name('homebackend');
 
     Route::resource('users', App\Http\Controllers\AdminUsersController::class);
-    //Route::resource('photos', App\Http\Controllers\AdminPhotosController::class);
+    Route::resource('photos', App\Http\Controllers\AdminPhotosController::class);
 
 });

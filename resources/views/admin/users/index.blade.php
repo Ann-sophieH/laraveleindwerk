@@ -42,7 +42,7 @@
                                 </td>
                                 <td>
                                     @foreach($user->roles as $role)
-                                        <span class="badge badge-pill badge-secondary">{{$role->name}}</span>
+                                        <span class="badge badge-sm bg-gradient-faded-info">{{$role->name}}</span>
                                     @endforeach
                                 </td>
                                 <td class="align-middle text-center text-sm">

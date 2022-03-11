@@ -73,6 +73,14 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link text-white " href="{{url('admin/photos/')}}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">photo</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Photos</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link text-white " href="./pages/billing.html">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">receipt_long</i>
@@ -88,14 +96,7 @@
                     <span class="nav-link-text ms-1">Virtual Reality</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link text-white " href="./pages/rtl.html">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
-                    </div>
-                    <span class="nav-link-text ms-1">RTL</span>
-                </a>
-            </li>
+
             <li class="nav-item">
                 <a class="nav-link text-white " href="./pages/notifications.html">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -120,15 +121,15 @@
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">login</i>
                     </div>
-                    <span class="nav-link-text ms-1">Sign In</span>
+                    <span class="nav-link-text ms-1">Sign out</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white " href="./pages/sign-up.html">
+                <a class="nav-link text-white " href="{{url('/')}}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">assignment</i>
                     </div>
-                    <span class="nav-link-text ms-1">Sign Up</span>
+                    <span class="nav-link-text ms-1">Frontend</span>
                 </a>
             </li>
         </ul>
@@ -261,7 +262,7 @@
             <div class="col-xl-3 col-sm-6 mb-xl-0 mb-5">
                 <div class="card">
                     <div class="card-header p-3 pt-2">
-                        <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+                        <div class="icon icon-lg icon-shape bg-gradient-faded-warning shadow-dark text-center border-radius-xl mt-n4 position-absolute">
                             <i class="material-icons opacity-10">weekend</i>
                         </div>
                         <div class="text-end pt-1">

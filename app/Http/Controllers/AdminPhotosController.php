@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
-use App\Models\User;
+use App\Models\Photo;
 use Illuminate\Http\Request;
 
-class AdminUsersController extends Controller
+class AdminPhotosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +15,8 @@ class AdminUsersController extends Controller
     public function index()
     {
         //
-        $users = User::orderBy('id', 'asc')->paginate(20);
-        return view('admin.users.index', compact('users')); //COMPACT draagt assoc array over nr indexpagina met users in
+        $photos = Photo::all();
+        return view('admin.photos.index', compact('photos'));
     }
 
     /**
@@ -28,8 +27,6 @@ class AdminUsersController extends Controller
     public function create()
     {
         //
-        $roles = Role::pluck('name', 'id')->all();
-        return view('admin.users.create', compact('roles'));
     }
 
     /**
