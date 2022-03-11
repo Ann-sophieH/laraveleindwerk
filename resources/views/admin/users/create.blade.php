@@ -1,15 +1,16 @@
 @extends('layouts.admin')
-@section('content')
 
+@section('content')
     <div class="col-12 mt-5">
         @include('includes.form_error')
     </div>
+
         <div class="row">
             <div class="col-12 mt-5">
                 <div class="card my-4">
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                         <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                            <h6 class="text-white text-capitalize ps-3">Photos table</h6>
+                            <h6 class="text-white text-capitalize ps-3">Create new user</h6>
                         </div>
                     </div>
                     <div class="card-body px-0 pb-2">
@@ -41,9 +42,13 @@
                             {!! Form::file('photo_id',null, ['class'=>'form-control shadow '] ) !!}
                         </div>
                         <div class="form-group">
-                            {!! Form::submit('Create user', ['class'=>'btn btn-primary mt-4'] ) !!}
+                            {!! Form::submit('Create user', ['class'=>'btn bg-gradient-warning w-25  mb-0  mt-5'] ) !!}
+
+
                         </div>
                         {!! Form::close() !!}
                     </div>
                 </div>
+                </div>
+
 @endsection
