@@ -7,7 +7,7 @@
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                        <h6 class="text-white text-capitalize ps-3">Photos table</h6>
+                        <h6 class="text-white text-capitalize ps-3">Products table</h6>
                     </div>
                 </div>
                 <div class="card-body px-0 pb-2">
@@ -22,25 +22,25 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($photos as $photo)
+                            @foreach($products as $product)
 
                                 <tr>
                                     <td>
 
                                         <div class="d-flex px-2 py-1">
-                                            <div> {{$photo->id}}</div>
+                                            <div> {{$product->id}}</div>
                                             <div>
-                                                <img style="height: 62px" class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="{{$photo->file ? asset($photo->file) : 'http://via.placeholder.com/62x62'}}" alt="{{$photo->name}}">
+                                                <img style="height: 62px" class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="{{$product->file ? asset($product->file) : 'http://via.placeholder.com/62x62'}}" alt="{{$product->name}}">
 
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="text-xs text-secondary mb-0">{{$photo->file}}</h6>
+                                                <h6 class="text-xs text-secondary mb-0">{{$product->file}}</h6>
                                             </div>
                                         </div>
                                     </td>
 
-                                    <td class="align-middle text-center"><span class="text-secondary text-xs font-weight-bold">{{$photo->created_at->diffForHumans()}}</span></td>
-                                    <td class="align-middle text-center"><span class="text-secondary text-xs font-weight-bold">{{$photo->updated_at->diffForHumans()}}</span></td>
+                                    <td class="align-middle text-center"><span class="text-secondary text-xs font-weight-bold">{{$product->created_at->diffForHumans()}}</span></td>
+                                    <td class="align-middle text-center"><span class="text-secondary text-xs font-weight-bold">{{$product->updated_at->diffForHumans()}}</span></td>
                                     <td class="align-middle text-center">
                                         <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
                                     </td>

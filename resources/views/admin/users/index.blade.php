@@ -40,7 +40,7 @@
                                     <div class="d-flex px-2 py-1">
                                         <div> {{$user->id}}</div>
                                         <div>
-                                            <img height="62" class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="{{$user->photo ? asset($user->photo->file) : 'http://via.placeholder.com/40x40'}}" alt="{{$user->name}}">
+                                            <img style="height: 62px" class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="{{$user->photo ? asset($user->photo->file) : 'http://via.placeholder.com/62x62'}}" alt="{{$user->name}}">
                                         </div>
                                         <div class="d-flex flex-column justify-content-center">
                                             <h6 class="mb-0 text-sm">{{$user->name}}</h6>
@@ -62,7 +62,7 @@
                                     <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
                                 </td>
                                 <td class="align-middle">
-                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                    <a href="{{url('admin/users/edit', $user->id)}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                         Edit
                                     </a>
                                 </td>

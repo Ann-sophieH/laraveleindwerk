@@ -5,14 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Photo extends Model
+class Product extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    protected $uploads= 'adminassets/img/';
-
-    public function getFileAttribute($photo){
-        return $this->uploads . $photo;
+    public function categories(){
+        return $this->belongsToMany(Category::class, 'product_category');
     }
-
 }
