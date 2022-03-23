@@ -27,7 +27,7 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <div class="navbar-nav me-auto mb-2 mb-lg-0 ">
                     <a aria-current="page" class="nav-link active text-uppercase" href="index.html">Home</a>
-                    <a class="nav-link text-uppercase" href="overzicht.html">Products</a>
+                    <a class="nav-link text-uppercase" href="{{route('products')}}">Products</a>
                     <a class="nav-link text-uppercase" href="contact.html">Contact</a>
                     <a class="nav-link text-uppercase" href="#">Blog</a>
                 </div>
@@ -53,36 +53,7 @@
         </div>
     </nav>
 </header>
-<!--hero -->
-<h1 class="d-none">Bang&Olufsen speakers and headphones</h1>
 
-<section class="container-fluid p-0" id="hero">
-    <div class="row g-0">
-        <section class="col-md-6 " id="heroleft">
-            <div class="card bg-dark text-white br-none border-0 ">
-                <img alt="..." class="card-img" src="assets/images/heroleftpic.jpg">
-                <div class="card-img-overlay">
-                    <div class="d-flex position-absolute pos-hero w-90 mb-5">
-                        <h2 class="card-body p-0 fs-reg pt-3">Speakers</h2>
-                        <a href="overzicht.html" class="btn btn-outline-light br-none fs-li mt-3 p-3 ">SHOP NOW</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class=" col-md-6 " id="heroright">
-            <div class="card bg-dark text-white br-none border-0 position-relative ">
-                <img alt="..." class="card-img" src="assets/images/GG_4.jpg">
-                <div class="card-img-overlay">
-                    <div class="d-flex position-absolute pos-hero w-90 mb-5">
-                        <h2 class="card-body p-0 fs-reg pt-3">Headphones</h2>
-                        <a href="overzicht.html" class="btn btn-outline-light br-none fs-li mt-3 p-3 ">SHOP NOW</a>
-                    </div>
-                </div>
-            </div>
-
-        </section>
-    </div>
-</section>
 
 
 @yield('content')

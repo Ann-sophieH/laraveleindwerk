@@ -15,7 +15,12 @@
                         <table class="table align-items-center mb-0">
                             <thead>
                             <tr>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Photo</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Product</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Color</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Product specifications</th>
+
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Amount</th>
+
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Updated</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deleted</th>
@@ -34,10 +39,17 @@
 
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="text-xs text-secondary mb-0">{{$product->file}}</h6>
+                                                <h6 class="text-xs text-secondary mb-0">{{$product->name}}</h6>
                                             </div>
                                         </div>
                                     </td>
+                                    <td class="align-middle text-center"><span class="text-secondary text-xs font-weight-bold  {{$product->color}}">{{$product->color}}</span></td>
+                                    <td class="align-middle text-center">
+                                        @foreach($product->specifications as $spec)
+                                            <span class="badge badge-sm bg-gradient-faded-success text-secondary text-xxs font-weight-bold">{{$spec->name}}</span>
+                                        @endforeach
+                                    </td>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">amount left</th>
 
                                     <td class="align-middle text-center"><span class="text-secondary text-xs font-weight-bold">{{$product->created_at->diffForHumans()}}</span></td>
                                     <td class="align-middle text-center"><span class="text-secondary text-xs font-weight-bold">{{$product->updated_at->diffForHumans()}}</span></td>
@@ -45,7 +57,7 @@
                                         <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
                                     </td>
                                     <td class="align-middle">
-                                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit product">
                                             Edit
                                         </a>
                                     </td>

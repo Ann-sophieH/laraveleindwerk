@@ -23,13 +23,17 @@ Auth::routes();
 
 
 /**FRONTEND**/
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\FrontendController::class, 'index'])->name('home');
+Route::get('/products', [App\Http\Controllers\FrontendController::class, 'products'])->name('products');
+
 
 /**BACKEND**/
 Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function (){
     Route::get('/', [App\Http\Controllers\AdminController::class, 'index'])->name('homebackend');
 
     Route::resource('users', App\Http\Controllers\AdminUsersController::class);
+    Route::get('users/restore/{user}', 'App\Http\Controllers\AdminUsersController@restore')->name('users.restore');
+
     Route::get('users/edit/{user}', 'App\Http\Controllers\AdminUsersController@edit')->name('users.edit');
 
     Route::resource('photos', App\Http\Controllers\AdminPhotosController::class);

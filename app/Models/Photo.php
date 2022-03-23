@@ -9,7 +9,7 @@ class Photo extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    protected $uploads= 'adminassets/img/';
+    protected $uploads= 'assets/img/';
 
     public function getFileAttribute($photo){
         return $this->uploads . $photo;

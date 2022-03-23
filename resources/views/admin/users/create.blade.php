@@ -15,16 +15,26 @@
                     </div>
                     <div class="card-body px-0 pb-2">
 
-                    <div class="col-10 mx-auto mt-5 p-2 pb-3 mb-5">
+
                         {!! Form::open(['method'=>'post', 'action'=>'App\Http\Controllers\AdminUsersController@store', 'files'=>true]) !!}
+                        <div class="row mx-auto">
+                        <div class="col-6  mt-5 p-2 pb-3 mb-5 ">
                         <div class="form-group">
-                            {!! Form::label('name', 'Name') !!}
-                            {!! Form::text('name', null, ['class'=>'form-control shadow border' ]) !!}
+                            {!! Form::label('username', 'Username') !!}
+                            {!! Form::text('username', null, ['class'=>'form-control shadow border' ]) !!}
                         </div>
-                        <div class="form-group">
-                            {!! Form::label('email', 'Email') !!}
-                            {!! Form::text('email', null, ['class'=>'form-control shadow border']) !!}
-                        </div>
+                            <div class="form-group">
+                                {!! Form::label('password', 'Password:') !!}
+                                {!! Form::password('password',['class' =>'form-control border']) !!}
+                            </div>
+                            <div class="form-group">
+                                {!! Form::label('first_name', 'First Name') !!}
+                                {!! Form::text('first_name', null, ['class'=>'form-control shadow border' ]) !!}
+                            </div>
+                            <div class="form-group">
+                                {!! Form::label('last_name', 'Last Name') !!}
+                                {!! Form::text('last_name', null, ['class'=>'form-control shadow border' ]) !!}
+                            </div>
                         <div class="form-group">
                             {!! Form::label('Select roles: (CTRL + click multiple)') !!}
                             {!! Form::select('roles[]', $roles, null, ['class'=>'form-control shadow ', 'multiple'=>'multiple'] ) !!}
@@ -33,21 +43,45 @@
                             {!! Form::label('is_active', 'Status:') !!}
                             {!! Form::select('is_active', array(1=>'active', 0=>'not active'), 1, ['class'=>'form-control shadow border'] ) !!}
                         </div>
-                        <div class="form-group">
-                            {!! Form::label('password', 'Password:') !!}
-                            {!! Form::password('password',['class' =>'form-control border']) !!}
-                        </div>
-                        <div class="form-group mt-3">
+
+                        <div class="form-group mt-5">
                             {!! Form::label('photo_id', 'Photo:') !!}
                             {!! Form::file('photo_id',null, ['class'=>'form-control shadow '] ) !!}
                         </div>
-                        <div class="form-group">
-                            {!! Form::submit('Create user', ['class'=>'btn bg-gradient-warning w-25  mb-0  mt-5'] ) !!}
+
+    </div>
+    <div class="col-6  mt-5 p-2 pb-3 mb-5 ">
+        <div class="form-group">
+            {!! Form::label('name_recipient', 'Name Recipient') !!}
+            {!! Form::text('name_recipient', null, ['class'=>'form-control shadow border' ]) !!}
+        </div>
+        <div class="form-group">
+            {!! Form::label('addressline_1', 'Street + number') !!}
+            {!! Form::text('addressline_1', null, ['class'=>'form-control shadow border']) !!}
+        </div>
+        <div class="form-group">
+            {!! Form::label('addressline_2', 'City + postalcode') !!}
+            {!! Form::text('addressline_2', null, ['class'=>'form-control shadow border']) !!}
+        </div>
+        <div class="form-group">
+            {!! Form::label('email', 'Email') !!}
+            {!! Form::text('email', null, ['class'=>'form-control shadow border']) !!}
+        </div>
+        <div class="form-group">
+            {!! Form::label('telephone', 'Phone') !!}
+            {!! Form::text('telephone', null, ['class'=>'form-control shadow border']) !!}
+        </div>
+
+        <div class="form-group">
+            {!! Form::submit('Create user', ['class'=>'btn bg-gradient-warning w-25 mx-auto mb-0  mt-5 ms-5'] ) !!}
 
 
+        </div>
+    </div>
                         </div>
+
                         {!! Form::close() !!}
-                    </div>
+
                 </div>
                 </div>
 

@@ -29,6 +29,8 @@
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Updated</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deleted</th>
+                                <th class=" text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -43,14 +45,16 @@
                                             <img style="height: 62px" class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="{{$user->photo ? asset($user->photo->file) : 'http://via.placeholder.com/62x62'}}" alt="{{$user->name}}">
                                         </div>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{$user->name}}</h6>
+                                            <h6 class="mb-0 text-sm">{{$user->username}}</h6>
+                                            <p class="text-xs text-secondary mb-0">{{$user->first_name}} {{$user->last_name}}</p>
+
                                             <p class="text-xs text-secondary mb-0">{{$user->email}}</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
                                     @foreach($user->roles as $role)
-                                        <span class="badge badge-sm bg-gradient-faded-info">{{$role->name}}</span>
+                                        <span class="badge badge-sm text-xxs bg-gradient-faded-info">{{$role->name}}</span>
                                     @endforeach
                                 </td>
                                 <td class="align-middle text-center text-sm">
@@ -62,9 +66,26 @@
                                     <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
                                 </td>
                                 <td class="align-middle">
-                                    <a href="{{url('admin/users/edit', $user->id)}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                        Edit
-                                    </a>
+                                    @if($user->deleted_at != null)
+                                        <a class="btn btn-warning" href="{{route('users.restore',$user->id)}}">Restore</a>
+                                    @else
+                                        <form method="POST"
+                                              action="{{action("App\Http\Controllers\AdminUsersController@destroy", $user->id)}}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <a class="btn text-warning" type='submit'
+                                               href="{{url('admin/users/show', $user->id)}} "><i
+                                                    class="fa fa-eye mt-3"></i></a>
+                                            <a class="btn text-info" type='submit'
+                                               href="{{url('admin/users/edit', $user->id)}} "><i
+                                                    class="fa fa-edit mt-3"></i></a>
+                                            <button class="btn  mt-2 ps-5 text-danger" type="submit"><i
+                                                    class="fa fa-close "></i></button>
+
+                                        </form>
+
+
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

@@ -91,6 +91,15 @@ nav img{
 .mi{
     overflow: hidden;
 }
+.location_image {
+    background-size: 150%;
+    background-position: center;
+    padding-top: 100%;
+    border-radius: 25px;
+    -webkit-transition: box-shadow .6s ease-out;
+    height: auto;
+    z-index: 1;
+}
 /*parallax*/
 .parallax{
     padding-top: 20%;
@@ -136,6 +145,7 @@ nav img{
     top: 0;
     left: 0;
 }
+/*hover*/
 .img-first{
     z-index: 5;
 }
@@ -145,6 +155,8 @@ nav img{
 .img-first:hover{
     display: none;
 }
+/*coloring details
+*/
 .checkshop input:checked {
     border-color: rgba(84, 81, 66,0.5);
     background-color:rgba(84, 81, 66,0.8);

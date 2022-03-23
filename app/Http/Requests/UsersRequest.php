@@ -25,8 +25,11 @@ class UsersRequest extends FormRequest
     {
         return [
             //
-            'name'=>'required|string',
-            'email'=>'required|unique:users|email',
+            'username'=>'string|max:255',
+            'first_name'=>'required|string|max:255',
+            'last_name'=>'required|string|max:255',
+            'telephone'=>'required|max:20',//not unique cause huistelefoon
+            'email'=>'required|email|unique:users',
             'roles'=>'required',
             'is_active'=>'required',
             'password'=>'required'
@@ -37,7 +40,9 @@ class UsersRequest extends FormRequest
     {
         return [
             'email.required'=>'Email is required! Please fill it in.',
-            'name.required'=>'Name is required! Please fill it in.',
+            'first_name.required'=>'A first name is required! Please fill it in.',
+            'last_name.required'=>'A last name is required! Please fill it in.',
+
             'roles.required'=>'A role is required! Please select at least one.',
 
             'password.required'=>'Please choose a password of minimum 8 characters.'        ];

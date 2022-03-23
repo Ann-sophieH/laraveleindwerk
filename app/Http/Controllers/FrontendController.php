@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class FrontendController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -23,6 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('homepage');
+        return view('index');
+    }
+    public function products(){
+        return view('products');
     }
 }

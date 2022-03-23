@@ -2,6 +2,36 @@
 
 
 @section('content')
+    <!--hero -->
+    <h1 class="d-none">Bang&Olufsen speakers and headphones</h1>
+
+    <section class="container-fluid p-0" id="hero">
+        <div class="row g-0">
+            <section class="col-md-6 " id="heroleft">
+                <div class="card bg-dark text-white br-none border-0 ">
+                    <img alt="..." class="card-img" src="assetsfront/images/heroleftpic.jpg">
+                    <div class="card-img-overlay">
+                        <div class="d-flex position-absolute pos-hero w-90 mb-5">
+                            <h2 class="card-body p-0 fs-reg pt-3">Speakers</h2>
+                            <a href="overzicht.html" class="btn btn-outline-light br-none fs-li mt-3 p-3 ">SHOP NOW</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class=" col-md-6 " id="heroright">
+                <div class="card bg-dark text-white br-none border-0 position-relative ">
+                    <img alt="..." class="card-img" src="assetsfront/images/GG_4.jpg">
+                    <div class="card-img-overlay">
+                        <div class="d-flex position-absolute pos-hero w-90 mb-5">
+                            <h2 class="card-body p-0 fs-reg pt-3">Headphones</h2>
+                            <a href="overzicht.html" class="btn btn-outline-light br-none fs-li mt-3 p-3 ">SHOP NOW</a>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    </section>
 <!--section1: highlighted article -->
 <div class="container-fluid" id="designSection">
     <div class="row col-10 offset-1 margins g-2">
@@ -10,18 +40,18 @@
             <h3 class="fs-reg text-uppercase mb-3">Don't sacrifice style for sound</h3>
         </div>
         <div class="col-lg-6 mi">
-            <img alt="" class="w-100 h-100" src="assets/images/desgn2.jpg">
+            <img alt="" class="w-100 h-100" src="assetsfront/images/desgn2.jpg">
         </div>
         <div class="col-6 col-lg-3 gy-1 fsize-1">
             <div class="mi position-relative mt-1">
-                <img alt="..." class="mi img-fluid" src="assets/images/highlightpic.png">
+                <img alt="..." class="mi img-fluid" src="assetsfront/images/highlightpic.png">
                 <div class="kader position-absolute ps-1 d-none d-md-block">
                     <p class="text-uppercase mp-none ">beosound explore</p>
                     <p class="text-muted mp-none d-none d-md-block">cradle to cradle ceritfiedr</p>
                 </div>
             </div>
             <div class="mi position-relative mt-2">
-                <img alt="..." class="mi img-fluid " src="assets/images/all_sapekres.jpg">
+                <img alt="..." class="mi img-fluid " src="assetsfront/images/all_sapekres.jpg">
                 <div class="kader position-absolute ps-1 d-none d-md-block">
                     <p class="text-uppercase mp-none">beosound explore</p>
                     <p class="text-muted mp-none d-none d-md-block">Portable  speaker</p>
@@ -31,14 +61,14 @@
         </div>
         <div class="col-6 col-lg-3 gy-1 fsize-1">
             <div class="mi position-relative mt-1">
-                <img alt="..." class="mi img-fluid" src="assets/images/design.jpg" id="highlightfix">
+                <img alt="..." class="mi img-fluid" src="assetsfront/images/design.jpg" id="highlightfix">
                 <div class="kader position-absolute ps-1 d-none d-md-block">
                     <p class="text-uppercase mp-none">beosound level</p>
                     <p class="text-muted mp-none d-none d-md-block">cradle to cradle ceritfied</p>
                 </div>
             </div>
             <div class="mi position-relative mt-2 shadow">
-                <img alt="..." class="mi img-fluid " src="assets/images/desgn2.jpg">
+                <img alt="..." class="mi img-fluid " src="assetsfront/images/desgn2.jpg">
                 <div class="kader position-absolute ps-1 d-none d-md-block">
                     <p class="text-uppercase mp-none">beosound explore</p>
                     <p class="text-muted mp-none d-none d-md-block">Portable  speaker</p>
@@ -78,21 +108,21 @@
                 <div class="carousel-item active g-2">
                     <div class=" row row-cols-lg-3">
                         <div class=" mi position-relative mt-2 col-lg-4">
-                            <img alt="..." class="img-fluid " src="assets/images/GG_3.jpg">
+                            <img alt="..." class="img-fluid " src="assetsfront/images/GG_3.jpg">
                             <div class=" kader position-absolute m-1 ps-2 ">
                                 <p class="text-uppercase mp-none">beosound explore</p>
                                 <p class="text-muted mp-none">Portable durable speaker</p>
                             </div>
                         </div>
                         <div class=" mi position-relative mt-2 col-lg-4">
-                            <img alt="..." class=" img-fluid " src="assets/images/headphonegrye.jpg">
+                            <img alt="..." class=" img-fluid " src="assetsfront/images/headphonegrye.jpg">
                             <div class="kader position-absolute m-1 ps-2 ">
                                 <p class="text-uppercase mp-none">beosound explore</p>
                                 <p class="text-muted mp-none">Portable durable speaker</p>
                             </div>
                         </div>
                         <div class=" mi position-relative mt-2 col-lg-4">
-                            <img alt="..." class=" img-fluid " src="assets/images/GG_4.jpg">
+                            <img alt="..." class=" img-fluid " src="assetsfront/images/GG_4.jpg">
                             <div class="kader position-absolute m-1 ps-2 ">
                                 <p class="text-uppercase mp-none">beosound explore</p>
                                 <p class="text-muted mp-none">Portable durable speaker</p>
@@ -104,21 +134,21 @@
                 <div class="carousel-item g-2">
                     <div class=" row row-cols-lg-3 ">
                         <div class=" mi position-relative mt-2 col-lg-4">
-                            <img alt="..." class="mi img-fluid " src="assets/images/GG_3.jpg">
+                            <img alt="..." class="mi img-fluid " src="assetsfront/images/GG_3.jpg">
                             <div class=" kader position-absolute m-1 ps-2 ">
                                 <p class="text-uppercase mp-none">beosound explore</p>
                                 <p class="text-muted mp-none">Portable durable speaker</p>
                             </div>
                         </div>
                         <div class=" mi position-relative mt-2 col-lg-4">
-                            <img alt="..." class="mi img-fluid " src="assets/images/headphonegrye.jpg">
+                            <img alt="..." class="mi img-fluid " src="assetsfront/images/headphonegrye.jpg">
                             <div class="kader position-absolute m-1 ps-2 ">
                                 <p class="text-uppercase mp-none">beosound explore</p>
                                 <p class="text-muted mp-none">Portable durable speaker</p>
                             </div>
                         </div>
                         <div class=" mi position-relative mt-2 col-lg-4">
-                            <img alt="..." class="mi img-fluid " src="assets/images/headphonegrye.jpg">
+                            <img alt="..." class="mi img-fluid " src="assetsfront/images/headphonegrye.jpg">
                             <div class="kader position-absolute m-1 ps-2 ">
                                 <p class="text-uppercase mp-none">beosound explore</p>
                                 <p class="text-muted mp-none">Portable durable speaker</p>

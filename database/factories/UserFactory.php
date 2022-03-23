@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -18,9 +19,12 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'is_active'=>$this->faker->numberBetween(0, 1),
-            'name' => $this->faker->name(),
+            'is_active'=>$this->faker->numberBetween(0,1),
+            'username' => $this->faker->userName(),
+            'first_name' => $this->faker->firstName(),
+            'last_name' => $this->faker->lastName(),
             'email' => $this->faker->unique()->safeEmail(),
+            'telephone' => $this->faker->unique()->phoneNumber(),
             'email_verified_at' => now(),
             'password' => $this->faker->password(), // password
             'remember_token' => Str::random(10),
