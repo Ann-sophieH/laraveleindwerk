@@ -78,11 +78,6 @@
                                     {!! Form::text('telephone',  $user->telephone, ['class'=>'form-control shadow border']) !!}
                                 </div>
 
-                                <div class="form-group">
-                                    {!! Form::submit('Create user', ['class'=>'btn bg-gradient-warning w-25 mx-auto mb-0  mt-5 ms-5'] ) !!}
-
-
-                                </div>
                             </div>
                         </div>
 

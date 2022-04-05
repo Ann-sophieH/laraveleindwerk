@@ -11,6 +11,9 @@ class Photo extends Model
     protected $guarded = ['id'];
     protected $uploads= 'assets/img/';
 
+    public function product(){
+        return $this->belongsTo(Product::class);
+    }
     public function getFileAttribute($photo){
         return $this->uploads . $photo;
     }

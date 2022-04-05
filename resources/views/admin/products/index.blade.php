@@ -8,8 +8,13 @@
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">Products table</h6>
+
                     </div>
                 </div>
+                <form class="ms-5 mt-5">
+                    <input type="text" name="search" class="form-control mb-3 border-1 small"
+                           placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                </form>
                 <div class="card-body px-0 pb-2">
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0">
@@ -36,14 +41,26 @@
                                             <div> {{$product->id}}</div>
                                             <div>
                                                 <img style="height: 62px" class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="{{$product->file ? asset($product->file) : 'http://via.placeholder.com/62x62'}}" alt="{{$product->name}}">
-
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="text-xs text-secondary mb-0">{{$product->name}}</h6>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="align-middle text-center"><span class="text-secondary text-xs font-weight-bold  {{$product->color}}">{{$product->color}}</span></td>
+                                    <td class="align-middle text-center d-flex ">
+                                        @foreach($product->colors as $color)
+                                            <div class="p-2">
+                                                 <span class="text-secondary text-xs font-weight-bold  {{$color->name}}">
+                                            {{$color->name}}
+                                        </span>
+                                                <div class="">
+                                                    <label class="btn-colour form-label " for="{{$color->name}}" style="background-color: {{$color->hex_value}}; width: 2rem; height: 2rem;border-radius: 50%"></label>
+                                                    <input name="colour " type="checkbox" id="{{$color->name}}" class="input-invisible form-control">
+                                                </div>
+                                            </div>
+
+                                        @endforeach
+                                    </td>
                                     <td class="align-middle text-center">
                                         @foreach($product->specifications as $spec)
                                             <span class="badge badge-sm bg-gradient-faded-success text-secondary text-xxs font-weight-bold">{{$spec->name}}</span>
@@ -57,7 +74,7 @@
                                         <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
                                     </td>
                                     <td class="align-middle">
-                                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit product">
+                                        <a href="{{route('products.edit', $product->id)}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit product">
                                             Edit
                                         </a>
                                     </td>
@@ -71,6 +88,9 @@
             </div>
         </div>
     </div>
+    <div class=" col-3 mx-auto">
+        {{$products->render()}}
 
+    </div>
 @endsection
 

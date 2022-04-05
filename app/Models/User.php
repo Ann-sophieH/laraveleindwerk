@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Kyslik\ColumnSortable\Sortable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, Sortable;
     use softDeletes;
 
 
@@ -51,7 +52,15 @@ class User extends Authenticatable
     }
 
 
-    public function scopeFilter($query, array $filters){ //scope+naam functie in casu Filter
+
+    public function isAdmin(){
+        foreach ($this->roles as $role){
+            if($role->name == 'administrator' && $this->is_active == 1){
+                return true;
+            }
+        }
+    }
+    public function scopeFilter($query, array $filters){ //scope+name function = Filter
         //array filters komt uit de filter array opgehaald met search variabele (opgehaald als array)
         //oude wijze: if(isset($filters['search']) == false
 

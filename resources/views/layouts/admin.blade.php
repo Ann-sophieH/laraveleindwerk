@@ -116,16 +116,22 @@
                     <span class="nav-link-text ms-1">Profile</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link text-white " href="./pages/sign-in.html">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">login</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Sign out</span>
+            <li class="nav-item ">
+                <a class="nav-link text-white " href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();"><div class="text-white text-center me-2 d-flex align-items-center justify-content-center"> <i class="material-icons opacity-10">login</i> </div>
+                    <span class="nav-link-text ms-1">  {{ __('Sign out') }}</span>
+
                 </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
+
             </li>
+
             <li class="nav-item">
-                <a class="nav-link text-white " href="{{url('/')}}">
+                <a class="nav-link text-white " href="{{url('/ ')}}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">assignment</i>
                     </div>
@@ -159,11 +165,20 @@
                     </div>
                 </div>
                 <ul class="navbar-nav  justify-content-end">
+
+
                     <li class="nav-item d-flex align-items-center">
-                        <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
-                            <i class="fa fa-user me-sm-1"></i>
-                            <span class="d-sm-inline d-none">Sign In</span>
+                        <a class="dropdown-item nav-link text-body font-weight-bold px-0" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();"> <i class="fa fa-user me-sm-1"></i>
+                            <span class="d-sm-inline d-none">  {{ __('Sign out') }}</span>
+
                         </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+
                     </li>
                     <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                         <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">

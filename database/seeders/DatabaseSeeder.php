@@ -20,10 +20,11 @@ class DatabaseSeeder extends Seeder
             RolesTableSeeder::class,
             UsersRolesTableSeeder::class,
             ProductsTableSeeder::class,
-            SpecificationsTableSeeder::class,
             CategoriesTableSeeder::class,
-            ProductsSpecificationsTable::class,
+            SpecificationsTableSeeder::class,
+            ProductsSpecificationsTableSeeder::class,
             AddressesTableSeeder::class,
+            ColorsTableSeeder::class,
 
         ]);
     }

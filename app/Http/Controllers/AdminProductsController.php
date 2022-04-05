@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Color;
+use App\Models\Photo;
 use App\Models\Product;
+use App\Models\Specification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Intervention\Image\Facades\Image;
 
 class AdminProductsController extends Controller
 {
@@ -15,7 +21,9 @@ class AdminProductsController extends Controller
     public function index()
     {
         //
-        $products = Product::all();
+        $products = Product::with(['specifications', 'colors', 'category'])->withTrashed()->filter(request(['search']))->paginate(15);
+        Session::flash('product_message', 'these are the products found in db!'); //naam om mess. op te halen,
+
         return view('admin.products.index', compact('products'));
     }
 
@@ -27,6 +35,11 @@ class AdminProductsController extends Controller
     public function create()
     {
         //
+        $colors = Color::all();
+        $specifications = Specification::all();
+        $categories = Category::all();
+        return view('admin.products.create', compact('colors', 'specifications' , 'categories'));
+
     }
 
     /**
@@ -38,6 +51,31 @@ class AdminProductsController extends Controller
     public function store(Request $request)
     {
         //
+        $product = new Product();
+        $product->name = $request->name;
+        $product->details = $request->details;
+        $product->price = $request->price;
+        $product->category_id = $request->category;
+
+        /**photo opslaan**/
+        if($file = $request->file('photo_id')){
+            $name = time() . $file->getClientOriginalName();
+            Image::make($file)
+                ->resize(700, 700, function ($constraint){
+                    $constraint->aspectRatio();
+                })
+                ->crop(512, 512 )
+                // ->insert(public_path('/img/watermark.png'), 'bottom-right', 20, 20) //wtermark toevoegen
+                ->save(public_path('assets/img/products/' . 'th_' . $name)); //enkel thumbnail vn product
+            // $file->move('img', $name);
+            $photo = Photo::create(['file'=>$name]);
+            $product->photo_id = $photo->id;
+        }
+        $product->save();
+        $product->colors()->sync($request->colors,false);
+        $product->specifications()->sync($request->specifications,false);
+        return redirect('admin/products');
+
     }
 
     /**
@@ -60,6 +98,11 @@ class AdminProductsController extends Controller
     public function edit($id)
     {
         //
+        $product = Product::findOrFail($id);
+        $specifications = Specification::all();
+        $categories = Category::all();
+        $colors = Color::all();
+        return view('admin.products.edit', compact('product','specifications','categories', 'colors'));
     }
 
     /**
@@ -83,5 +126,8 @@ class AdminProductsController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function products(){
+        return view('products');
     }
 }

@@ -7,7 +7,7 @@ use App\Models\Specification;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ProductsSpecificationsTable extends Seeder
+class ProductsSpecificationsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

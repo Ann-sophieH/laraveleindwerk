@@ -28,6 +28,16 @@ return new class extends Migration
             //user_id refereert naar id op tabel users en bij delete van user moet relatie ook deleted worden
             $table->foreign('specification_id')->references('id')->on('specifications')->onDelete('cascade');
         });
+        Schema::create('category_specification',  function (Blueprint $table){
+            $table->id();
+            $table->unsignedBigInteger('category_id'); //= samentrekking tabel (enkelvoud) en zijn id
+            $table->unsignedBigInteger('specification_id');
+            $table->timestamps();
+            $table->unique(['category_id' , 'specification_id']);
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            //user_id refereert naar id op tabel users en bij delete van user moet relatie ook deleted worden
+            $table->foreign('specification_id')->references('id')->on('specifications')->onDelete('cascade');
+        });
     }
 
     /**

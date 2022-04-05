@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class FrontendController extends Controller
+class HomeController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -13,7 +14,7 @@ class FrontendController extends Controller
      */
     public function __construct()
     {
-      //  $this->middleware('auth');
+        $this->middleware('auth');
     }
 
     /**
@@ -23,9 +24,7 @@ class FrontendController extends Controller
      */
     public function index()
     {
-        return view('index');
-    }
-    public function products(){
-        return view('products');
+        $active_user = Auth::user();
+        return view('admin.index', compact('active_user'));
     }
 }

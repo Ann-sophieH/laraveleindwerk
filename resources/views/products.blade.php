@@ -172,7 +172,13 @@
                         <div aria-labelledby="headingThree" class="accordion-collapse collapse"
                              data-bs-parent="#accordionExample"
                              id="collapseThree">
-                            <div class="accordion-body">
+                            <div class="accordion-body ">
+                                <div class="range-wrap position-relative">
+                                    <div class="range-value mx-auto mb-4 text-border" id="rangeV">
+
+                                    </div>
+                                    <input id="range" class="mx-auto " type="range" min="50" max="4000" value="200" step="1" style="width: 90%">
+                                </div>
                             </div>
 
                         </div>
@@ -330,4 +336,19 @@
             </ul>
         </aside>
     </div>
+    <script>
+        const
+            range = document.getElementById('range'),
+            rangeV = document.getElementById('rangeV'),
+            setValue = ()=>{
+                const
+                    newValue = Number( (range.value - range.min) * 100 / (range.max - range.min) ),
+                    newPosition = 10 - (newValue * 0.2);
+                rangeV.innerHTML = `<span>${range.value}</span>`;
+                rangeV.style.left = `calc(${newValue}% + (${newPosition}px))`;
+            };
+        document.addEventListener("DOMContentLoaded", setValue);
+        range.addEventListener('input', setValue);
+
+    </script>
 @endsection
