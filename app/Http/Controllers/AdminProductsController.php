@@ -58,20 +58,35 @@ class AdminProductsController extends Controller
         $product->category_id = $request->category;
 
         /**photo opslaan**/
-        if($file = $request->file('photo_id')){
+        /*if($files = $request->file('photos')){
+            foreach($files as $file){
+                $name = time() . $file->getClientOriginalName();
+                Image::make($file)
+                    ->resize(720, 720, function ($constraint){
+                        $constraint->aspectRatio();
+                    })
+                    ->crop(550, 550 )
+                    // ->insert(public_path('/img/watermark.png'), 'bottom-right', 20, 20) //wtermark toevoegen
+                    ->save(public_path('assets/img/products/' . 'th_' . $name)); //enkel thumbnail vn product
+                Photo::create(['file'=>$name]);
+            }
+        }*/
+        if($file = $request->file('photos')){
             $name = time() . $file->getClientOriginalName();
             Image::make($file)
-                ->resize(700, 700, function ($constraint){
+                ->resize(720, 720, function ($constraint){
                     $constraint->aspectRatio();
                 })
-                ->crop(512, 512 )
-                // ->insert(public_path('/img/watermark.png'), 'bottom-right', 20, 20) //wtermark toevoegen
-                ->save(public_path('assets/img/products/' . 'th_' . $name)); //enkel thumbnail vn product
-            // $file->move('img', $name);
-            $photo = Photo::create(['file'=>$name]);
-            $product->photo_id = $photo->id;
+                ->crop(550, 550 )
+                ->save(public_path('assets/img/products/' . 'th_' . $name));
+
+           $photo =  Photo::create(['file'=>$name]);
+
+
         }
         $product->save();
+        $product->photos()->save($photo);
+
         $product->colors()->sync($request->colors,false);
         $product->specifications()->sync($request->specifications,false);
         return redirect('admin/products');

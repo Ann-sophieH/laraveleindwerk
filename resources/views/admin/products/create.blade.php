@@ -90,8 +90,8 @@
                                         <input type="number" min="1" step="any" class="form-control border ps-2 shadow-sm" id="price" name="price" placeholder="Product price...">
                                     </div>
                                     <div class="form-group col-4">
-                                        <label for="file">Product photo:</label>
-                                        <input type="file"  class="form-control border ps-2 shadow-sm" id="file" name="file" >
+                                        <label for="photos">Product photo(s):</label>
+                                        <input type="file"  class="form-control border ps-2 shadow-sm" id="photos"  name="photos" multiple>
                                     </div>
                                 </div>
 

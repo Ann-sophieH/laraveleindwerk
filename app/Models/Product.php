@@ -15,7 +15,7 @@ class Product extends Model
 
     public function photos()
     {
-        return $this->hasMany(Photo::class);
+        return $this->morphToMany(Photo::class, 'photoable');
     }
 
     public function category()

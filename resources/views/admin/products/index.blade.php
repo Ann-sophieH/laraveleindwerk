@@ -6,9 +6,14 @@
         <div class="col-12 mt-5">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
                         <h6 class="text-white text-capitalize ps-3">Products table</h6>
+                        <button class="btn bg-gradient-warning  mb-0  me-4" >
+                            <div class=" me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">add</i> <a href="{{route('products.create')}}" class="text-white text-center ps-2"> Add product</a>
 
+                            </div>
+                        </button>
                     </div>
                 </div>
                 <form class="ms-5 mt-5">
@@ -40,7 +45,7 @@
                                         <div class="d-flex px-2 py-1">
                                             <div> {{$product->id}}</div>
                                             <div>
-                                                <img style="height: 62px" class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="{{$product->file ? asset($product->file) : 'http://via.placeholder.com/62x62'}}" alt="{{$product->name}}">
+                                                <img style="height: 62px" class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="{{$product->photos ? asset($product->photos->file) : 'http://via.placeholder.com/62x62'}}" alt="{{$product->name}}">
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="text-xs text-secondary mb-0">{{$product->name}}</h6>
