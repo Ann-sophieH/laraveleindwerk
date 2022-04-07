@@ -45,8 +45,17 @@
                                         <div class="d-flex px-2 py-1">
                                             <div> {{$product->id}}</div>
                                             <div>
-                                                <img style="height: 62px" class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="{{$product->photos ? asset($product->photos->file) : 'http://via.placeholder.com/62x62'}}" alt="{{$product->name}}">
+                                                @if(($product->photos)->isNotEmpty())
+                                                @foreach($product->photos as $photo)
+
+                                                    <img style="height: 62px" class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="{{ empty($photo) ? 'http://via.placeholder.com/62x62' : asset($photo->file) }}" alt="{{$product->name}}">
+                                                @endforeach
+                                                @else
+                                                    <img style="height: 62px" class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="http://via.placeholder.com/62x62" alt="{{$product->name}}">
+
+                                                @endif
                                             </div>
+
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="text-xs text-secondary mb-0">{{$product->name}}</h6>
                                             </div>

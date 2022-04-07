@@ -44,8 +44,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function roles(){
         return $this->belongsToMany(Role::class, 'user_role');
     }
-    public function photo(){
-        return $this->belongsTo(Photo::class);
+    public function photos()
+    {
+        return $this->morphToMany(Photo::class, 'photoable');
+        //users could have multiple pics, for pfp always latest added
     }
     public function address(){
         return $this->belongsTo(Address::class);

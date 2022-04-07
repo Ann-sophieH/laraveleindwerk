@@ -1,5 +1,28 @@
 @extends('layouts.admin')
 @section('content')
+<div class="row">
+    <div class="col-10 mx-auto d-flex justify-content-around">
+@foreach($roles as $role)
+
+        <div class="card col-2">
+            <a href="{{route('admin.usersPerRole', $role->id)}}">
+            <div class="card-header mx-4 p-3 text-center">
+                <div class="icon icon-shape icon-lg bg-gradient-primary shadow text-center border-radius-lg">
+                    <i class="material-icons opacity-10">person</i>
+                </div>
+            </div>
+            <div class="card-body pt-0 p-3 text-center">
+                <h6 class="text-center mb-0">{{$role->name}}</h6>
+                <hr class="horizontal dark ">
+                <span class="text-xs">Sort users by role of {{$role->name}} </span>
+
+            </div>
+            </a>
+        </div>
+
+        @endforeach
+    </div>
+</div>
 
     <div class="row">
 
@@ -17,6 +40,10 @@
 
                     </div>
                 </div>
+                <form class="ms-5 mt-5">
+                    <input type="text" name="search" class="form-control mb-3 border-1 small"
+                           placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                </form>
                 <div class="card-body px-0 pb-2">
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0">
@@ -41,8 +68,17 @@
 
                                     <div class="d-flex px-2 py-1">
                                         <div> {{$user->id}}</div>
+
                                         <div>
-                                            <img style="height: 62px" class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="{{$user->photo ? asset($user->photo->file) : 'http://via.placeholder.com/62x62'}}" alt="{{$user->name}}">
+                                            @if(($user->photos)->isNotEmpty())
+                                                @foreach($user->photos as $photo)
+
+                                                    <img style="height: 62px" class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="{{ empty($photo) ? 'http://via.placeholder.com/62x62' : asset($photo->file) }}" alt="{{$user->username}}">
+                                                @endforeach
+                                            @else
+                                                <img style="height: 62px" class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="http://via.placeholder.com/62x62" alt="{{$user->username}}">
+
+                                            @endif
                                         </div>
                                         <div class="d-flex flex-column justify-content-center">
                                             <h6 class="mb-0 text-sm">{{$user->username}}</h6>
@@ -97,7 +133,7 @@
             </div>
         </div>
     </div>
-    <div class="mx-auto mt-5">
+    <div class="col-3 mx-auto mt-5">
         {{$users->render()}}
     </div>
 @endsection

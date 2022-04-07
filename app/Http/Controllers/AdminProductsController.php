@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductsEditRequest;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Photo;
@@ -21,7 +22,7 @@ class AdminProductsController extends Controller
     public function index()
     {
         //
-        $products = Product::with(['specifications', 'colors', 'category'])->withTrashed()->filter(request(['search']))->paginate(15);
+        $products = Product::with(['specifications', 'colors', 'category', 'photos'])->withTrashed()->filter(request(['search']))->paginate(15);
         Session::flash('product_message', 'these are the products found in db!'); //naam om mess. op te halen,
 
         return view('admin.products.index', compact('products'));
@@ -79,10 +80,8 @@ class AdminProductsController extends Controller
                 })
                 ->crop(550, 550 )
                 ->save(public_path('assets/img/products/' . 'th_' . $name));
-
-           $photo =  Photo::create(['file'=>$name]);
-
-
+            $thumbnail = 'products/' . 'th_' . $name ;
+            $photo =  Photo::create(['file'=>$thumbnail]);
         }
         $product->save();
         $product->photos()->save($photo);
@@ -117,6 +116,8 @@ class AdminProductsController extends Controller
         $specifications = Specification::all();
         $categories = Category::all();
         $colors = Color::all();
+
+
         return view('admin.products.edit', compact('product','specifications','categories', 'colors'));
     }
 
@@ -127,9 +128,31 @@ class AdminProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductsEditRequest $request, $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $input = $request->all();
+
+        /** update photo **/
+        if($file = $request->file('photos')){
+            $name = time() . $file->getClientOriginalName();
+            Image::make($file)
+                ->resize(720, 720, function ($constraint){
+                    $constraint->aspectRatio();
+                })
+                ->crop(550, 550 )
+                ->save(public_path('assets/img/products/' . 'th_' . $name));
+            $thumbnail = 'products/' . 'th_' . $name ;
+            $photo =  Photo::create(['file'=>$thumbnail]);
+        }
+        $product->update($input);
+        /** edit many-relationships **/
+        $product->photos()->save($photo);
+        $product->colors()->sync($request->colors, true);
+        $product->specifications()->sync($request->specifications, true);
+
+
+
     }
 
     /**

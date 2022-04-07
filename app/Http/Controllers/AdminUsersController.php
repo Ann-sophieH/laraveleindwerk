@@ -25,10 +25,12 @@ class AdminUsersController extends Controller
     public function index()
     {
         //
-        $users = User::with(['photo', 'roles', 'address'])->withTrashed()->filter(request(['search']))->paginate(15);
+        $roles = Role::all();
+
+        $users = User::with(['photos', 'roles', 'address'])->withTrashed()->filter(request(['search']))->paginate(15);
         Session::flash('user_message', 'these are the users found in db!'); //naam om mess. op te halen,
 
-        return view('admin.users.index', compact('users')); //COMPACT draagt assoc array over nr indexpagina met users in
+        return view('admin.users.index', compact('users', 'roles')); //COMPACT draagt assoc array over nr indexpagina met users in
     }
 
     /**
@@ -52,6 +54,7 @@ class AdminUsersController extends Controller
     public function store(UsersRequest $request)
     {
         //
+        /** save user **/
         $user = new User();
         $user->username = $request->username;
         $user->first_name = $request->first_name;
@@ -65,18 +68,21 @@ class AdminUsersController extends Controller
         if($file = $request->file('photo_id')){
             $name = time() . $file->getClientOriginalName();
             Image::make($file)
-                ->resize(300, 300, function ($constraint){
+                ->resize(520, 520, function ($constraint){
                     $constraint->aspectRatio();
                 })
-                ->crop(200, 200 )
-                ->save(public_path('/img/' . $name)); //file nodig = temporary file of pc
-            // $file->move('img', $name);
-            $photo = Photo::create(['file'=>$name]);
+                ->crop(320, 320 )
+                ->save(public_path('assets/img/users/' . 'th_' . $name));//file nodig = temporary file of pc
+            $thumbnail = 'users/' . 'th_' . $name ;
+            $photo = Photo::create(['file'=>$thumbnail]);
             $user->photo_id = $photo->id;
         }
         $user->save();
-        $user->roles()->sync($request->roles, false);
+        $user->photos()->save($photo);
 
+        /** save roles **/
+        $user->roles()->sync($request->roles, false);
+        /** save address **/
         $address = new Address();
         $address->name_recipient = $request['name_recipient'];
         $address->addressline_1 = $request['addressline_1'];
@@ -139,14 +145,34 @@ class AdminUsersController extends Controller
         /**code opslaan foto **/
         if($file = $request->file('photo_id')){
             $name = time() . $file->getClientOriginalName();
-            $file->move('assets/img', $name);
-            $photo = Photo::create(['file'=>$name]);
+            Image::make($file)
+                ->resize(520, 520, function ($constraint){
+                    $constraint->aspectRatio();
+                })
+                ->crop(320, 320 )
+                ->save(public_path('assets/img/users/' . 'th_' . $name)); //file nodig = temporary file of pc
+            $thumbnail = 'users/' . 'th_' . $name ;
+            $photo = Photo::create(['file'=>$thumbnail]);
+
             $user->photo_id = $input['photo_id'] = $photo->id ; //id ophalen van de foto die net is opgeladen
+            //eerst oude foto weer verwijderen how?
+            $user->update($input);
+
+            $user->photos()->save($photo);
+
         }
         $user->update($input);
 
         /** wegschrijven tussentabel rollen**/
         $user->roles()->sync($request->roles, true);
+        /*kan dit korter? */
+        $user->address()->where('user_id', $user->id);
+        $address = Address::where('user_id', $user->id)
+            ->update([  'name_recipient' =>  $request['name_recipient'],
+                        'addressline_1' => $request['addressline_1'],
+                        'addressline_2' => $request['addressline_2'],
+                        'user_id'=>$user->id
+            ]);
         Session::flash('user_message', $user->name . ' was edited!');
         return redirect('/admin/users');
     }
@@ -169,5 +195,14 @@ class AdminUsersController extends Controller
     public function restore($id){
         User::onlyTrashed()->where('id', $id)->restore();
         return redirect('/admin/users');
+    }
+    public function usersPerRole($id){
+        $roles = Role::all();
+        $users = Role::with(['users.photos', 'users.roles'])->findOrFail($id)->users()->paginate(15);
+        //EAGER loading problem not fixed
+
+
+        return view('admin.users.index', compact('users', 'roles'));
+
     }
 }

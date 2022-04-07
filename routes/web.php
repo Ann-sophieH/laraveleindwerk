@@ -31,6 +31,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function (){
     Route::resource('users', App\Http\Controllers\AdminUsersController::class);
     Route::get('users/restore/{user}', 'App\Http\Controllers\AdminUsersController@restore')->name('users.restore');
     Route::get('users/edit/{user}', 'App\Http\Controllers\AdminUsersController@edit')->name('users.edit');
+    Route::get('users/roles/{id}', '\App\Http\Controllers\AdminUsersController@usersPerRole')->name('admin.usersPerRole');
 
     Route::resource('products', App\Http\Controllers\AdminProductsController::class);
 

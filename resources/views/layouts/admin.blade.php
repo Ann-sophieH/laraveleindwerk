@@ -41,8 +41,16 @@
     <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
         <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
-            <img src="{{asset('./assets/img/logo-ct.png')}}" class="navbar-brand-img h-100" alt="main_logo">
-            <span class="ms-1 font-weight-bold text-white">Material Dashboard 2</span>
+            @if((Auth::user()->photos)->isNotEmpty())
+                @foreach(Auth::user()->photos as $photo)
+
+                    <img  class="  rounded-circle ms-2 me-2" src="{{ empty($photo) ? 'http://via.placeholder.com/62x62' : asset($photo->file) }}" alt="{{Auth::user()->username}}">
+                @endforeach
+            @else
+                <img style="height: 62px" class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="http://via.placeholder.com/62x62" alt="{{Auth::user()->username}}">
+
+            @endif
+            <span class="ms-1 font-weight-bold text-white"> {{Auth::user()->username}} CMS</span>
         </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
@@ -56,21 +64,19 @@
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link text-white " href="{{url('admin/users/')}}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">person</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Users</span>
-                </a>
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">E-commerce </h6>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white " href="{{url('admin/products/')}}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">money</i>
+                        <i class="material-icons opacity-10">shop </i>
                     </div>
                     <span class="nav-link-text ms-1">Products</span>
                 </a>
+            </li>
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Content management system</h6>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white " href="{{url('admin/photos/')}}">
@@ -81,31 +87,39 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white " href="./pages/billing.html">
+                <a class="nav-link text-white " href="{{url('admin/photos/')}}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">receipt_long</i>
+                        <i class="material-icons opacity-10">receipt</i>
                     </div>
-                    <span class="nav-link-text ms-1">Billing</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white " href="./pages/virtual-reality.html">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">view_in_ar</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Virtual Reality</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link text-white " href="./pages/notifications.html">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">notifications</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Notifications</span>
+                    <span class="nav-link-text ms-1">Blogposts</span>
                 </a>
             </li>
             <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Relation d management </h6>
+            </li>
+
+
+            <li class="nav-item">
+                <a class="nav-link text-white " href="{{url('admin/users/')}}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">person</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Users</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white " href="{{url('admin/users/')}}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">home</i>
+                    </div>
+                    <span class="nav-link-text ms-1">Addresslist</span>
+                </a>
+            </li>
+
+
+
+
+            <li class="nav-item mt-5">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
             </li>
             <li class="nav-item">
