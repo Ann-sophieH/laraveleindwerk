@@ -10,7 +10,7 @@
                         <h6 class="text-white text-capitalize ps-3">Colors table :  <span class="ms-5 text-sm "> {{$colors->count()}}  /  {{\App\Models\Color::all()->count()}}  </span></h6>
                         <button class="btn bg-gradient-warning  mb-0  me-4" >
                             <div class=" me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">add</i> <a href="{{route('colors.create')}}" class="text-white text-center ps-2"> Add product</a>
+                                <i class="material-icons opacity-10">add</i> <a href="{{route('colors.create')}}" class="text-white text-center ps-2"> Add color</a>
 
                             </div>
                         </button>
@@ -25,11 +25,11 @@
                         <table class="table align-items-center mb-0">
                             <thead>
                             <tr>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Product</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Color</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Product specifications</th>
 
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Amount</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Hex code</th>
 
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Updated</th>
@@ -37,58 +37,30 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($products as $product)
+                            @foreach($colors as $color)
 
                                 <tr>
                                     <td>
-
-                                        <div class="d-flex px-2 py-1">
-                                            <div> {{$product->id}}</div>
-                                            <div>
-                                                @if(($product->photos)->isNotEmpty())
-                                                @foreach($product->photos as $photo)
-
-                                                    <img style="height: 62px" class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="{{ empty($photo) ? 'http://via.placeholder.com/62x62' : asset($photo->file) }}" alt="{{$product->name}}">
-                                                @endforeach
-                                                @else
-                                                    <img style="height: 62px" class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="http://via.placeholder.com/62x62" alt="{{$product->name}}">
-
-                                                @endif
-                                            </div>
-
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="text-xs text-secondary mb-0">{{$product->name}}</h6>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="align-middle text-center d-flex ">
-                                        @foreach($product->colors as $color)
-                                            <div class="p-2">
-                                                 <span class="text-secondary text-xs font-weight-bold  {{$color->name}}">
-                                            {{$color->name}}
+                                        <span class=" text-xs font-weight-bold ps-3">
+                                         {{$color->id}}
                                         </span>
-                                                <div class="">
-                                                    <label class="btn-colour form-label " for="{{$color->name}}" style="background-color: {{$color->hex_value}}; width: 2rem; height: 2rem;border-radius: 50%"></label>
-                                                    <input name="colour " type="checkbox" id="{{$color->name}}" class="input-invisible form-control">
-                                                </div>
-                                            </div>
 
-                                        @endforeach
                                     </td>
                                     <td class="align-middle text-center">
-                                        @foreach($product->specifications as $spec)
-                                            <span class="badge badge-sm bg-gradient-faded-success text-secondary text-xxs font-weight-bold">{{$spec->name}}</span>
-                                        @endforeach
+                                        <label class="btn-colour form-label " for="{{$color->name}}" style="background-color: {{$color->hex_value}}; width: 2rem; height: 2rem;border-radius: 50%"></label>
+                                        <input name="colour " type="checkbox" id="{{$color->name}}" class="input-invisible form-control">
                                     </td>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">amount left</th>
 
-                                    <td class="align-middle text-center"><span class="text-secondary text-xs font-weight-bold">{{$product->created_at->diffForHumans()}}</span></td>
-                                    <td class="align-middle text-center"><span class="text-secondary text-xs font-weight-bold">{{$product->updated_at->diffForHumans()}}</span></td>
+                                    <td class="text-center text-uppercase text-xxs font-weight-bolder opacity-9"><span class=" text-xs font-weight-bold">{{$color->name}}</span></td>
+                                    <td class="text-center text-uppercase  text-xxs font-weight-bolder opacity-9"><span class=" text-xs font-weight-bold">{{$color->hex_value}}</span></td>
+
+                                    <td class="align-middle text-center"><span class="text-secondary text-xs font-weight-bold">{{$color->created_at}}</span></td>
+                                    <td class="align-middle text-center"><span class="text-secondary text-xs font-weight-bold">{{$color->updated_at}}</span></td>
                                     <td class="align-middle text-center">
                                         <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
                                     </td>
                                     <td class="align-middle">
-                                        <a href="{{route('products.edit', $product->id)}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit product">
+                                        <a href="{{route('colors.edit', $color->id)}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit color">
                                             Edit
                                         </a>
                                     </td>
@@ -103,7 +75,7 @@
         </div>
     </div>
     <div class=" col-3 mx-auto">
-        {{$products->render()}}
+        {{$colors->render()}}
 
     </div>
 @endsection

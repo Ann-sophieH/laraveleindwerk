@@ -34,7 +34,7 @@
                                                                         </div>-->
                                     <div class="form-group col-6 ">
                                         <label class="col-form-label" for="specifications[]">Product specifications </label>
-                                        <button type="button" class="btn btn-outline-primary mt-2 ms-5 flex-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        <button type="button" class="btn btn-primary opacity-5 mt-2 ms-5 flex-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                             <i class="fa fa-plus"> Add new specification </i>
                                         </button>
                                         <div class="form-check " id="specifications[]"  multiple>
@@ -74,7 +74,7 @@
                                     </div>-->
                                     <div class="form-group col ">
                                         <label class="col-form-label" for="colors[]">Product colors (CRTL + CLICK multiple select)</label>
-                                        <button type="button" class="btn btn-outline-primary mt-2 ms-5 flex-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        <button type="button" class="btn btn-primary opacity-5 mt-2 ms-5 flex-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                             <i class="fa fa-plus"> Add new color </i>
                                         </button>
                                         <select class="form-control shadow-sm " id="colors[]" name="colors[]" multiple>
@@ -108,7 +108,7 @@
     </div>
 
 
-    <!-- Modal -->
+    <!-- Modal COLOR CREATE -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -116,26 +116,28 @@
                     <h5 class="modal-title" id="exampleModalLabel">Add a new color to database</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <form action="{{route('colors.store')}}" method="post" enctype="multipart/form-data">
+                    @csrf
                 <div class="modal-body">
-                    <form action="{{route('colors.store')}}" method="post" enctype="multipart/form-data">
-                        @csrf
+
                         <div class="form-group">
                             <label for="name">Color name:</label>
                             <input type="text" class="form-control border ps-2 shadow-sm" id="name" name="name" placeholder="Color name...">
                         </div>
                         <div class="form-group mt-5 col-6 mx-auto p-2">
-                            <label for="color"><strong>Select your product color: </strong><br> tip: open the product photo and use the colorpicker</label>
-                            <input type="color" class="form-control " id="color" name="color" value="#ff0000">
+                            <label for="hex_value"><strong>Select your product color: </strong><br> tip: use the colorpicker on the product photo </label>
+                            <input type="color" class="form-control " id="hex_value" name="hex_value" value="#ff0000">
 
                         </div>
 
 
-                    </form>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary opacity-8">Save changes</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>

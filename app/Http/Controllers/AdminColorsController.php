@@ -28,8 +28,8 @@ class AdminColorsController extends Controller
     public function create()
     {
         //
-        $colors = Color::all();
-        return view('admin.colors.index', compact('colors'));
+
+        return view('admin.products.create');
     }
 
     /**
@@ -41,6 +41,11 @@ class AdminColorsController extends Controller
     public function store(Request $request)
     {
         //
+        $color = new Color();
+        $color->name = $request->name;
+        $color->hex_value = $request->hex_value;
+        $color->save();
+        return redirect('/admin/products/create');
     }
 
     /**
@@ -62,7 +67,9 @@ class AdminColorsController extends Controller
      */
     public function edit($id)
     {
-        //
+        //https://devnote.in/how-to-inline-row-editing-using-laravel/
+        //https://laracasts.com/discuss/channels/livewire/this-is-a-component-you-may-like-to-use-for-inline-editing
+
     }
 
     /**
