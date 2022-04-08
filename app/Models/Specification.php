@@ -8,7 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Specification extends Model
 {
     use HasFactory;
-    protected $guarded= ['id'];
+    protected $fillable = ['name', 'parent_id'];
+
+    public function specs(){
+        return $this->hasMany(Specification::class, 'parent_id');
+    }
+    //recursive function
+    public function childspecs(){
+        return $this->hasMany(Specification::class, 'parent_id')->with('specs'); //leest parent id ipv id
+    }
 
     public function products(){
         return $this->belongsToMany(Product::class, 'product_specification');

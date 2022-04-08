@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminAddressesController extends Controller
@@ -15,8 +16,9 @@ class AdminAddressesController extends Controller
     public function index()
     {
         //
-        $addresses = Address::withTrashed()->paginate(25);
-        return view('admin.addresses.index', compact('addresses' ));
+        $users = User::all();
+        $addresses = Address::with(['user'])->withTrashed()->filter(request(['search']))->paginate(25);
+        return view('admin.addresses.index', compact('addresses', 'users' ));
     }
 
     /**

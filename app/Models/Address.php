@@ -19,7 +19,21 @@ class Address extends Model
     ];
 
 
-    public function users(){
-        return $this->hasMany(User::class); //or hasmany als
+    public function user(){
+        return $this->belongsTo(User::class);
+        //1 address can in reality have multiple users, to keep errors w shipping addresses to a low
+        //the user from the same address will just have to repeat it
+        //catches user error in filling in the address fields
+    }
+
+
+    public function scopeFilter($query, array $filters){
+        if($filters['search'] ?? false ){ //only works since php 8!! older project : if(isset($filters['search']) == false
+            $query->where('name_recipient', 'like', '%' . request('search') . '%')
+                ->orWhere('addressline_1', 'like', '%' . request('search') . '%')
+                ->orWhere('addressline_2', 'like', '%' . request('search') . '%');
+
+
+        }
     }
 }

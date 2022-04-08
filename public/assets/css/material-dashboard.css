@@ -98,10 +98,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   color: #344767; }
 
 h1, .h1 {
-  font-size: calc(1.425rem + 2.1vw); }
-  @media (min-width: 1200px) {
-    h1, .h1 {
-      font-size: 3rem; } }
+    font-size: 1rem; }
 
 h2, .h2 {
   font-size: calc(1.35rem + 1.2vw); }

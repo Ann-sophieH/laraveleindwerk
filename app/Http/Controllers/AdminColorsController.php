@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Photo;
+use App\Models\Category;
+use App\Models\Color;
 use Illuminate\Http\Request;
 
-class AdminPhotosController extends Controller
+class AdminColorsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,8 @@ class AdminPhotosController extends Controller
     public function index()
     {
         //
-        $photos = Photo::all();
-        return view('admin.photos.index', compact('photos'));
+        $colors = Color::with(['products'])->paginate(25);
+        return view('admin.colors.index', compact('colors'));
     }
 
     /**
@@ -26,7 +27,9 @@ class AdminPhotosController extends Controller
      */
     public function create()
     {
-        // so far create and update happening from user and product polymorph many to many
+        //
+        $colors = Color::all();
+        return view('admin.colors.index', compact('colors'));
     }
 
     /**

@@ -47,10 +47,12 @@ class User extends Authenticatable implements MustVerifyEmail
     public function photos()
     {
         return $this->morphToMany(Photo::class, 'photoable');
-        //users could have multiple pics, for pfp always latest added
+        //users could have multiple pics, for pfp/tables always latest added chosen
     }
-    public function address(){
-        return $this->belongsTo(Address::class);
+    public function addresses(){
+        return $this->hasMany(Address::class);
+        //initially only 1 address can be given but on checkout ill add a way to add a new address
+        //from the frontend checkout side
     }
 
 

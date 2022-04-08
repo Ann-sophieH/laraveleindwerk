@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Photo;
+use App\Models\Product;
+use App\Models\Specification;
 use Illuminate\Http\Request;
 
-class AdminPhotosController extends Controller
+class AdminSpecificationsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,9 @@ class AdminPhotosController extends Controller
     public function index()
     {
         //
-        $photos = Photo::all();
-        return view('admin.photos.index', compact('photos'));
+        $specs = Specification::whereNull('parent_id')->with([ 'childspecs', 'products'])->get();
+        return view('admin.specifications.index', compact('specs'));
+
     }
 
     /**
@@ -26,7 +28,9 @@ class AdminPhotosController extends Controller
      */
     public function create()
     {
-        // so far create and update happening from user and product polymorph many to many
+        //how to make up this HTML??
+        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
+        return view('admin.specs.create', compact('specs'));
     }
 
     /**

@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Specification;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class SpecificationsTableSeeder extends Seeder
@@ -19,12 +20,50 @@ class SpecificationsTableSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('specifications')->insert(['name' => 'wifi']);
-        DB::table('specifications')->insert(['name' => 'bluetooth']);
-        DB::table('specifications')->insert(['name' => 'Wireless charging']);
-        DB::table('specifications')->insert(['name' => 'Wearable']);
-        DB::table('specifications')->insert(['name' => 'Noice cancelling']);
-        DB::table('specifications')->insert(['name' => 'Multipairing']);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'wifi',
+                'parent_id'=>NULL,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'bluetooth',
+                'parent_id'=>NULL,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'charging',
+                'parent_id'=>NULL,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'size',
+                'parent_id'=>NULL,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'Noise cancelling',
+                'parent_id'=>NULL,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'Pairing options',
+                'parent_id'=>NULL,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+
+
 
         $specifications = Specification::all();
         Category::all()->each(function ($category) use ($specifications){
@@ -32,6 +71,8 @@ class SpecificationsTableSeeder extends Seeder
                 $specifications->random(rand(1,6))->pluck('id')->toArray()
                 );
         });
+
+        Specification::factory()->count(50)->create();
 
 
     }

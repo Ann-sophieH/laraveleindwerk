@@ -47,7 +47,7 @@
                     <img  class="  rounded-circle ms-2 me-2" src="{{ empty($photo) ? 'http://via.placeholder.com/62x62' : asset($photo->file) }}" alt="{{Auth::user()->username}}">
                 @endforeach
             @else
-                <img style="height: 62px" class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="http://via.placeholder.com/62x62" alt="{{Auth::user()->username}}">
+                <img style="height: 62px" class=" img-fluid rounded-circle ms-2 me-2" src="http://via.placeholder.com/62x62" alt="{{Auth::user()->username}}">
 
             @endif
             <span class="ms-1 font-weight-bold text-white"> {{Auth::user()->username}} CMS</span>
@@ -68,12 +68,25 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">E-commerce </h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white " href="{{url('admin/products/')}}">
+                <a class="nav-link text-white "  data-bs-toggle="collapse" href="#sidebar-products" aria-expanded="false" aria-controls="sidebar-products">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">shop </i>
                     </div>
                     <span class="nav-link-text ms-1">Products</span>
                 </a>
+                <div class="collapse" id="sidebar-products">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item ps-3"> <a class="nav-link text-white" href="{{route('products.index')}}">All products</a></li>
+                        <li class="nav-item ps-3   "> <a class="nav-link text-white" href="{{route('products.create')}}">Add new product</a></li>
+                        <li class="nav-item ps-3"> <a class="nav-link text-white" href="{{route('colors.index')}}">Product colors</a></li>
+                        <li class="nav-item ps-3"> <a class="nav-link text-white" href="{{route('colors.create')}}">Add new color</a></li>
+
+                        <li class="nav-item ps-3"> <a class="nav-link text-white" href="{{route('specifications.index')}}">Product specifications </a></li>
+                        <li class="nav-item ps-3"> <a class="nav-link text-white" href="{{route('specifications.create')}}">Add new specifications</a></li>
+
+
+                    </ul>
+                </div>
             </li>
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Content management system</h6>
@@ -108,7 +121,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white " href="{{url('admin/users/')}}">
+                <a class="nav-link text-white " href="{{route('addresses.index')}}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">home</i>
                     </div>
@@ -156,7 +169,7 @@
     </div>
     <div class="sidenav-footer position-absolute w-100 bottom-0 ">
         <div class="mx-3">
-            <a class="btn bg-gradient-primary mt-4 w-100" href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree" type="button">Upgrade to pro</a>
+            <a class="btn bg-gradient-warning opacity-8 mt-4 w-100" href="{{url('/ ')}}" type="button">See Frontend </a>
         </div>
     </div>
 </aside>

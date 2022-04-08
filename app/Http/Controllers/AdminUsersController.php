@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UsersSoftDelete;
 use App\Http\Requests\UsersEditRequest;
 use App\Http\Requests\UsersRequest;
 use App\Models\Address;
@@ -27,7 +28,7 @@ class AdminUsersController extends Controller
         //
         $roles = Role::all();
 
-        $users = User::with(['photos', 'roles', 'address'])->withTrashed()->filter(request(['search']))->paginate(15);
+        $users = User::with(['photos', 'roles', 'addresses'])->withTrashed()->filter(request(['search']))->paginate(25);
         Session::flash('user_message', 'these are the users found in db!'); //naam om mess. op te halen,
 
         return view('admin.users.index', compact('users', 'roles')); //COMPACT draagt assoc array over nr indexpagina met users in
@@ -103,7 +104,9 @@ class AdminUsersController extends Controller
     public function show($id)
     {
         //detailpagina user
-        return view('admin.users.index', compact());
+        //$addresses = Address::all();
+        $users = User::all();
+        return view('admin.users.show', compact('users'));
 
     }
 
@@ -142,7 +145,7 @@ class AdminUsersController extends Controller
             $input = $request->all;
             $input['password'] = Hash::make($request['password']);
         }
-        /**code opslaan foto **/
+        /** code picture save **/
         if($file = $request->file('photo_id')){
             $name = time() . $file->getClientOriginalName();
             Image::make($file)
@@ -163,10 +166,10 @@ class AdminUsersController extends Controller
         }
         $user->update($input);
 
-        /** wegschrijven tussentabel rollen**/
+        /** adding to tussentabel rollen**/
         $user->roles()->sync($request->roles, true);
-        /*kan dit korter? */
-        $user->address()->where('user_id', $user->id);
+        /** adding to address table **/
+        $user->addresses()->where('user_id', $user->id);
         $address = Address::where('user_id', $user->id)
             ->update([  'name_recipient' =>  $request['name_recipient'],
                         'addressline_1' => $request['addressline_1'],
@@ -188,7 +191,7 @@ class AdminUsersController extends Controller
         //
         $user = User::findOrFail($id);
         Session::flash('user_message', $user->name . 'was deleted!'); //naam om mess. op te halen, VOOR DELETE OFC
-
+        UsersSoftDelete::dispatch($user);
         $user->delete();
         return redirect('/admin/users');
     }
