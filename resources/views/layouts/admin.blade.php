@@ -70,19 +70,19 @@
             <li class="nav-item">
                 <a class="nav-link text-white "  data-bs-toggle="collapse" href="#sidebar-products" aria-expanded="false" aria-controls="sidebar-products">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">shop </i>
+                        <i class="material-icons opacity-10">shopping_basket </i>
                     </div>
                     <span class="nav-link-text ms-1">Products</span>
                 </a>
                 <div class="collapse" id="sidebar-products">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item ps-3"> <a class="nav-link text-white" href="{{route('products.index')}}">All products</a></li>
-                        <li class="nav-item ps-3   "> <a class="nav-link text-white" href="{{route('products.create')}}">Add new product</a></li>
+                        <li class="nav-item ps-3   "> <a class="nav-link text-white" href="{{route('products.create')}}"><i class="icon-xxs material-icons pe-2">add</i>Add new product</a></li>
                         <li class="nav-item ps-3"> <a class="nav-link text-white" href="{{route('colors.index')}}">Product colors</a></li>
-                        <li class="nav-item ps-3"> <a class="nav-link text-white" href="{{route('colors.create')}}">Add new color</a></li>
+                        <li class="nav-item ps-3"> <a class="nav-link text-white" href="{{route('colors.create')}}"><i class="icon-xxs material-icons pe-2">add</i>Add new color</a></li>
 
                         <li class="nav-item ps-3"> <a class="nav-link text-white" href="{{route('specifications.index')}}">Product specifications </a></li>
-                        <li class="nav-item ps-3"> <a class="nav-link text-white" href="{{route('specifications.create')}}">Add new specifications</a></li>
+                        <li class="nav-item ps-3"> <a class="nav-link text-white" href="{{route('specifications.create')}}"><i class="icon-xxs material-icons pe-2">add</i>Add new specifications</a></li>
 
 
                     </ul>
@@ -112,13 +112,23 @@
             </li>
 
 
+
             <li class="nav-item">
-                <a class="nav-link text-white " href="{{url('admin/users/')}}">
+                <a class="nav-link text-white "  data-bs-toggle="collapse" href="#sidebar-users" aria-expanded="false" aria-controls="sidebar-users">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">person</i>
+                        <i class="material-icons opacity-10">person </i>
                     </div>
                     <span class="nav-link-text ms-1">Users</span>
                 </a>
+                <div class="collapse" id="sidebar-users">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item ps-3"> <a class="nav-link text-white" href="{{route('users.index')}}">All users</a></li>
+                        <li class="nav-item ps-3   "> <a class="nav-link text-white" href="{{route('users.create')}}"><i class="icon-xxs material-icons pe-2">add</i>Add new user</a></li>
+                        <li class="nav-item ps-3   "> <a class="nav-link " href="{{route('users.index')}}">Roles & <br> managing site access</a></li>
+
+
+                    </ul>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white " href="{{route('addresses.index')}}">
@@ -299,8 +309,9 @@
         </div>
     </nav>
     <!-- End Navbar -->
-    <div class="container-fluid py-4">
-        <div class="row mb-5">
+
+<!--<div class="container-fluid py-4">
+<div class="row mb-5">
             <div class="col-xl-3 col-sm-6 mb-xl-0 mb-5">
                 <div class="card">
                     <div class="card-header p-3 pt-2">
@@ -369,7 +380,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
     @yield('content')
     {{--        cards w charts--}}

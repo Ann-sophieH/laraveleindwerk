@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Color;
 use App\Models\Product;
 use App\Models\Specification;
 use Illuminate\Http\Request;
@@ -28,9 +30,11 @@ class AdminSpecificationsController extends Controller
      */
     public function create()
     {
-        //how to make up this HTML??
+        //how to make up this HTML?? make second includes w checkboxes and input type hidden w parent id
+        $colors = Color::all();
         $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
-        return view('admin.specs.create', compact('specs'));
+        $categories = Category::all();
+        return view('admin.products.create' , compact('specs', 'colors', 'categories'));
     }
 
     /**

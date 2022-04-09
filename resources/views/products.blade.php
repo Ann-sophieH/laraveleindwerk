@@ -1,7 +1,7 @@
 @extends('layouts/index')
 @section('content')
 
-    <div class="container-fluid col-lg-10 offset-lg-1 mt-4">
+    <div class="container-fluid col-lg-11 mx-auto mt-4">
         <nav aria-label="breadcrumb ">
             <ol class="breadcrumb fs-li">
                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>

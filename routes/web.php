@@ -37,6 +37,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function (){
     Route::resource('addresses', App\Http\Controllers\AdminAddressesController::class);
 
     Route::resource('products', App\Http\Controllers\AdminProductsController::class);
+
     Route::resource('colors', App\Http\Controllers\AdminColorsController::class);
     Route::resource('specifications', App\Http\Controllers\AdminSpecificationsController::class);
 

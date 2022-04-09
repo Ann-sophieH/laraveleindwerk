@@ -37,9 +37,9 @@ class AdminProductsController extends Controller
     {
         //
         $colors = Color::all();
-        $specifications = Specification::all();
+        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
         $categories = Category::all();
-        return view('admin.products.create', compact('colors', 'specifications' , 'categories'));
+        return view('admin.products.create', compact('colors', 'specs' , 'categories'));
 
     }
 
@@ -113,12 +113,12 @@ class AdminProductsController extends Controller
     {
         //
         $product = Product::findOrFail($id);
-        $specifications = Specification::all();
+        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
         $categories = Category::all();
         $colors = Color::all();
 
 
-        return view('admin.products.edit', compact('product','specifications','categories', 'colors'));
+        return view('admin.products.edit', compact('product','specs','categories', 'colors'));
     }
 
     /**

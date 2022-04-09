@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Color;
+use App\Models\Specification;
 use Illuminate\Http\Request;
 
 class AdminColorsController extends Controller
@@ -16,7 +17,7 @@ class AdminColorsController extends Controller
     public function index()
     {
         //
-        $colors = Color::with(['products'])->paginate(25);
+        $colors = Color::with(['products', 'specs.childspecs'])->paginate(25);
         return view('admin.colors.index', compact('colors'));
     }
 
@@ -28,8 +29,10 @@ class AdminColorsController extends Controller
     public function create()
     {
         //
-
-        return view('admin.products.create');
+        $colors = Color::all();
+        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
+        $categories = Category::all();
+        return view('admin.products.create' , compact('specs', 'colors', 'categories'));
     }
 
     /**

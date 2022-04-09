@@ -2,7 +2,7 @@
 @extends('layouts.admin')
 @section('content')
 
-    <div class="row">
+    <div class="row p-0 m-0">
         <div class="col-12 mt-5">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
