@@ -20,4 +20,8 @@ class Category extends Model
         return $this->belongsToMany(Specification::class, 'category_specification');
     }
 
+    public function types(){
+        return $this->hasMany(Type::class);
+    }
+
 }

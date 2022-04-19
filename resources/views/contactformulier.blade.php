@@ -1,6 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.index')
 @section('content')
+
+
     <div class="row">
+        <div id="parallax2">
         <div class="col-10 offset-1">
             <form action="{{action('App\Http\Controllers\ContactController@store')}}" method="POST">
                 @csrf
@@ -11,10 +14,13 @@
                     <input type="email" class="form-control" id="contact-email" placeholder="Email" name="email">
                 </div>
                 <div class="form-group">
-                    <textarea name="message" id="message" placeholder="Message" cols="30" rows="10"></textarea>
+                    <textarea name="message" id="message" placeholder="Message" cols="100" rows="10"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">SUBMIT <i class="fa fa-angle-right ml-2"></i></button>
             </form>
         </div>
+        </div>
     </div>
+
+
     @stop

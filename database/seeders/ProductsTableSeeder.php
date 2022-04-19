@@ -24,6 +24,7 @@ class ProductsTableSeeder extends Seeder
             //'color' => 'Purple heart',
             'price' => 1899, //is process field moet er nog uit ->hoe normaliseren?
             //'photo_id'=>1,
+            'category_id'=>2,
             'details' => 'lorem ipsum',
             'created_at'=>Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at'=>Carbon::now()->format('Y-m-d H:i:s'),

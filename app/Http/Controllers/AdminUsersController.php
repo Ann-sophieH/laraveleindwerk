@@ -29,7 +29,7 @@ class AdminUsersController extends Controller
         $roles = Role::all();
 
         $users = User::with(['photos', 'roles', 'addresses'])->withTrashed()->filter(request(['search']))->paginate(25);
-        Session::flash('user_message', 'these are the users found in db!'); //naam om mess. op te halen,
+        Session::flash('user_message', 'these are all the users found in the database!');
 
         return view('admin.users.index', compact('users', 'roles')); //COMPACT draagt assoc array over nr indexpagina met users in
     }
@@ -101,12 +101,12 @@ class AdminUsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
         //detailpagina user
-        //$addresses = Address::all();
-        $users = User::all();
-        return view('admin.users.show', compact('users'));
+        Session::flash('user_message', 'Here is all the info we have on ' . $user->username );
+
+        return view('admin.users.show', compact('user'));
 
     }
 
@@ -147,6 +147,12 @@ class AdminUsersController extends Controller
         }
         /** code picture save **/
         if($file = $request->file('photo_id')){
+            /** delete old user picture upon update to keep things clean **/
+            if($user->photos() == true){
+                $pivot = $user->photos()->where('photoable_id' == $id && 'photoable_type' == 'App\Models\User');
+                $pivot->detach(); //deletes from photoables BUT NOT LOCAL OR FROM PHOTOS !!
+            }
+
             $name = time() . $file->getClientOriginalName();
             Image::make($file)
                 ->resize(520, 520, function ($constraint){
@@ -201,11 +207,18 @@ class AdminUsersController extends Controller
     }
     public function usersPerRole($id){
         $roles = Role::all();
-        $users = Role::with(['users.photos', 'users.roles'])->findOrFail($id)->users()->paginate(15);
+        $users = Role::with(['users.photos',])->findOrFail($id)->users()->paginate(15);
         //EAGER loading problem not fixed
 
+        Session::flash('user_message', 'Here are all the users with this role: '); //naam om mess. op te halen, VOOR DELETE OFC
 
         return view('admin.users.index', compact('users', 'roles'));
+        /*$role = $request->input('role');
 
+        $users = DB::table('users')
+            ->when($role, function ($query, $role) {
+                $query->where('role_id', $role);
+            })
+            ->get();*/ //alternative query to consider
     }
 }

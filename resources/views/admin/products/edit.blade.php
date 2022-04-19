@@ -1,10 +1,21 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="col-12 mt-5">
+    <div class="col-11 mx-auto">
         @include('includes.form_error')
-    </div>
+        @if(session('product_message'))
+            <div class="alert alert-success opacity-7 alert-dismissible text-white" role="alert">
+                <i class="material-icons ps-3">
+                    notifications_active
+                </i>
+                <span class="text-sm ps-4">{{session('product_message')}} </span>
+                <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close" control-id="ControlID-6">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
 
+        @endif
+    </div>
     <div class="row">
         <div class="col-12 mt-5">
             <div class="card my-4">
@@ -90,10 +101,10 @@
                                     <input type="number" min="1" step="any " value="{{$product->price}}" class="form-control border ps-2 shadow-sm" id="price" name="price" placeholder="Product price...">
                                 </div>
                                 <div class="form-group ">
-                                    <label for="file">Product photo:</label>
-                                    <input type="file"  class="form-control border ps-2 shadow-sm" id="file" name="file" >
+                                    <label for="photos">Product photo:</label>
+                                    <input type="file"  class="form-control border ps-2 shadow-sm" id="photos" name="photos" >
                                 </div>
-                                <button type="submit" class="btn btn-warning mt-5 opacity-8">Add new product</button>
+                                <button type="submit" class="btn btn-warning mt-5 opacity-8">Edit this product</button>
                             </div>
                             <div class="col-3">
 

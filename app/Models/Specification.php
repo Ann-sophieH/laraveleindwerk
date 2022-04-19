@@ -24,4 +24,12 @@ class Specification extends Model
     public function categories(){
         return $this->belongsToMany(Category::class, 'category_specification');
     }
+    public function photos()
+    {
+        return $this->morphToMany(Photo::class, 'photoable');
+        //acctually i only need 1 picture per spec but to keep all photo relations neatly in the
+        //photoables pivot table ill make a many-relationship
+        //upon update ill delete old picture
+        //nice to have !!
+    }
 }

@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             SpecificationsTableSeeder::class,
             ProductsSpecificationsTableSeeder::class,
             ColorsTableSeeder::class,
+            TypesTableSeeder::class,
 
 
         ]);

@@ -19,11 +19,11 @@ class ProductFactory extends Factory
         return [
             //
 
-            'name' => $this->faker->name(),
+            'name' => 'Beosound ' . $this->faker->word(),
             //'color' => $this->faker->colorName(),
             'price' => $this->faker->numberBetween(0, 4000),
-            'details' => $this->faker->text(),
-
+            'details' => $this->faker->sentence($nbwords= 8, $variableNbWords=true),
+            'category_id'=>$this->faker->numberBetween(1, 2),
         ];
     }
 }

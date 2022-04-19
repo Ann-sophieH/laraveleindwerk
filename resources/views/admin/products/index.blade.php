@@ -1,7 +1,65 @@
 
 @extends('layouts.admin')
 @section('content')
+    <div class="col-11 mx-auto">
+        @include('includes.form_error')
+        @if(session('product_message'))
+            <div class="alert alert-success opacity-7 alert-dismissible text-white" role="alert">
+                <i class="material-icons ps-3">
+                    notifications_active
+                </i>
+                <span class="text-sm ps-4">{{session('product_message')}} </span>
+                <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close" control-id="ControlID-6">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
 
+        @endif
+    </div>
+    <div class="row py-4  p-0 m-0">
+        <div class="col-10 mx-auto d-flex justify-content-around">
+            @foreach($specs as $spec)
+                <div class="card">
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="icon icon-md icon-shape  bg-gradient-primary shadow text-center border-radius-md">
+                                    <i class="material-icons  opacity-10">{{$spec->name}}</i>
+                                </div>
+                            </div>
+                            <div class="col-8 my-auto text-end ">
+                                <a href="{{route('admin.productsPerSpecification', $spec->id)}}">
+                                    <p class="text-sm font-weight-bolder  d-inline  mb-0 opacity-7">{{$spec->name}}</p>
+                                    <a class="text-xxs" data-bs-toggle="collapse"
+                                       href="#collapse-{{$spec->id}}" aria-expanded="false"
+                                       aria-controls="collapse-{{$spec->id}}">
+                                    <button
+                                        class="btn btn-link text-dark d-inline text-sm mb-0 px-0 ms-2"
+                                        >
+                                        <i class="fa fa-arrow-down text-lg position-relative me-1"></i>
+                                    </button> </a>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            @endforeach
+        </div>
+    </div>
+    @foreach($specs as $spec)
+    <div class="collapse" id="collapse-{{$spec->id}}">
+        <ul class="list-group flex-column sub-menu m-1">
+            @if(count($spec->childspecs))
+                @foreach($spec->childspecs as $childspecs)
+                    @include('includes.sub_specs',['sub_specs'=>$childspecs])
+                @endforeach
+            @endif
+
+        </ul>
+    </div>
+    @endforeach
     <div class="row p-0 m-0">
         <div class="col-12 mt-5">
             <div class="card my-4">
@@ -26,7 +84,7 @@
                             <thead>
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Product</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Color</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Colors</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Product specifications</th>
 
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Amount</th>
@@ -48,10 +106,10 @@
                                                 @if(($product->photos)->isNotEmpty())
                                                 @foreach($product->photos as $photo)
 
-                                                    <img style="height: 62px" class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="{{ empty($photo) ? 'http://via.placeholder.com/62x62' : asset($photo->file) }}" alt="{{$product->name}}">
+                                                    <img style="height: 62px" class=" img-fluid rounded-circle ms-2 me-2" src="{{ empty($photo) ? 'http://via.placeholder.com/62x62' : asset($photo->file) }}" alt="{{$product->name}}">
                                                 @endforeach
                                                 @else
-                                                    <img style="height: 62px" class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="http://via.placeholder.com/62x62" alt="{{$product->name}}">
+                                                    <img style="height: 62px" class=" img-fluid rounded-circle ms-2 me-2" src="http://via.placeholder.com/62x62" alt="{{$product->name}}">
 
                                                 @endif
                                             </div>

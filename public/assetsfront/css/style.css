@@ -52,6 +52,49 @@ a:hover{
     color: #262626;
     /*text-decoration: underline;*/
 }
+
+.bg-gray-100 {
+    background-color: #f8f9fa !important; }
+
+.bg-gray-200 {
+    background-color: #f0f2f5 !important; }
+
+.bg-gray-300 {
+    background-color: #dee2e6 !important; }
+
+.bg-gray-400 {
+    background-color: #ced4da !important; }
+
+.bg-gray-500 {
+    background-color: #adb5bd !important; }
+
+.bg-gray-600 {
+    background-color: #6c757d !important; }
+
+.bg-gray-700 {
+    background-color: #495057 !important; }
+
+.bg-gray-800 {
+    background-color: #343a40 !important; }
+
+.bg-gray-900 {
+    background-color: #212529 !important; }
+
+.bg-opacity-10 {
+    --bs-bg-opacity: 0.1; }
+
+.bg-opacity-25 {
+    --bs-bg-opacity: 0.25; }
+
+.bg-opacity-50 {
+    --bs-bg-opacity: 0.5; }
+
+.bg-opacity-75 {
+    --bs-bg-opacity: 0.75; }
+
+.bg-opacity-100 {
+    --bs-bg-opacity: 1; }
+
 /*nav*/
 /*positioning of logo*/
 .navbar {
@@ -132,6 +175,10 @@ nav img{
     display: none;
 }
 /*productdetailpagina*/
+.filtercard:active{
+    background-color: #000000;
+    color: #FFFFFF;
+}
 .carousel button{
     border: none;
     color: grey;
@@ -144,6 +191,25 @@ nav img{
 #productOverzicht article img{
     top: 0;
     left: 0;
+}
+.swatch-container{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 16px;
+    height: 16px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    margin-left: -2px;
+}
+.swatch-color{
+    border: 1px solid rgb(85, 85, 85);
+    width: 16px;
+    height: 16px;
+    display: block;
+    border-radius: 50%;
+    position: relative;
+    margin-left: -2px;
 }
 /*slider*/
 input[type=range] {
@@ -198,8 +264,8 @@ input[type=range]:focus::-webkit-slider-runnable-track {
     margin-top: -1px;
 }
 .range-value span{
-    width: 30px;
-    height: 24px;
+    width: 40px;
+    height: 28px;
     line-height: 24px;
     text-align: center;
     background: rgba(84, 81, 66,0.8);!important;
@@ -212,21 +278,12 @@ input[type=range]:focus::-webkit-slider-runnable-track {
     border-radius: 6px;
 }
 /*end slider*/
-/*hover*/
-.img-first{
-    z-index: 5;
-}
-.img-second{
-    z-index: 0;
-}
-.img-first:hover{
-    display: none;
-}
+
 /*coloring details
 */
 .checkshop input:checked {
-    border-color: rgba(84, 81, 66,0.5);
-    background-color:rgba(84, 81, 66,0.8);
+    border-color: rgba(85, 81, 70,0.5);
+    background-color: rgba(85, 81, 70,0.9);
 }
 .page-item .page-link {
     color: rgba(84, 81, 66,0.8) !important;
@@ -236,6 +293,9 @@ input[type=range]:focus::-webkit-slider-runnable-track {
     color: #fff !important;
     background: rgba(84, 81, 66,0.8) !important;
     border: rgba(84, 81, 66,0.8) !important;
+}
+ul .pagination{
+    justify-content: center;
 }
 /*slider*/
 

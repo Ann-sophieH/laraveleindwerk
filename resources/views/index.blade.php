@@ -9,11 +9,14 @@
         <div class="row g-0">
             <section class="col-md-6 " id="heroleft">
                 <div class="card bg-dark text-white br-none border-0 ">
-                    <img alt="..." class="card-img" src="assetsfront/images/heroleftpic.jpg">
+                    <div style="background-image:url(" assetsfront/images/heroleftpic.jpg")">
+                        <img alt="..." class="card-img" src="assetsfront/images/heroleftpic.jpg">
+                    </div>
+
                     <div class="card-img-overlay">
                         <div class="d-flex position-absolute pos-hero w-90 mb-5">
                             <h2 class="card-body p-0 fs-reg pt-3">Speakers</h2>
-                            <a href="overzicht.html" class="btn btn-outline-light br-none fs-li mt-3 p-3 ">SHOP NOW</a>
+                            <a href="{{route('speakers')}}" class="btn btn-outline-light br-none fs-li mt-3 p-3 ">SHOP NOW</a>
                         </div>
                     </div>
                 </div>
@@ -24,7 +27,7 @@
                     <div class="card-img-overlay">
                         <div class="d-flex position-absolute pos-hero w-90 mb-5">
                             <h2 class="card-body p-0 fs-reg pt-3">Headphones</h2>
-                            <a href="overzicht.html" class="btn btn-outline-light br-none fs-li mt-3 p-3 ">SHOP NOW</a>
+                            <a href="{{route('headphones')}}" class="btn btn-outline-light br-none fs-li mt-3 p-3 ">SHOP NOW</a>
                         </div>
                     </div>
                 </div>
@@ -84,7 +87,7 @@
         <div class="position-relative col-lg-10 offset-lg-1">
             <div class="position-absolute p-3 w-auto bg-white fs-reg">
                 <h4 class="mt-2"><span class="d-block ">Pair multiple </span>Stereos in the app</h4>
-                <a class="fs-li underlined text-muted" href="">Shop Now</a>
+                <a class="fs-li underlined text-muted" href="{{route('speakers')}}">Shop Now</a>
             </div>
         </div>
     </div>
@@ -92,81 +95,48 @@
 <!--end parallax -->
 
 <!--highlighted items -->
-<div class="container-fluid">
+<div class="container-fluid mb-5">
     <div class="row col-10 offset-1 mt-5 mb-5 g-2">
         <div class="col-md-6 fs-reg mt-5 mb-4">
             <p class="text-uppercase text-muted">On the go</p>
             <h3 class="text-uppercase mb-3">Our most portable items </h3>
         </div>
         <div class="col-md-6 text-end ">
-            <a href="overzicht.html" class="text-muted">view more headphones</a>
+            <a href="{{route('headphones')}}" class="text-muted">view more headphones</a>
         </div>
     </div>
-    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-        <div class=" col-10 offset-1 g-3 ">
+    <div id="carouselExampleControls" class="carousel slide row" data-bs-ride="carousel">
+
             <div class="carousel-inner">
-                <div class="carousel-item active g-2">
+                <div class=" col-10 offset-1 g-3 ">
+                @foreach($carr_products->chunk(3) as $three)
+                <div class="carousel-item @if ($loop->first) active @endif g-2">
                     <div class=" row row-cols-lg-3">
+                        @foreach($three as $product)
                         <div class=" mi position-relative mt-2 col-lg-4">
                             <img alt="..." class="img-fluid " src="assetsfront/images/GG_3.jpg">
-                            <div class=" kader position-absolute m-1 ps-2 ">
-                                <p class="text-uppercase mp-none">beosound explore</p>
-                                <p class="text-muted mp-none">Portable durable speaker</p>
+                            <div class="kader position-absolute mx-auto m-1 ps-2 ">
+                                <p class="text-uppercase mp-none">{{$product->name}}</p>
+                                <p class="text-muted mp-none">{{$product->details}}</p>
                             </div>
                         </div>
-                        <div class=" mi position-relative mt-2 col-lg-4">
-                            <img alt="..." class=" img-fluid " src="assetsfront/images/headphonegrye.jpg">
-                            <div class="kader position-absolute m-1 ps-2 ">
-                                <p class="text-uppercase mp-none">beosound explore</p>
-                                <p class="text-muted mp-none">Portable durable speaker</p>
-                            </div>
-                        </div>
-                        <div class=" mi position-relative mt-2 col-lg-4">
-                            <img alt="..." class=" img-fluid " src="assetsfront/images/GG_4.jpg">
-                            <div class="kader position-absolute m-1 ps-2 ">
-                                <p class="text-uppercase mp-none">beosound explore</p>
-                                <p class="text-muted mp-none">Portable durable speaker</p>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
-
                 </div>
-                <div class="carousel-item g-2">
-                    <div class=" row row-cols-lg-3 ">
-                        <div class=" mi position-relative mt-2 col-lg-4">
-                            <img alt="..." class="mi img-fluid " src="assetsfront/images/GG_3.jpg">
-                            <div class=" kader position-absolute m-1 ps-2 ">
-                                <p class="text-uppercase mp-none">beosound explore</p>
-                                <p class="text-muted mp-none">Portable durable speaker</p>
-                            </div>
-                        </div>
-                        <div class=" mi position-relative mt-2 col-lg-4">
-                            <img alt="..." class="mi img-fluid " src="assetsfront/images/headphonegrye.jpg">
-                            <div class="kader position-absolute m-1 ps-2 ">
-                                <p class="text-uppercase mp-none">beosound explore</p>
-                                <p class="text-muted mp-none">Portable durable speaker</p>
-                            </div>
-                        </div>
-                        <div class=" mi position-relative mt-2 col-lg-4">
-                            <img alt="..." class="mi img-fluid " src="assetsfront/images/headphonegrye.jpg">
-                            <div class="kader position-absolute m-1 ps-2 ">
-                                <p class="text-uppercase mp-none">beosound explore</p>
-                                <p class="text-muted mp-none">Portable durable speaker</p>
-                            </div>
-                        </div>
-                    </div>
-
+                @endforeach
                 </div>
 
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#381b52" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"></path>
+                    </svg>                    <span class="visually-hidden">Previous</span>
                 </button>
                 <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#381b52" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+                    </svg>                    <span class="visually-hidden">Next</span>
                 </button>
-            </div>
+
 
         </div>
     </div>

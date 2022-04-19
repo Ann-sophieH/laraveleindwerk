@@ -1,11 +1,22 @@
 @extends('layouts.admin')
 @section('content')
-    <div class="col-12">
-        @if(Session::has('user_message'))
-            <p class="alert alert-info">{{session('user_message')}}</p>
+    <div class="col-11 mx-auto">
+        @include('includes.form_error')
+        @if(session('address_message'))
+            <div class="alert alert-success opacity-7 alert-dismissible text-white" role="alert">
+                <i class="material-icons ps-3">
+                    notifications_active
+                </i>
+                <span class="text-sm ps-4">{{session('address_message')}} </span>
+                <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close" control-id="ControlID-6">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
         @endif
     </div>
-    <div class="row">
+
+    <div class="row m-0">
 
         <div class="col-12 mt-5">
             <div class="card my-4">
@@ -30,7 +41,7 @@
                     @foreach($addresses as $address)
                     <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
                         <div class="d-flex flex-column">
-                            <a href="{{route('users.show', $address->user->id)}}">
+                            <a href="{{route('users.show', $address->user_id)}}">
                                 <h6 class="mb-3 text-sm link-success"> {{$address->user->first_name}} {{$address->user->last_name}}</h6>
                             </a>
 
@@ -39,8 +50,17 @@
                             <span class="text-xs">Address line 2 : <span class="text-dark ms-sm-2 font-weight-bold">{{$address->addressline_2}}</span></span>
                         </div>
                         <div class="ms-auto text-end">
-                            <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="material-icons text-sm me-2">delete</i>Delete</a>
-                            <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="material-icons text-sm me-2">edit</i>Edit</a>
+                            @if($address->deleted_at != null)
+                                <a class="btn btn-link text-dark px-3 mb-0" href="{{route('addresses.restore',$address->id)}}"><i class="material-icons text-sm me-2">restore</i>Restore</a>
+                            @else
+                            <form method="POST"
+                                  action="{{action("App\Http\Controllers\AdminAddressesController@destroy", $address->id)}}">
+                                @csrf
+                                @method('DELETE')
+                            <button class="btn btn-link text-danger text-gradient px-3 mb-0" type="submit"><i class="material-icons text-sm me-2">delete</i>Delete</button>
+                            <a class="btn btn-link text-dark px-3 mb-0" href="{{route('users.edit', $address->user_id)}}"><i class="material-icons text-sm me-2">edit</i>Edit</a>
+
+                        @endif
                         </div>
                     </li>
 

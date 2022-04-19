@@ -1,5 +1,21 @@
 @extends('layouts.admin')
 @section('content')
+    <div class="col-11 mx-auto">
+        @include('includes.form_error')
+        @if(session('user_message'))
+            <div class="alert alert-success opacity-7 alert-dismissible text-white" role="alert">
+                <i class="material-icons ps-3">
+                    notifications_active
+                </i>
+                <span class="text-sm ps-4">{{session('user_message')}} </span>
+                <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close" control-id="ControlID-6">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+        @endif
+    </div>
+
 {{--    topcards user--}}
 <div class="container-fluid py-4">
 <div class="row row p-0 m-0">
@@ -89,14 +105,29 @@
 </div>
 {{--    topcards user--}}
 
-<div class="row py-4 row p-0 m-0">
+<div class="row py-4  p-0 m-0">
     <div class="col-10 mx-auto d-flex justify-content-around">
+        <div class="card col-2">
+            <a href="{{route('users.index')}}">
+                <div class="card-header mx-4 p-3 text-center">
+                    <div class="icon icon-shape icon-lg bg-gradient-faded-warning shadow text-center border-radius-lg">
+                        <i class="material-icons opacity-10">groups</i>
+                    </div>
+                </div>
+                <div class="card-body pt-0 p-3 text-center">
+                    <h6 class="text-center mb-0">All users</h6>
+                    <hr class="horizontal dark ">
+                    <span class="text-xs">See all users without filters</span>
+                    <p>add active users toggle here!!</p>
+                </div>
+            </a>
+        </div>
 @foreach($roles as $role)
 
         <div class="card col-2">
             <a href="{{route('admin.usersPerRole', $role->id)}}">
             <div class="card-header mx-4 p-3 text-center">
-                <div class="icon icon-shape icon-lg bg-gradient-warning shadow text-center border-radius-lg">
+                <div class="icon icon-shape icon-lg bg-gradient-faded-info shadow text-center border-radius-lg">
                     <i class="material-icons opacity-10">person</i>
                 </div>
             </div>
@@ -171,7 +202,9 @@
                                             @endif
                                         </div>
                                         <div class="d-flex flex-column justify-content-center">
+                                            <a href="{{route('users.show', $user->id)}}">
                                             <h6 class="mb-0 text-sm">{{$user->username}}</h6>
+                                            </a>
                                             <p class="text-xs text-secondary mb-0">{{$user->first_name}} {{$user->last_name}}</p>
 
                                             <p class="text-xs text-secondary mb-0">{{$user->email}}</p>
@@ -200,7 +233,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <a class="btn text-warning" type='submit'
-                                               href="{{url('admin/users/show', $user->id)}} "><i
+                                               href="{{route('users.show', $user->id)}} "><i
                                                     class="fa fa-eye mt-3"></i></a>
                                             <a class="btn text-info" type='submit'
                                                href="{{url('admin/users/edit', $user->id)}} "><i

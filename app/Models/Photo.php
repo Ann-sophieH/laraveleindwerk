@@ -16,4 +16,11 @@ class Photo extends Model
         return $this->uploads . $photo;
     }
 
+    public function users(){
+        return $this->morphedByMany(User::class, 'photoable');
+    }
+    public function products(){
+        return $this->morphedByMany(Product::class, 'photoable');
+    }
+
 }

@@ -11,11 +11,15 @@ class ContactController extends Controller
     //
 
     public function create(){
-        return view('contactformulier ');
+        return view('contactformulier');
     }
     public function store(Request $request){
         $data = $request->all();
         Mail::to(request('email'))->send(new Contact($data)); //??
         return redirect()->back();
+    }
+    public function contact(){
+
+        return view('contact');
     }
 }

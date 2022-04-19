@@ -6,12 +6,13 @@
     <meta content="Webshop eindwerk" name="description">
     <meta content="Bang&Olufsen, speaker, headphone, sound, earphones" name="keywords">
     <title>Bang & Olufsen eindwerk</title>
+    <link rel="icon" type="image/png" href="{{asset('./assetsfront/images/logo.png')}}">
     <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
           name="viewport">
-    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+    <link crossorigin="anonymous" href="{{asset('https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css')}}"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="assetsfront/css/style.css" rel="stylesheet">
+    <link href="{{asset('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css')}}" rel="stylesheet">
+    <link href="{{asset('assetsfront/css/style.css')}}" rel="stylesheet">
 
 </head>
 <body>
@@ -19,22 +20,26 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container-fluid col-10 offset-1 d-flex justify-content-between">
-            <a class="navbar-brand" href="index.html"><img alt="logo"  src="assetsfront/images/logo.png"></a>
+            <a class="navbar-brand" href="{{url('/')}}"><img alt="logo"  src="{{asset('./assetsfront/images/logo.png')}}"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <div class="navbar-nav me-auto mb-2 mb-lg-0 ">
-                    <a aria-current="page" class="nav-link active text-uppercase" href="index.html">Home</a>
-                    <a class="nav-link text-uppercase" href="{{route('products')}}">Products</a>
-                    <a class="nav-link text-uppercase" href="contact.html">Contact</a>
+                    <a aria-current="page" class="nav-link active text-uppercase" href="{{url('/')}}">Home</a>
+                    <a class="nav-link text-uppercase" href="{{route('products')}}"> ALl Products</a>
+<!--                    <a class="nav-link text-uppercase" href="{{route('speakers')}}">Speakers</a>
+                    <a class="nav-link text-uppercase" href="{{route('headphones')}}"> headphones </a>-->
+
+
+                    <a class="nav-link text-uppercase" href="{{route('contact')}}">Contact</a>
                     <a class="nav-link text-uppercase" href="#">Blog</a>
                 </div>
                 <div class="nav-item dropdown d-flex justify-content-between">
-                    <a class="nav-link dropdown-toggle text-muted" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle text-muted" href="" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-search text-muted" style="font-size: 1.3rem;"></i>
                     </a>
-                    <a class="nav-link" href="cart.html"><i class="bi bi-bag fa-lg text-muted" style="font-size: 1.5rem;"></i></a>
+                    <a class="nav-link" href="{{asset('cart')}}"><i class="bi bi-bag fa-lg text-muted" style="font-size: 1.5rem;"></i></a>
                     <a class="nav-link" href="{{asset('admin/')}}"><i class="bi bi-person fa-lg text-muted" style="font-size: 1.5rem;"></i></a>
 
                     <div class="dropdown-menu mt-0 br-none p-2 border-0" aria-labelledby="navbarDropdownMenuLink">
@@ -58,13 +63,13 @@
 @yield('content')
 
 <!-- footer -->
-<footer class="bg-dark bg-opacity-50 pb-0 text-white mt-5 pt-5">
+<footer class=" bg-gray-500 pb-0 text-white  pt-5">
     <div class="container-fluid">
         <div class="row col-lg-10 offset-lg-1 justify-content-md-around fsize-1">
 
             <!-- menu -->
             <div class="order-1 col-md-8 col-lg-4 text-white fs-reg ">
-                <div class="row g-5 mb-3">
+                <div class="row mb-3">
                     <!--<div class="col-1 pe-3">
                         <ul class="list-unstyled  align-items-center  col offset-1">
                             <div class="border-white border-1">
@@ -74,14 +79,14 @@
                             <li><a href="#!" class="text-hover-twitter socialIcons"><i class="bi bi-twitter text-white"></i></a></li>
                         </ul>
                     </div>-->
-                    <div class="col">
+                    <div class="col-6">
                         <p class="mb-1 text-uppercase ">Company</p>
                         <ul class=" list-unstyled">
                             <li class=""><a href="" class="text-dark br-none">Press</a></li>
                             <li class=""><a href="" class="text-dark br-none">Contact</a></li>
                         </ul>
                     </div>
-                    <div class="col">
+                    <div class="col-6">
                         <p class="mb-1 text-uppercase ">Help Center</p>
                         <ul class="list-unstyled">
                             <li class=""><a href="" class="text-dark br-none">Shipping</a></li>
@@ -108,15 +113,15 @@
             <div class="order-3 order-md-2 order-lg-3 col-md-4 col-lg-3  text-white fs-reg">
                 <p class=" mb-1 text-uppercase ">Payment methods</p>
                 <ul class="list-unstyled d-flex mt-2 justify-content-between">
-                    <li><img src="assetsfront/images/visa@2x.png" class="img-fluid" alt="Image"></li>
-                    <li><img src="assetsfront/images/paypal@2x.png" class="img-fluid" alt="Image"></li>
-                    <li><img src="assetsfront/images/mastercard@2x.png" class="img-fluid" alt="Image"></li>
+                    <li><img src="{{asset('assetsfront/images/visa@2x.png')}}" class="img-fluid" alt="Image"></li>
+                    <li><img src="{{asset('assetsfront/images/paypal@2x.png')}}" class="img-fluid" alt="Image"></li>
+                    <li><img src="{{asset('assetsfront/images/mastercard@2x.png')}}" class="img-fluid" alt="Image"></li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <div class="mt-5 py-2 bg-dark">
+    <div class="mt-5 py-2 bg-gray-800">
         <div class="container-fluid ">
             <div class="row align-items-center g-1">
                 <div class="col-md-8">
@@ -141,8 +146,8 @@
 
 <script crossorigin="anonymous"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="assetsfront/js/script.js"></script>
+        src="{{asset('https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{asset('assetsfront/js/script.js')}}"></script>
 
 </body>
 </html>

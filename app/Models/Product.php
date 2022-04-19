@@ -22,6 +22,10 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    public function types()
+    {
+        return $this->belongsToMany(Type::class, 'product_type');
+    }
 
     public function specifications()
     {
@@ -29,6 +33,9 @@ class Product extends Model
     }
     public function colors(){
         return $this->belongsToMany(Color::class, 'color_product');
+    }
+    public function productreviews(){
+        return $this->hasMany(Review::class);
     }
 
     public function scopeFilter($query, array $filters)
@@ -45,4 +52,5 @@ class Product extends Model
         }
 
     }
+
 }

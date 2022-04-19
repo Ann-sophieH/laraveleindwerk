@@ -1,11 +1,24 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="col-12 mt-5">
+    <div class="col-11 mx-auto">
         @include('includes.form_error')
+        @if(session('user_message'))
+            <div class="alert alert-success opacity-7 alert-dismissible text-white" role="alert">
+                <i class="material-icons ps-3">
+                    notifications_active
+                </i>
+                <span class="text-sm ps-4">{{session('user_message')}} </span>
+                <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close" control-id="ControlID-6">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+        @endif
     </div>
 
-        <div class="row">
+
+        <div class="row m-0 p-0">
             <div class="col-8 mt-5">
                 <div class="card my-4">
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
@@ -91,12 +104,19 @@
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                        <h6 class="text-white text-capitalize ps-3">User photo</h6>
+                        <h6 class="text-white text-capitalize ps-3">User picture </h6>
                     </div>
                 </div>
-                <div class="card-body px-0 pb-2 mx-auto my-auto">
-                    <img class="img-fluid img-thumbnail mt-5" src="{{$user->photo ? asset($user->photo->file) :  'http://via.placeholder.com/400'}}"></img>
-                </div>
+                <div class="card-body px-0 pb-2 mx-auto my-auto row">
+                    @if(($user->photos)->isNotEmpty())
+                        @foreach($user->photos as $photo)
+
+                            <img  class=" img-fluid rounded-circle ms-2 me-2" src="{{ empty($photo) ? 'http://via.placeholder.com/62x62' : asset($photo->file) }}" alt="{{$user->username}}">
+                        @endforeach
+                    @else
+                        <img class=" img-fluid rounded-circle ms-2 me-2" src="http://via.placeholder.com/62x62" alt="{{$user->username}}">
+
+                    @endif                      </div>
             </div>
         </div>
             </div>

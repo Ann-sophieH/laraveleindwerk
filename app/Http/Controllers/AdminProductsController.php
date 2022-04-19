@@ -8,6 +8,7 @@ use App\Models\Color;
 use App\Models\Photo;
 use App\Models\Product;
 use App\Models\Specification;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
@@ -23,9 +24,10 @@ class AdminProductsController extends Controller
     {
         //
         $products = Product::with(['specifications', 'colors', 'category', 'photos'])->withTrashed()->filter(request(['search']))->paginate(15);
-        Session::flash('product_message', 'these are the products found in db!'); //naam om mess. op te halen,
+        Session::flash('product_message', 'these are all the products found in database!');
+        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
 
-        return view('admin.products.index', compact('products'));
+        return view('admin.products.index', compact('products', 'specs'));
     }
 
     /**
@@ -36,7 +38,7 @@ class AdminProductsController extends Controller
     public function create()
     {
         //
-        $colors = Color::all();
+        $colors = Color::paginate(12); //see all knop maken!!
         $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
         $categories = Category::all();
         return view('admin.products.create', compact('colors', 'specs' , 'categories'));
@@ -78,7 +80,7 @@ class AdminProductsController extends Controller
                 ->resize(720, 720, function ($constraint){
                     $constraint->aspectRatio();
                 })
-                ->crop(550, 550 )
+                //->crop(550, 550 )
                 ->save(public_path('assets/img/products/' . 'th_' . $name));
             $thumbnail = 'products/' . 'th_' . $name ;
             $photo =  Photo::create(['file'=>$thumbnail]);
@@ -88,6 +90,8 @@ class AdminProductsController extends Controller
 
         $product->colors()->sync($request->colors,false);
         $product->specifications()->sync($request->specifications,false);
+        Session::flash('product_message', 'A new product was added!');
+
         return redirect('admin/products');
 
     }
@@ -144,12 +148,18 @@ class AdminProductsController extends Controller
                 ->save(public_path('assets/img/products/' . 'th_' . $name));
             $thumbnail = 'products/' . 'th_' . $name ;
             $photo =  Photo::create(['file'=>$thumbnail]);
+            $product->update($input);
+
+            $product->photos()->save($photo);
+
         }
+
         $product->update($input);
         /** edit many-relationships **/
-        $product->photos()->save($photo);
         $product->colors()->sync($request->colors, true);
         $product->specifications()->sync($request->specifications, true);
+        Session::flash('product_message', 'Product: ' . $product->name . 'was edited!');
+        return redirect('/admin/products');
 
 
 
@@ -164,8 +174,74 @@ class AdminProductsController extends Controller
     public function destroy($id)
     {
         //
+        $product = Product::findOrFail($id);
+        Session::flash('product_message', $product->name . 'was deleted!'); //naam om mess. op te halen, VOOR DELETE OFC
+
+        $product->delete();
+        return redirect('/admin/products');
     }
+    public function restore($id){
+        Product::onlyTrashed()->where('id', $id)->restore();
+        return redirect('/admin/products');
+    }
+    public function productsPerSpecification($id){
+        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
+        $products = Specification::findOrFail($id)->products()->with(['specifications', 'colors', 'photos'])->paginate(25);
+        return view('admin.products.index', compact('products', 'specs'));
+
+    }
+
+
+        /** FRONTEND CODE **/
     public function products(){
-        return view('products');
+        $products = Product::with(['photos', 'colors'])->paginate(25);
+        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
+        $categories = Category::all();
+
+        return view('products', compact('products', 'specs', 'categories'));
     }
+    public function speakers(){
+        $products = Product::with(['photos', 'colors'])->where('category_id' , 2)->paginate(25);
+        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
+        $categories = Category::all();
+        $types = Type::where('category_id' , 2)->get();
+
+        return view('speakers', compact('products', 'specs', 'categories', 'types'));
+    }
+    public function speakersPerType($id){
+        //all speakers (cat 2) where type id = $id
+        $types = Type::where('category_id' , 2)->get();
+        $products = Type::findOrFail($id)->products()->with(['photos', 'colors'])->where('category_id' , 2)->paginate(25);
+
+        $categories = Category::all();
+        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
+
+        return view('speakers', compact('products', 'types', 'specs', 'categories'));
+
+    }
+    public function headphones(){
+        $products = Product::with(['photos', 'colors'])->where('category_id' , 1)->paginate(25);
+        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
+        $categories = Category::all();
+        $types = Type::where('category_id' , 1)->get();
+        return view('headphones', compact('products', 'specs', 'categories', 'types'));
+    }
+    public function headphonesPerType($id){
+        //all speakers (cat 2) where type id = $id
+        $types = Type::where('category_id' , 1)->get();
+        $products = Type::findOrFail($id)->products()->with(['photos', 'colors'])->where('category_id' , 1)->paginate(25);
+
+        $categories = Category::all();
+        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
+        return view('headphones', compact('products', 'types', 'specs', 'categories'));
+
+    }
+    public function details($id){
+        $product = Product::with(['photos', 'colors', 'productreviews.user'])->findOrFail($id);
+       // $specss = Specification::whereNull('parent_id')->with( 'childspecs')->get();
+        $specs = $product->specifications()->with( 'childspecs')->get();
+        //dd($specs);
+        return view('details', compact('product', 'specs'));
+    }
+
 }
