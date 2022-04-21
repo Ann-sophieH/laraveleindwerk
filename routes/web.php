@@ -55,7 +55,9 @@ Route::group(['prefix' => 'admin', 'middleware'=> 'admin'], function (){
     Route::get('addresses/restore/{address}', 'App\Http\Controllers\AdminAddressesController@restore')->name('addresses.restore');
 
     Route::resource('products', App\Http\Controllers\AdminProductsController::class);
-    Route::get('products/specifications/{id}', '\App\Http\Controllers\AdminProductsController@productsPerSpecification')->name('admin.productsPerSpecification');
+    Route::get('products/restore/{product}', 'App\Http\Controllers\AdminProductsController@restore')->name('products.restore');
+
+    Route::get('products/categories/{id}', '\App\Http\Controllers\AdminProductsController@productsPerCat')->name('admin.productsPerCat');
     Route::resource('reviews', \App\Http\Controllers\AdminProductReviewsController::class);
 
     Route::resource('colors', App\Http\Controllers\AdminColorsController::class);

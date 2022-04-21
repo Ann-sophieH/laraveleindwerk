@@ -29,7 +29,7 @@ class AdminUsersController extends Controller
         $roles = Role::all();
 
         $users = User::with(['photos', 'roles', 'addresses'])->withTrashed()->filter(request(['search']))->paginate(25);
-        Session::flash('user_message', 'these are all the users found in the database!');
+       // Session::flash('user_message', 'these are all the users found in the database!');
 
         return view('admin.users.index', compact('users', 'roles')); //COMPACT draagt assoc array over nr indexpagina met users in
     }
@@ -121,10 +121,12 @@ class AdminUsersController extends Controller
         //
         $user = User::findOrFail($id);
         $roles = Role::pluck('name', 'id')->all();
-        $user_address = Address::where('user_id', $user->id)->get();
+        $user_address = $user->addresses->first();
+            //Address::where('user_id', $user->id)->get();
+        //cant get first element out
 
        //  = $user->address()->get();
-        //dd($user_address);
+       //dd($user_address);
         return view('admin.users.edit' , compact('user', 'roles', 'user_address'));
     }
 

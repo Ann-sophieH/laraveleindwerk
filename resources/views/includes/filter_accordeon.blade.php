@@ -16,7 +16,7 @@
                     <ul class="list-unstyled ps-0">
                         @foreach($specs as $spec)
                             <li class="mb-1">
-                                <button aria-expanded="false" class="btn btn-toggle collapsed shadow-none spec-dropdown" data-bs-target="#filter-{{$spec->id}}" data-bs-toggle="collapse">
+                                <button aria-expanded="true" class="btn btn-toggle collapsed shadow-none spec-dropdown" data-bs-target="#filter-{{$spec->id}}" data-bs-toggle="collapse">
                                     {{$spec->name}}
                                 </button>
                                 <div class="collapse " id="filter-{{$spec->id}}">

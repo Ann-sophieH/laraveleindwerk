@@ -18,7 +18,6 @@ class ProductFactory extends Factory
     {
         return [
             //
-
             'name' => 'Beosound ' . $this->faker->word(),
             //'color' => $this->faker->colorName(),
             'price' => $this->faker->numberBetween(0, 4000),

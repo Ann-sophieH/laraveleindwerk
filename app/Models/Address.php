@@ -15,15 +15,16 @@ class Address extends Model
         'name_recipient',
         'addressline_1',
         'addressline_2',
-        'user_id'
+        'address_type'
     ];
 
 
-    public function user(){
-        return $this->belongsTo(User::class);
-        //1 address can in reality have multiple users, to keep errors w shipping addresses to a low
-        //the user from the same address will just have to repeat it
-        //catches user error in filling in the address fields
+    public function users(){
+        return $this->belongsToMany(User::class , 'address_user');
+
+    }
+    public function addresstype(){
+        return $this->belongsTo(Addresstype::class);
     }
 
 

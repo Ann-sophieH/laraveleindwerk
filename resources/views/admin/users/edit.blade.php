@@ -72,15 +72,15 @@
                             <div class="col-6  mt-5 p-2 pb-3 mb-5 ">
                                 <div class="form-group">
                                     {!! Form::label('name_recipient', 'Name Recipient') !!}
-                                    {!! Form::text('name_recipient', $user_address[0]->name_recipient, ['class'=>'form-control shadow border' ]) !!}
+                                    {!! Form::text('name_recipient', $user_address->name_recipient, ['class'=>'form-control shadow border' ]) !!}
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('addressline_1', 'Street + number') !!}
-                                    {!! Form::text('addressline_1', $user_address[0]->addressline_1, ['class'=>'form-control shadow border']) !!}
+                                    {!! Form::text('addressline_1', $user_address->addressline_1, ['class'=>'form-control shadow border']) !!}
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('addressline_2', 'City + postalcode') !!}
-                                    {!! Form::text('addressline_2',  $user_address[0]->addressline_2, ['class'=>'form-control shadow border']) !!}
+                                    {!! Form::text('addressline_2',  $user_address->addressline_2, ['class'=>'form-control shadow border']) !!}
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('email', 'Email') !!}

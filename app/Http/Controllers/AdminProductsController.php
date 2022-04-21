@@ -23,11 +23,12 @@ class AdminProductsController extends Controller
     public function index()
     {
         //
+        $categories = Category::all();
         $products = Product::with(['specifications', 'colors', 'category', 'photos'])->withTrashed()->filter(request(['search']))->paginate(15);
-        Session::flash('product_message', 'these are all the products found in database!');
+       // Session::flash('product_message', 'these are all the products found in database!');
         $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
 
-        return view('admin.products.index', compact('products', 'specs'));
+        return view('admin.products.index', compact('products', 'specs', 'categories'));
     }
 
     /**
@@ -175,19 +176,23 @@ class AdminProductsController extends Controller
     {
         //
         $product = Product::findOrFail($id);
-        Session::flash('product_message', $product->name . 'was deleted!'); //naam om mess. op te halen, VOOR DELETE OFC
+        Session::flash('product_message', $product->name . ' was deleted!'); //naam om mess. op te halen, VOOR DELETE OFC
 
         $product->delete();
         return redirect('/admin/products');
     }
     public function restore($id){
         Product::onlyTrashed()->where('id', $id)->restore();
+        Session::flash('product_message', 'Product was restored  !');
+
         return redirect('/admin/products');
     }
-    public function productsPerSpecification($id){
+    public function productsPerCat($id){
+        $categories = Category::all();
         $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
-        $products = Specification::findOrFail($id)->products()->with(['specifications', 'colors', 'photos'])->paginate(25);
-        return view('admin.products.index', compact('products', 'specs'));
+
+        $products = Product::where('category_id' , $id)->with(['colors', 'photos', 'specifications'])->paginate(25);
+        return view('admin.products.index', compact('categories', 'products', 'specs'));
 
     }
 
@@ -243,5 +248,8 @@ class AdminProductsController extends Controller
         //dd($specs);
         return view('details', compact('product', 'specs'));
     }
+    public function cart(){
 
+        return view('cart');
+    }
 }

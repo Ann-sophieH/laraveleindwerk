@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Addresstype;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
             RolesTableSeeder::class,
             UsersRolesTableSeeder::class,
             AddressesTableSeeder::class,
+            AddresstypesTableSeeder::class,
             //E-comm
             ProductsTableSeeder::class,
             CategoriesTableSeeder::class,
@@ -27,6 +29,7 @@ class DatabaseSeeder extends Seeder
             ProductsSpecificationsTableSeeder::class,
             ColorsTableSeeder::class,
             TypesTableSeeder::class,
+
 
 
         ]);

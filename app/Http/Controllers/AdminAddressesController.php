@@ -18,7 +18,7 @@ class AdminAddressesController extends Controller
     {
         //
         $users = User::all();
-        $addresses = Address::with(['user'])->withTrashed()->filter(request(['search']))->paginate(25);
+        $addresses = Address::with(['users'])->withTrashed()->filter(request(['search']))->paginate(25);
         return view('admin.addresses.index', compact('addresses', 'users' ));
     }
 

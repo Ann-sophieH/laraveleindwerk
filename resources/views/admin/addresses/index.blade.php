@@ -40,8 +40,8 @@
                 <div class="card-body  pb-2">
                     @foreach($addresses as $address)
                     <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
-                        <div class="d-flex flex-column">
-                            <a href="{{route('users.show', $address->user_id)}}">
+                        <div class="d-flex flex-column">{{dd( $address->users)}}
+                            <a href="{{route('users.show', $address->users->id)}}">
                                 <h6 class="mb-3 text-sm link-success"> {{$address->user->first_name}} {{$address->user->last_name}}</h6>
                             </a>
 

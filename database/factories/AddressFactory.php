@@ -17,14 +17,14 @@ class AddressFactory extends Factory
      */
     public function definition()
     {
-        $users = User::pluck('id')->toArray();
+
 
         return [
             //
             'name_recipient' => $this->faker->name(),
             'addressline_1' =>$this->faker->address() ,
             'addressline_2' => $this->faker->streetAddress(),
-            'user_id'=> $this->faker->randomElement($users),
+            'address_type'=> 1,
 
 
         ];

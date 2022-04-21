@@ -18,34 +18,52 @@
     </div>
     <div class="row py-4  p-0 m-0">
         <div class="col-10 mx-auto d-flex justify-content-around">
-            @foreach($specs as $spec)
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="icon icon-md icon-shape  bg-gradient-primary shadow text-center border-radius-md">
+                                <i class="material-icons text-lowercase opacity-10 ">apps</i>
+                            </div>
+                        </div>
+                        <div class="col-8 my-auto text-end ">
+                            <a href="{{route('products.index')}}">
+                                <p class="text-sm font-weight-bolder text-uppercase  d-inline  mb-0 opacity-7">all products</p>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            @foreach($categories as $cat)
+
                 <div class="card">
                     <div class="card-body p-3">
                         <div class="row">
                             <div class="col-4">
                                 <div class="icon icon-md icon-shape  bg-gradient-primary shadow text-center border-radius-md">
-                                    <i class="material-icons  opacity-10">{{$spec->name}}</i>
+                                    <i class="material-icons text-lowercase opacity-10 @if ($loop->last) ps-3 @endif">{{$cat->name}}</i>
                                 </div>
                             </div>
                             <div class="col-8 my-auto text-end ">
-                                <a href="{{route('admin.productsPerSpecification', $spec->id)}}">
-                                    <p class="text-sm font-weight-bolder  d-inline  mb-0 opacity-7">{{$spec->name}}</p>
+                                <a href="{{route('admin.productsPerCat', $cat->id)}}">
+                                    <p class="text-sm font-weight-bolder text-uppercase  d-inline  mb-0 opacity-7"> {{$cat->name}}</p>
                                     <a class="text-xxs" data-bs-toggle="collapse"
-                                       href="#collapse-{{$spec->id}}" aria-expanded="false"
-                                       aria-controls="collapse-{{$spec->id}}">
-                                    <button
+                                       href="#collapse-{{$cat->id}}" aria-expanded="false"
+                                       aria-controls="collapse-{{$cat->id}}">
+<!--                                    <button
                                         class="btn btn-link text-dark d-inline text-sm mb-0 px-0 ms-2"
                                         >
                                         <i class="fa fa-arrow-down text-lg position-relative me-1"></i>
-                                    </button> </a>
+                                    </button>--> </a>
                                 </a>
                             </div>
 
                         </div>
                     </div>
                 </div>
+                @endforeach
 
-            @endforeach
         </div>
     </div>
     @foreach($specs as $spec)
@@ -84,7 +102,6 @@
                             <thead>
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Product</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Colors</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Product specifications</th>
 
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Amount</th>
@@ -92,6 +109,8 @@
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Updated</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deleted</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -119,20 +138,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="align-middle text-center d-flex ">
-                                        @foreach($product->colors as $color)
-                                            <div class="p-2">
-                                                 <span class="text-secondary text-xs font-weight-bold  {{$color->name}}">
-                                            {{$color->name}}
-                                        </span>
-                                                <div class="">
-                                                    <label class="btn-colour form-label " for="{{$color->name}}" style="background-color: {{$color->hex_value}}; width: 2rem; height: 2rem;border-radius: 50%"></label>
-                                                    <input name="colour " type="checkbox" id="{{$color->name}}" class="input-invisible form-control">
-                                                </div>
-                                            </div>
 
-                                        @endforeach
-                                    </td>
                                     <td class="align-middle text-center">
                                         @foreach($product->specifications as $spec)
                                             <span class="badge badge-sm bg-gradient-faded-success text-secondary text-xxs font-weight-bold">{{$spec->name}}</span>
@@ -146,9 +152,26 @@
                                         <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
                                     </td>
                                     <td class="align-middle">
-                                        <a href="{{route('products.edit', $product->id)}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit product">
-                                            Edit
-                                        </a>
+                                        @if($product->deleted_at != null)
+                                            <a class="btn btn-warning" href="{{route('products.restore',$product->id)}}">Restore</a>
+                                        @else
+                                            <form method="POST"
+                                                  action="{{action("App\Http\Controllers\AdminProductsController@destroy", $product->id)}}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <a class="btn text-warning" type='submit'
+                                                   href="{{route('products.show', $product->id)}} "><i
+                                                        class="fa fa-eye mt-3"></i></a>
+                                                <a class="btn text-info" type='submit'
+                                                   href="{{route('products.edit', $product->id)}} "><i
+                                                        class="fa fa-edit mt-3"></i></a>
+                                                <button class="btn  mt-2 ps-5 text-danger" type="submit"><i
+                                                        class="fa fa-close "></i></button>
+
+                                            </form>
+
+
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
