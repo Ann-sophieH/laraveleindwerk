@@ -124,9 +124,10 @@
                                             <div>
                                                 @if(($product->photos)->isNotEmpty())
                                                 @foreach($product->photos as $photo)
-
+                                                    @if($loop->first)
                                                     <img style="height: 62px" class=" img-fluid rounded-circle ms-2 me-2" src="{{ empty($photo) ? 'http://via.placeholder.com/62x62' : asset($photo->file) }}" alt="{{$product->name}}">
-                                                @endforeach
+                                                        @endif
+                                                    @endforeach
                                                 @else
                                                     <img style="height: 62px" class=" img-fluid rounded-circle ms-2 me-2" src="http://via.placeholder.com/62x62" alt="{{$product->name}}">
 

@@ -52,32 +52,7 @@
             <label class="form-check-label text-body ms-3 text-truncate w-80 mb-0" for="flexSwitchCheckDefault4">User active</label>
         </div>
         </div>
-<!-- nav tabs of template
-        <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
-            <div class="nav-wrapper position-relative end-0">
-                <ul class="nav nav-pills nav-fill p-1" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="true">
-                            <i class="material-icons text-lg position-relative">home</i>
-                            <span class="ms-1">App</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
-                            <i class="material-icons text-lg position-relative">email</i>
-                            <span class="ms-1">Messages</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
-                            <i class="material-icons text-lg position-relative">settings</i>
-                            <span class="ms-1">Settings</span>
-                        </a>
-                    </li>
-                    <div class="moving-tab position-absolute nav-link" style="padding: 0px; transition: all 0.5s ease 0s; transform: translate3d(0px, 0px, 0px); width: 134px;"><a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="true">-</a></div></ul>
-            </div>
-        </div>
--->
+
     </div>
     <div class="row">
         <div class="row">
@@ -103,12 +78,23 @@
                             <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; {{$user->first_name}} {{$user->last_name}}</li>
                             <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp;{{$user->telephone}} </li>
                             <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; {{$user->email}} </li>
-
-                            <li class="list-group-item border-0 ps-0 pt-5 text-sm"><strong class="text-dark">Primary delivery address:</strong> &nbsp;<br>
-                                {{$user->addresses()->first()->name_recipient}} <br>
-                                {{$user->addresses()->first()->addressline_1}} <br>
-                                {{$user->addresses()->first()->addressline_2}} <br>
+                            @foreach($user->addresses->where('address_type', 1)->take(1) as $delivery_address)
+                            <li class="list-group-item border-0 ps-0 pt-5 text-sm"><strong class="text-dark"> Delivery address:</strong> &nbsp;<br>
+                                {{$delivery_address->name_recipient}} <br>
+                                {{$delivery_address->addressline_1}} <br>
+                                {{$delivery_address->addressline_2}} <br>
+                                @if($delivery_address->deleted_at != null)
+                                    <a class="btn btn-link text-dark px-3 mb-0" href="{{route('addresses.restore',$delivery_address->id)}}"><i class="material-icons text-sm me-2">restore</i>Restore</a>
+                                @else
+                                <form method="POST"
+                                      action="{{action("App\Http\Controllers\AdminAddressesController@destroy", $delivery_address->id)}}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-link text-danger text-gradient px-3 mb-0" type="submit"><i class="material-icons text-sm me-2">delete</i>Delete</button>
+                                </form>
+                                @endif
                             </li>
+                            @endforeach
 
                         </ul>
                     </div>
@@ -143,15 +129,28 @@
                                 </div>
                             </li>
                         </ul>
-                        <li class="list-group-item border-0 ps-0 pt-4 text-sm"><strong class="text-dark">Other delivery addresses:</strong> &nbsp;<br>
+                        @foreach($user->addresses->where('address_type', 2) as $billing_address)
 
-                            {{$user->addresses()->first()->name_recipient}} <br>
-                            {{$user->addresses()->first()->addressline_1}} <br>
-                            {{$user->addresses()->first()->addressline_2}} <br>
+                            <li class="list-group-item border-0 ps-0 pt-4 text-sm"><strong class="text-dark">Billing address:</strong> &nbsp;<br>
+                                {{$billing_address->name_recipient}} <br>
+                                {{$billing_address->addressline_1}} <br>
+                                {{$billing_address->addressline_2}} <br>
+                                @if($billing_address->deleted_at != null)
+                                    <a class="btn btn-link text-dark px-3 mb-0" href="{{route('addresses.restore',$billing_address->id)}}"><i class="material-icons text-sm me-2">restore</i>Restore</a>
+                                @else
+                                <form method="POST"
+                                      action="{{action("App\Http\Controllers\AdminAddressesController@destroy", $billing_address->id)}}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-link text-danger text-gradient px-3 mb-0" type="submit"><i class="material-icons text-sm me-2">delete</i>Delete</button>
+                                </form>
+                                @endif
                         </li>
+
+                        @endforeach
                         <button class="btn">
-                            <a href="{{route('addresses.create')}}" class="text-center" >
-                                    <i class="material-icons icon-sm pt-1">add</i> new delivery address
+                            <a href="{{route('addresses.create', $user->id)}}" class="text-center" >
+                                    <i class="material-icons icon-sm pt-1">add</i> billing/delivery address
                             </a>
                         </button>
 
@@ -167,8 +166,15 @@
                     <div class="row row-cols-4 g-2 mt-2">
                         @if(($user->photos)->isNotEmpty())
                             @foreach($user->photos as $photo)
-
+                                <div class="d-flex">
+                                <form method="post" action="{{route('photos.destroy', $photo)}}" enctype="multipart/form-data">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn  text-danger" type="submit"><i
+                                            class="fa fa-close "></i></button>
+                                </form>
                                 <img  class=" img-fluid  ms-2 me-2" src="{{ empty($photo) ? 'http://via.placeholder.com/62x62' : asset($photo->file) }}" alt="{{$user->username}}">
+                                </div>
                             @endforeach
                         @else
                             <img  class=" img-fluid  ms-2 me-2" src="http://via.placeholder.com/62x62" alt="{{$user->username}}">
@@ -187,6 +193,25 @@
                             <i class="fab fa-instagram fa-lg" aria-hidden="true"></i>
                         </a>
                     </div>
+                    {{--@foreach($user->addresses as $billing_address)
+                        @if($loop->iteration >= 3)
+                            <li class="list-group-item border-0 ps-0 pt-5 text-sm"><strong class="text-dark">other addresses:</strong> &nbsp;<br>
+                                {{$billing_address->name_recipient}} <br>
+                                {{$billing_address->addressline_1}} <br>
+                                {{$billing_address->addressline_2}} <br>
+                                @if($billing_address->deleted_at != null)
+                                    <a class="btn btn-link text-dark px-3 mb-0" href="{{route('addresses.restore',$address->id)}}"><i class="material-icons text-sm me-2">restore</i>Restore</a>
+                                @else
+                                <form method="POST"
+                                      action="{{action("App\Http\Controllers\AdminAddressesController@destroy", $billing_address->id)}}">
+                                @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-link text-danger text-gradient px-3 mb-0" type="submit"><i class="material-icons text-xxs me-2">delete</i>Delete</button>
+                                </form>
+                                @endif
+                            </li>
+                        @endif
+                    @endforeach--}}
                 </div>
             </div>
 

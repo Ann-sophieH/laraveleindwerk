@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Photo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AdminPhotosController extends Controller
 {
@@ -80,8 +81,12 @@ class AdminPhotosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Photo $photo)
     {
-        //
+        //$photo = Photo::findOrFail($photo);
+        Session::flash('product_message', $photo->name . ' was deleted!'); //naam om mess. op te halen, VOOR DELETE OFC
+        unlink($photo->file);
+        $photo->delete();
+        return redirect()->back();
     }
 }

@@ -17,14 +17,14 @@
                     <a class="" href="{{route('speakers')}}">
                         <img src="{{asset('assetsfront/images/highlightpic.png')}}" class="card-img-top img-fluid" alt="..." style="height: 10rem;">
                         <div class="card-body">
-                            <p class="card-title fsize-1 text-uppercase"><strong>All speakers</strong></p>
+                            <p class="card-title fsize-1 text-uppercase"><strong> speakers</strong></p>
                         </div> </a>
                 </div>
                 <div class="card filtercard border-0 br-none me-5" style="width: 15rem;height: 13rem;">
                     <a class="" href="{{route('headphones')}}">
                         <img src="{{asset('assetsfront/images/highlightpic.png')}}" class="card-img-top img-fluid" alt="..." style="height: 10rem;">
                         <div class="card-body">
-                            <p class="card-title fsize-1 text-uppercase"><strong>All headphones</strong></p>
+                            <p class="card-title fsize-1 text-uppercase"><strong> headphones</strong></p>
                         </div> </a>
                 </div>
 
@@ -36,7 +36,7 @@
             @include('includes.filter_accordeon')
 
             <div class="ms-3 mt-3 " id="productOverzicht">
-                <h1 class=" fsize-3 text-uppercase mb-3">All Speakers</h1>
+                <h1 class=" fsize-3 text-uppercase mb-3">All Products</h1>
                 <div class="row row-cols-md-2 row-cols-lg-3 g-4 gy-4 fs-reg my-auto mt-2" >
                     @foreach($products as $product)
                         <article class="card border-0 mb-4 "> <a href="{{route('details', $product->id)}}" class="br-none">
@@ -68,7 +68,7 @@
                                     <div class="card-body row flex-wrap mt-auto">
                                         <div class="product-details col-8   ">
                                             <h2 class="card-title text-uppercase fsize-2 "><strong>{{$product->name}}</strong></h2>
-                                            <p class="card-text text-muted fsize-1">{{$product->details}}</p>
+                                            <p class="card-text text-muted fsize-1">{{Str::limit($product->details, 40)}}</p>
                                             <p class="card-text fsize-1 "><strong>€{{$product->price}}</strong></p>
 
                                         </div>

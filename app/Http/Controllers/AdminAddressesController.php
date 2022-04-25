@@ -27,10 +27,10 @@ class AdminAddressesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //create, store, edit, update, delete gebeurt in user controller
-
+        $user = User::findOrFail($id);
+        return view('admin.addresses.create', compact('user') );
     }
 
     /**
@@ -41,7 +41,17 @@ class AdminAddressesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //add validation?
+        $address = new Address();
+        $address->name_recipient = $request['name_recipient'];
+        $address->addressline_1 = $request['addressline_1'];
+        $address->addressline_2 = $request['addressline_2'];
+        $address->address_type = $request['address_type'];
+        $address->save();
+        $address->users()->sync($request['user_id'], true);
+        Session::flash('address_message', 'address for'. $address->name_recipient . ' was saved!');
+
+        return redirect('/admin/addresses');
     }
 
     /**
@@ -64,6 +74,7 @@ class AdminAddressesController extends Controller
     public function edit($id)
     {
         //
+
     }
 
     /**
@@ -76,6 +87,13 @@ class AdminAddressesController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $address=  Address::findOrFail($id);
+        $address->name_recipient = $request['name_recipient'];
+        $address->addressline_1 = $request['addressline_1'];
+        $address->addressline_2 = $request['addressline_2'];
+        $address->address_type = $request['address_type'];
+        Session::flash('address_message', 'address for'. $address->name_recipient . ' was edited!');
+
     }
 
     /**
@@ -90,7 +108,7 @@ class AdminAddressesController extends Controller
         $address = Address::findOrFail($id);
         Session::flash('user_message', $address->name . 'was deleted!'); //naam om mess. op te halen, VOOR DELETE OFC
         $address->delete();
-        return redirect('/admin/addresses');
+        return redirect()->back();
     }
     public function restore( $id){
         Address::onlyTrashed()->where('id', $id)->restore();

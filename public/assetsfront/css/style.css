@@ -107,6 +107,8 @@ nav img{
 .dropdown { position: static; } /*disables poppers dynamic positioning to stretch&position searchbar myself*/
 .dropdown-menu { width: 100%; }
 /*end nav*/
+/*aside */
+
 /*highlighted section */
 .w-90{
     width: 90%;
@@ -122,7 +124,7 @@ nav img{
     bottom: 1px;
 }
 .kader{ /*hoveer/ focus voor mobile om fotos nog zichtbaar te laten*/
-    top: 85%; right: 50%;
+    top: 81%; right: 50%;
     transform: translate(50%,-50%);
     width:90%;
     background: rgba(255,255,255,0.9);
@@ -169,6 +171,10 @@ nav img{
     background-size: cover;
     cursor: pointer;
     transition: border-color .1s;
+}
+.form-check-input:checked~.form-option-label{
+    /*for border color change classes  https://themes.getbootstrap.com/preview/?theme_id=35287*/
+    border-color: #fe696a;
 }
 .input-invisible {
     position: absolute;

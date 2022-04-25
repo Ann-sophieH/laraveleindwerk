@@ -2,8 +2,9 @@
 
 
 <div class="form-check checkshop">
-    <input class="form-check-input shadow-none " name="{{$sub_specs_filter->name}}"  id="{{$sub_specs_filter->name}}" type="checkbox"
-           >
+
+    <input class="form-check-input shadow-none " name="specifications[]" value="{{$sub_specs_filter->id}}" id="{{$sub_specs_filter->name}}" type="checkbox"
+          @if($product != null) @if($product->specifications->contains($sub_specs_filter->id)) checked @endif  @endif>
     <label class="form-check-label " for="{{$sub_specs_filter->name}}">
         {{$sub_specs_filter->name}}
     </label>

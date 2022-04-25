@@ -69,28 +69,33 @@ class AdminUsersController extends Controller
         if($file = $request->file('photo_id')){
             $name = time() . $file->getClientOriginalName();
             Image::make($file)
-                ->resize(520, 520, function ($constraint){
+                ->resize(850, 850, function ($constraint){//520
                     $constraint->aspectRatio();
                 })
-                ->crop(320, 320 )
+                //->crop(320, 320 )
                 ->save(public_path('assets/img/users/' . 'th_' . $name));//file nodig = temporary file of pc
             $thumbnail = 'users/' . 'th_' . $name ;
             $photo = Photo::create(['file'=>$thumbnail]);
             $user->photo_id = $photo->id;
         }
         $user->save();
-        $user->photos()->save($photo);
+        if($request->hasfile('photo_id')){
+            $user->photos()->save($photo);
+        }
+
+
 
         /** save roles **/
         $user->roles()->sync($request->roles, false);
         /** save address **/
+
         $address = new Address();
         $address->name_recipient = $request['name_recipient'];
         $address->addressline_1 = $request['addressline_1'];
         $address->addressline_2 = $request['addressline_2'];
-        $address->user_id = $user->id;
+       // $address->address_type = 1;
         $address->save();
-
+        $user->addresses()->sync($address->id, false);
         Session::flash('user_message', 'A new user was added!');
         return redirect('/admin/users');
     }
@@ -103,7 +108,8 @@ class AdminUsersController extends Controller
      */
     public function show(User $user)
     {
-        //detailpagina user
+        //detailpage user
+
         Session::flash('user_message', 'Here is all the info we have on ' . $user->username );
 
         return view('admin.users.show', compact('user'));
@@ -121,12 +127,8 @@ class AdminUsersController extends Controller
         //
         $user = User::findOrFail($id);
         $roles = Role::pluck('name', 'id')->all();
-        $user_address = $user->addresses->first();
-            //Address::where('user_id', $user->id)->get();
-        //cant get first element out
+        $user_address = $user->addresses->first();//change to delivery adr
 
-       //  = $user->address()->get();
-       //dd($user_address);
         return view('admin.users.edit' , compact('user', 'roles', 'user_address'));
     }
 
@@ -177,12 +179,11 @@ class AdminUsersController extends Controller
         /** adding to tussentabel rollen**/
         $user->roles()->sync($request->roles, true);
         /** adding to address table **/
-        $user->addresses()->where('user_id', $user->id);
-        $address = Address::where('user_id', $user->id)
-            ->update([  'name_recipient' =>  $request['name_recipient'],
+        $address = $user->addresses->first();
+        $address->update([  'name_recipient' =>  $request['name_recipient'],
                         'addressline_1' => $request['addressline_1'],
                         'addressline_2' => $request['addressline_2'],
-                        'user_id'=>$user->id
+
             ]);
         Session::flash('user_message', $user->name . ' was edited!');
         return redirect('/admin/users');

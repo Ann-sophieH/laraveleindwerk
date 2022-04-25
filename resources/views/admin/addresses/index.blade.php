@@ -40,9 +40,9 @@
                 <div class="card-body  pb-2">
                     @foreach($addresses as $address)
                     <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
-                        <div class="d-flex flex-column">{{dd( $address->users)}}
-                            <a href="{{route('users.show', $address->users->id)}}">
-                                <h6 class="mb-3 text-sm link-success"> {{$address->user->first_name}} {{$address->user->last_name}}</h6>
+                        <div class="d-flex flex-column">
+                            <a href="{{route('users.show', $address->users->first()->id)}}">
+                                <h6 class="mb-3 text-sm link-success"> {{$address->users->first()->first_name}} {{$address->users->first()->last_name}}</h6>
                             </a>
 
                             <span class="mb-2 text-xs">Name recipient: <span class="text-dark font-weight-bold ms-sm-2">{{$address->name_recipient}}</span></span>
@@ -58,7 +58,7 @@
                                 @csrf
                                 @method('DELETE')
                             <button class="btn btn-link text-danger text-gradient px-3 mb-0" type="submit"><i class="material-icons text-sm me-2">delete</i>Delete</button>
-                            <a class="btn btn-link text-dark px-3 mb-0" href="{{route('users.edit', $address->user_id)}}"><i class="material-icons text-sm me-2">edit</i>Edit</a>
+                            <a class="btn btn-link text-dark px-3 mb-0" href="{{route('users.edit', $address->users->first()->id)}}"><i class="material-icons text-sm me-2">edit</i>Edit</a>
 
                         @endif
                         </div>

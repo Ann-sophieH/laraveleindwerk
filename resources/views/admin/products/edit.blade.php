@@ -17,18 +17,20 @@
         @endif
     </div>
     <div class="row">
-        <div class="col-12 mt-5">
+        <div class="col-11 mx-auto mt-5">
+            <h3 class="mt-3 mb-0 text-center">Edit  {{$product->name}}</h3>
+            <p class="lead font-weight-normal opacity-8 mb-7 text-center">This will let you change the information of product {{$product->name}} .</p>
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                        <h6 class="text-white text-capitalize ps-3">Edit:  {{$product->name}}</h6>
+                        <h6 class="text-white text-capitalize ps-3">Edit product here:</h6>
                     </div>
                 </div>
                 <div class="card-body px-0 pb-2">
                     <form action="{{route('products.update', $product->id)}}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
-                        <div class="row mx-auto ">
+                        <div class="row mx-auto justify-content-evenly">
                             <div class="col-8  mb-3">
                                 <div class="form-group mt-3">
                                     <label for="name">Product name:</label>
@@ -50,14 +52,45 @@
                                             <i class="fa fa-plus"> Add new specification </i>
                                         </button>
                                         <div class="form-check " id="specifications[]"  multiple>
-                                            @foreach($specs as $spec)
-                                                <input class="form-check-input" type="checkbox" value="{{$spec->id}}" name="specifications[]" id="flexCheck{{$spec->id}}"
-                                                       @if($product->specifications->contains($spec->id)) checked @endif>
-                                                <label class="form-check-label" for="flexCheck{{$spec->id}}">
-                                                    {{$spec->name}}
-                                                </label>
+                                            <ul class="list-group row">
+                                                @foreach($specs as $spec)
+                                                    <li class="list-group-item border-0 d-flex justify-content-between p-1 mb-2 border-radius-lg bg-gray-100">
 
-                                            @endforeach
+                                                        <div class="d-flex ">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                   value="{{$spec->id}}" name="specifications[]"
+                                                                   id="flexCheck{{$spec->id}}"   @if($product->specifications->contains($spec->id)) checked @endif>
+                                                            <label class="form-check-label ps-2"
+                                                                   for="flexCheck{{$spec->id}}">
+                                                                {{$spec->name}}
+                                                            </label>
+
+                                                        </div>
+                                                        <div class="d-flex align-items-center text-sm">
+                                                            <a class="text-xxs" data-bs-toggle="collapse"
+                                                               href="#collapse-{{$spec->id}}" aria-expanded="false"
+                                                               aria-controls="collapse-{{$spec->id}}">
+                                                                pick related specifications
+                                                                <button
+                                                                    class="btn btn-link text-dark text-sm mb-0 px-0 ms-2"
+                                                                    control-id="ControlID-3">
+                                                                    <i class="fa fa-arrow-down text-lg position-relative me-1"></i>
+                                                                </button>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                    <div class="collapse p-0" id="collapse-{{$spec->id}}">
+                                                        <ul class="list-group flex-column sub-menu m-1 p-1 bg-gray-100">
+                                                            @if(count($spec->childspecs))
+                                                                @foreach($spec->childspecs as $childspecs)
+                                                                    @include('includes.sub_specs_filter',['sub_specs_filter'=>$childspecs])
+                                                                @endforeach
+                                                            @endif
+
+                                                        </ul>
+                                                    </div>
+                                                @endforeach
+                                            </ul>
                                         </div>
 
 
@@ -100,17 +133,37 @@
                                     <label for="price">Product price:</label>
                                     <input type="number" min="1" step="any " value="{{$product->price}}" class="form-control border ps-2 shadow-sm" id="price" name="price" placeholder="Product price...">
                                 </div>
-                                <div class="form-group ">
-                                    <label for="photos">Product photo:</label>
-                                    <input type="file"  class="form-control border ps-2 shadow-sm" id="photos" name="photos" >
+                                <div class="form-group  mt-3 col">
+                                    <div class="pt-3 ps-5">
+                                        <label class="form-control form-label text-muted mb-0" for="photos">Product
+                                            photos</label>
+                                        <input name="photos[]" type="file"
+                                               class="form-control border dropzone dz-clickable p-5" multiple
+                                               id="photos[]">
+
+                                    </div>
                                 </div>
                                 <button type="submit" class="btn btn-warning mt-5 opacity-8">Edit this product</button>
                             </div>
-                            <div class="col-3">
+                            <div class="col-3 ">
 
                                 <div>
-                                    <img  class=" img-fluid " src="{{$product->file ? asset($product->file) : 'http://via.placeholder.com/700x700'}}" alt="{{$product->name}}">
+                                    @if(($product->photos)->isNotEmpty())
+                                        @foreach($product->photos as $photo)
+                                            <div class="d-flex">
+                                            <form method="post" action="{{route('photos.destroy', $photo)}}" enctype="multipart/form-data">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn  text-danger" type="submit"><i
+                                                        class="fa fa-close "></i></button>
+                                            </form>
+                                            <img style="height: 162px" class=" img-fluid rounded-circle ms-2 me-2" src="{{ empty($photo) ? 'http://via.placeholder.com/700x700' : asset($photo->file) }}" alt="{{$product->name}}">
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        <img style="height: 170px" class=" img-fluid rounded-circle ms-2 me-2" src="http://via.placeholder.com/700x700" alt="{{$product->name}}">
 
+                                    @endif
                                 </div>
 
 

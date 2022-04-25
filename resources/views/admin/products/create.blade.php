@@ -91,10 +91,12 @@
                                                             </div>
                                                         </li>
                                                         <div class="collapse" id="collapse-{{$spec->id}}">
-                                                            <ul class="list-group flex-column sub-menu m-1">
+                                                            <ul class="list-group flex-column sub-menu m-1 bg-gray-100">
                                                                 @if(count($spec->childspecs))
+
                                                                     @foreach($spec->childspecs as $childspecs)
-                                                                        @include('includes.sub_specs',['sub_specs'=>$childspecs])
+
+                                                                        @include('includes.sub_specs_filter',['sub_specs_filter'=>$childspecs])
                                                                     @endforeach
                                                                 @endif
 
@@ -173,9 +175,10 @@
                                             <div class="pt-3 ps-5">
                                                 <label class="form-control form-label text-muted mb-0" for="photos">Product
                                                     photos</label>
-                                                <input name="photos" type="file"
+                                                <input name="photos[]" type="file"
                                                        class="form-control border dropzone dz-clickable p-5" multiple
-                                                       id="photos">
+                                                       id="photos[]">
+
                                             </div>
                                         </div>
                                         <div class="form-group col-3">

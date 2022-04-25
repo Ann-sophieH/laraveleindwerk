@@ -9,7 +9,7 @@
         <div class="row g-0">
             <section class="col-md-6 " id="heroleft">
                 <div class="card bg-dark text-white br-none border-0 ">
-                    <div style="background-image:url(" assetsfront/images/heroleftpic.jpg")">
+                    <div style="background-image:url( {{asset('assetsfront/images/heroleftpic.jpg')}})">
                         <img alt="..." class="card-img" src="assetsfront/images/heroleftpic.jpg">
                     </div>
 
@@ -37,47 +37,50 @@
     </section>
 <!--section1: highlighted article -->
 <div class="container-fluid" id="designSection">
-    <div class="row col-10 offset-1 margins g-2">
-        <div class="text-center mb-4">
-            <p class="fs-reg text-uppercase text-muted">shop latest design speakers</p>
-            <h3 class="fs-reg text-uppercase mb-3">Don't sacrifice style for sound</h3>
-        </div>
-        <div class="col-lg-6 mi">
-            <img alt="" class="w-100 h-100" src="assetsfront/images/desgn2.jpg">
-        </div>
-        <div class="col-6 col-lg-3 gy-1 fsize-1">
-            <div class="mi position-relative mt-1">
-                <img alt="..." class="mi img-fluid" src="assetsfront/images/highlightpic.png">
-                <div class="kader position-absolute ps-1 d-none d-md-block">
-                    <p class="text-uppercase mp-none ">beosound explore</p>
-                    <p class="text-muted mp-none d-none d-md-block">cradle to cradle ceritfiedr</p>
-                </div>
+    <div class="row col-10 offset-1 margins ">
+        <div class="row">
+            <div class="text-center mb-4">
+                <p class="fs-reg text-uppercase text-muted">shop latest design speakers</p>
+                <h3 class="fs-reg text-uppercase mb-3">Don't sacrifice style for sound</h3>
             </div>
-            <div class="mi position-relative mt-2">
-                <img alt="..." class="mi img-fluid " src="assetsfront/images/all_sapekres.jpg">
-                <div class="kader position-absolute ps-1 d-none d-md-block">
-                    <p class="text-uppercase mp-none">beosound explore</p>
-                    <p class="text-muted mp-none d-none d-md-block">Portable  speaker</p>
-                </div>
+            <div class="col-lg-6 mi p-1 ">
+                <img alt="" class="w-100 h-100" src="{{asset('assetsfront/images/desgn2.jpg')}}">
             </div>
+            <div class="col-6 col-lg-3 gx-2  fsize-1">
+                <div class="mi position-relative mt-1">
+                    <img alt="..." class="mi img-fluid" src="{{asset('assetsfront/images/highlightpic.png')}}">
+                    <div class="kader position-absolute ps-1 d-none d-md-block">
+                        <p class="text-uppercase mp-none ">beosound explore</p>
+                        <p class="text-muted mp-none d-none d-md-block">cradle to cradle ceritfiedr</p>
+                    </div>
+                </div>
+                <div class="mi position-relative mt-2">
+                    <img alt="..." class="mi img-fluid " src="{{asset('assetsfront/images/all_sapekres.jpg')}}">
+                    <div class="kader position-absolute ps-1 d-none d-md-block">
+                        <p class="text-uppercase mp-none">beosound explore</p>
+                        <p class="text-muted mp-none d-none d-md-block">Portable  speaker</p>
+                    </div>
+                </div>
 
-        </div>
-        <div class="col-6 col-lg-3 gy-1 fsize-1">
-            <div class="mi position-relative mt-1">
-                <img alt="..." class="mi img-fluid" src="assetsfront/images/design.jpg" id="highlightfix">
-                <div class="kader position-absolute ps-1 d-none d-md-block">
-                    <p class="text-uppercase mp-none">beosound level</p>
-                    <p class="text-muted mp-none d-none d-md-block">cradle to cradle ceritfied</p>
+            </div>
+            <div class="col-6 col-lg-3 gx-2  fsize-1">
+                <div class="mi position-relative mt-1">
+                    <img alt="..." class="mi img-fluid" src="{{asset('assetsfront/images/bigdesign.jpg')}}" style="height: auto" id="highlightfix">
+                    <div class="kader position-absolute ps-1 d-none d-md-block">
+                        <p class="text-uppercase mp-none">beosound level</p>
+                        <p class="text-muted mp-none d-none d-md-block">cradle to cradle ceritfied</p>
+                    </div>
+                </div>
+                <div class="mi position-relative mt-2 shadow">
+                    <img alt="..." class="mi img-fluid " src="{{asset('assetsfront/images/desgn2.jpg')}}">
+                    <div class="kader position-absolute ps-1 d-none d-md-block">
+                        <p class="text-uppercase mp-none">beosound explore</p>
+                        <p class="text-muted mp-none d-none d-md-block">Portable  speaker</p>
+                    </div>
                 </div>
             </div>
-            <div class="mi position-relative mt-2 shadow">
-                <img alt="..." class="mi img-fluid " src="assetsfront/images/desgn2.jpg">
-                <div class="kader position-absolute ps-1 d-none d-md-block">
-                    <p class="text-uppercase mp-none">beosound explore</p>
-                    <p class="text-muted mp-none d-none d-md-block">Portable  speaker</p>
-                </div>
-            </div>
         </div>
+
     </div>
 </div>
 <!--end section1 -->

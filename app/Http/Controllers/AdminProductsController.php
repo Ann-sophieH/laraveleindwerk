@@ -42,7 +42,8 @@ class AdminProductsController extends Controller
         $colors = Color::paginate(12); //see all knop maken!!
         $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
         $categories = Category::all();
-        return view('admin.products.create', compact('colors', 'specs' , 'categories'));
+        $product = null; // simply so i can use same sub_specs_filter in create as i used in edit.blade
+        return view('admin.products.create', compact('colors', 'specs' , 'categories', 'product'));
 
     }
 
@@ -55,40 +56,43 @@ class AdminProductsController extends Controller
     public function store(Request $request)
     {
         //
+        //@dd($request);
         $product = new Product();
         $product->name = $request->name;
         $product->details = $request->details;
         $product->price = $request->price;
         $product->category_id = $request->category;
-
+        $product->save();
         /**photo opslaan**/
-        /*if($files = $request->file('photos')){
-            foreach($files as $file){
+        $files = $request->file('photos');
+       // dd($request->file('photos') );
+        if($request->hasfile('photos')){
+            foreach( $files as $file){
                 $name = time() . $file->getClientOriginalName();
                 Image::make($file)
                     ->resize(720, 720, function ($constraint){
                         $constraint->aspectRatio();
                     })
-                    ->crop(550, 550 )
+                    //->crop(550, 550 )
                     // ->insert(public_path('/img/watermark.png'), 'bottom-right', 20, 20) //wtermark toevoegen
-                    ->save(public_path('assets/img/products/' . 'th_' . $name)); //enkel thumbnail vn product
-                Photo::create(['file'=>$name]);
-            }
-        }*/
-        if($file = $request->file('photos')){
+                    ->save(public_path('assets/img/products/' . 'md_' . $name)); //enkel thumbnail vn product
+                $mediumProduct = 'products/' . 'md_' . $name ;
+                $photo = Photo::create(['file'=>$mediumProduct]);
+                $product->photos()->save($photo);
+            }}
+
+     /*   if($file = $request->file('photos')){
             $name = time() . $file->getClientOriginalName();
             Image::make($file)
                 ->resize(720, 720, function ($constraint){
                     $constraint->aspectRatio();
                 })
-                //->crop(550, 550 )
+                ->crop(550, 550)
                 ->save(public_path('assets/img/products/' . 'th_' . $name));
             $thumbnail = 'products/' . 'th_' . $name ;
             $photo =  Photo::create(['file'=>$thumbnail]);
-        }
-        $product->save();
-        $product->photos()->save($photo);
-
+        }*/
+        //dd($request->specifications);
         $product->colors()->sync($request->colors,false);
         $product->specifications()->sync($request->specifications,false);
         Session::flash('product_message', 'A new product was added!');
@@ -122,7 +126,6 @@ class AdminProductsController extends Controller
         $categories = Category::all();
         $colors = Color::all();
 
-
         return view('admin.products.edit', compact('product','specs','categories', 'colors'));
     }
 
@@ -139,21 +142,24 @@ class AdminProductsController extends Controller
         $input = $request->all();
 
         /** update photo **/
-        if($file = $request->file('photos')){
-            $name = time() . $file->getClientOriginalName();
-            Image::make($file)
-                ->resize(720, 720, function ($constraint){
-                    $constraint->aspectRatio();
-                })
-                ->crop(550, 550 )
-                ->save(public_path('assets/img/products/' . 'th_' . $name));
-            $thumbnail = 'products/' . 'th_' . $name ;
-            $photo =  Photo::create(['file'=>$thumbnail]);
-            $product->update($input);
+        $files = $request->file('photos');
+        if($request->hasfile('photos')){
+            foreach( $files as $file){
+                $name = time() . $file->getClientOriginalName();
+                Image::make($file)
+                    ->resize(720, 720, function ($constraint){
+                        $constraint->aspectRatio();
+                    })
+                    //->crop(550, 550 )
+                    // ->insert(public_path('/img/watermark.png'), 'bottom-right', 20, 20) //wtermark toevoegen
+                    ->save(public_path('assets/img/products/' . 'md_' . $name)); //enkel thumbnail vn product
+                $mediumProduct = 'products/' . 'md_' . $name ;
+                $product->update($input);
 
-            $product->photos()->save($photo);
+                $photo = Photo::create(['file'=>$mediumProduct]);
+                $product->photos()->save($photo);
 
-        }
+            }}
 
         $product->update($input);
         /** edit many-relationships **/
@@ -174,7 +180,7 @@ class AdminProductsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //need to cascade delete something here?
         $product = Product::findOrFail($id);
         Session::flash('product_message', $product->name . ' was deleted!'); //naam om mess. op te halen, VOOR DELETE OFC
 
@@ -197,7 +203,7 @@ class AdminProductsController extends Controller
     }
 
 
-        /** FRONTEND CODE **/
+        /** FRONTEND CODE can be deleted now**/
     public function products(){
         $products = Product::with(['photos', 'colors'])->paginate(25);
         $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();

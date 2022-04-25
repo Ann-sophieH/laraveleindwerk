@@ -51,6 +51,7 @@
                                 {!! Form::text('last_name', null,  ['class'=>'form-control d-block', 'aria-describedby'=>'emailHelp' ,'onfocus'=>'focused(this)' , 'onfocusout'=>'defocused(this)']) !!}
                             </div>
                             <div class="input-group input-group-dynamic mt-3">
+
                                 {!! Form::label('Select roles:  ') !!}
                                 {!! Form::select('roles[]', $roles, null, ['class'=>'form-control ms-2', 'multiple' , 'aria-describedby'=>'emailHelp' ,'onfocus'=>'focused(this)' , 'onfocusout'=>'defocused(this)'] ) !!}
                             </div>
@@ -64,7 +65,8 @@
 
 
                         </div>
-                        <div class="col-6  mt-5 p-2 pb-3 mb-5 ">
+                        <div class="col-6  mt-4 pt-2 p-2 pb-3 mb-5 ">
+                           <p class="text-sm">delivery address: <span class="text-muted text-lowercase ms-5 "><i > you can add billing address later</i></span></p>
                             <div class="input-group input-group-dynamic mt-3">
                                 {!! Form::label('name_recipient', 'Name Recipient', ['class'=>'form-label ']) !!}
                                 {!! Form::text('name_recipient', null, ['class'=>'form-control ', 'aria-describedby'=>'emailHelp' ,'onfocus'=>'focused(this)' , 'onfocusout'=>'defocused(this)']) !!}
@@ -88,7 +90,7 @@
                             <div class="input-group input-group-dynamic mt-3">
                                 <div class="row mt-3">
                                     <div class="col-12">
-                                        <label class="form-control text-muted mb-0" for="photo_id">User profile picture</label>
+                                        <label class="form-control text-muted mb-0" for="photo_id">User profile picture (optional) </label>
                                         <input name="photo_id" type="file"
                                                class="form-control border dropzone dz-clickable" multiple
                                                id="photo_id">

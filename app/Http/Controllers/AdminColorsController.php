@@ -17,7 +17,7 @@ class AdminColorsController extends Controller
     public function index()
     {
         //
-        $colors = Color::with(['products', 'specs.childspecs'])->paginate(25);
+        $colors = Color::with(['products'])->paginate(25);
         return view('admin.colors.index', compact('colors'));
     }
 
@@ -70,9 +70,11 @@ class AdminColorsController extends Controller
      */
     public function edit($id)
     {
+        $colors = Color::with(['products'])->paginate(25);
+        $color = Color::findOrFail($id);
         //https://devnote.in/how-to-inline-row-editing-using-laravel/
         //https://laracasts.com/discuss/channels/livewire/this-is-a-component-you-may-like-to-use-for-inline-editing
-
+        return view('admin.colors.edit', compact('colors', 'color'));
     }
 
     /**

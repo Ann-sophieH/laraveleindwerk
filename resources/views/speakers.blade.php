@@ -64,7 +64,7 @@
                             <div class="card-body row flex-wrap mt-auto">
                                 <div class="product-details col-8   ">
                                     <h2 class="card-title text-uppercase fsize-2 "><strong>{{$product->name}}</strong></h2>
-                                    <p class="card-text text-muted fsize-1">{{$product->details}}</p>
+                                    <p class="card-text text-muted fsize-1">{{Str::limit($product->details, 40)}}</p>
                                     <p class="card-text fsize-1 "><strong>€{{$product->price}}</strong></p>
 
                                 </div>

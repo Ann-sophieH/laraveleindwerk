@@ -37,6 +37,10 @@ class Product extends Model
     public function productreviews(){
         return $this->hasMany(Review::class);
     }
+    public function orderdetails(){
+        return $this->hasMany(Orderdetail::class);
+    }
+
 
     public function scopeFilter($query, array $filters)
     { //scope+naam functie in casu Filter

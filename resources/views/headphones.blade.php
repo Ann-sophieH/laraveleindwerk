@@ -4,24 +4,30 @@
     <div class="container-fluid row mp-none ">
         {{--    filtercards home product page--}}
 
-        <div class="bg-gray-100">
-        <aside class="col-10 mx-auto my-5 d-flex justify-content-start ">
-                <div class="card filtercard border-0 br-none me-5" style="width: 15rem;height: 13rem;">
+        <div class=" bg-gray-100">
+        <aside class="col-10 mx-auto my-5  justify-content-start ">
+            <div class="row ">
+                <div class="card filtercard border-0 br-none me-5" >
                     <a class="" href="{{route('headphones')}}">
-                    <img src="{{asset('assetsfront/images/highlightpic.png')}}" class="card-img-top img-fluid" alt="..." style="height: 10rem;">
-                    <div class="card-body">
-                        <p class="card-title fsize-1 text-uppercase"><strong>All headphones</strong></p>
-                    </div> </a>
+                    <!--                        <div style="background-image:url({{asset('assetsfront/images/all_headpohones_nav.png')}}); height: 125px; object-fit: cover" class="card-img-top img-fluid" >
+
+                        </div>-->
+                        <img src="{{asset('assetsfront/images/all_headpohones_nav.png')}}" class="card-img-top nav_tab img-fluid d-none d-md-block" alt="..." style="height: 123px">
+                        <div class="card-body">
+                            <p class="card-title fsize-1 text-uppercase"><strong>All headphones</strong></p>
+                        </div> </a>
                 </div>
                 @foreach($types as $type)
-                    <div class="card filtercard border-0 me-5 br-none" style="width: 15rem;height: 13rem;">
+                    <div class="card filtercard border-0 me-5 br-none" >
                         <a href="{{route('headphonesPerType', $type->id)}}">
-                        <img src="{{asset('assetsfront/images/highlightpic.png')}}" class="card-img-top img-fluid" alt="..." style="height: 10rem;" >
-                        <div class="card-body ">
-                            <p class="card-title fsize-1 text-uppercase"><strong>{{$type->name}}</strong></p>
-                        </div></a>
+                            <img src="{{asset('assetsfront/images/highlightpic.png')}}" class="card-img-top img-fluid" alt="..." style="height: 123px" >
+                            <div class="card-body ">
+                                <p class="card-title fsize-1 text-uppercase"><strong>{{$type->name}}</strong></p>
+                            </div></a>
                     </div>
                 @endforeach
+            </div>
+
 
 
 
@@ -64,7 +70,7 @@
                             <div class="card-body row flex-wrap mt-auto">
                                 <div class="product-details col-8   ">
                                     <h2 class="card-title text-uppercase fsize-2 "><strong>{{$product->name}}</strong></h2>
-                                    <p class="card-text text-muted fsize-1">{{$product->details}}</p>
+                                    <p class="card-text text-muted fsize-1">{{Str::limit($product->details, 40)}}</p>
                                     <p class="card-text fsize-1 "><strong>€{{$product->price}}</strong></p>
 
                                 </div>
