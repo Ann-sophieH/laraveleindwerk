@@ -27,8 +27,8 @@ class AdminProductsController extends Controller
         $products = Product::with(['specifications', 'colors', 'category', 'photos'])->withTrashed()->filter(request(['search']))->paginate(15);
        // Session::flash('product_message', 'these are all the products found in database!');
         $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
-
-        return view('admin.products.index', compact('products', 'specs', 'categories'));
+        $product = null;
+        return view('admin.products.index', compact('products', 'specs', 'categories', 'product'));
     }
 
     /**
@@ -70,7 +70,7 @@ class AdminProductsController extends Controller
             foreach( $files as $file){
                 $name = time() . $file->getClientOriginalName();
                 Image::make($file)
-                    ->resize(720, 720, function ($constraint){
+                    ->resize(2650, 2650, function ($constraint){
                         $constraint->aspectRatio();
                     })
                     //->crop(550, 550 )
@@ -247,15 +247,9 @@ class AdminProductsController extends Controller
         return view('headphones', compact('products', 'types', 'specs', 'categories'));
 
     }
-    public function details($id){
-        $product = Product::with(['photos', 'colors', 'productreviews.user'])->findOrFail($id);
-       // $specss = Specification::whereNull('parent_id')->with( 'childspecs')->get();
-        $specs = $product->specifications()->with( 'childspecs')->get();
-        //dd($specs);
-        return view('details', compact('product', 'specs'));
-    }
-    public function cart(){
+
+    /*public function cart(){
 
         return view('cart');
-    }
+    }*/
 }

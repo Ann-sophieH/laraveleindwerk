@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('price');
             $table->string('details');
             $table->unsignedBigInteger('category_id');
+            $table->string('slug')->unique();
             $table->softDeletes();
             $table->timestamps();
         });

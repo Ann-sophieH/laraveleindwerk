@@ -7,6 +7,7 @@ use App\Models\Color;
 use App\Models\Product;
 use App\Models\Specification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AdminSpecificationsController extends Controller
 {
@@ -18,7 +19,9 @@ class AdminSpecificationsController extends Controller
     public function index()
     {
         //
-        $specs = Specification::whereNull('parent_id')->with([ 'childspecs', 'products'])->get();
+        $specs = Specification::with([ 'childspecs', 'products'])->whereNull('parent_id')->withTrashed()->paginate(10);
+        //$sub_specs = Specification::with([ 'products','childspecs', 'specs'])->withTrashed()->whereNotNull('parent_id')->paginate(10);
+
         return view('admin.specifications.index', compact('specs'));
 
     }
@@ -32,7 +35,7 @@ class AdminSpecificationsController extends Controller
     {
         //how to make up this HTML?? make second includes w checkboxes and input type hidden w parent id
         $colors = Color::all();
-        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
+        $specs = Specification::whereNull('parent_id')->with( 'childspecs', 'products')->get();
         $categories = Category::all();
         return view('admin.products.create' , compact('specs', 'colors', 'categories'));
     }
@@ -91,5 +94,13 @@ class AdminSpecificationsController extends Controller
     public function destroy($id)
     {
         //
+        $specification = Specification::findOrFail($id);
+        Session::flash('spec_message', $specification->name . ' was deleted!'); //naam om mess. op te halen, VOOR DELETE OFC
+        $specification->delete();
+        return redirect()->back();
+    }
+    public function restore( $id){
+        Specification::onlyTrashed()->where('id', $id)->with('products')->restore();
+        return redirect('/admin/specifications');
     }
 }

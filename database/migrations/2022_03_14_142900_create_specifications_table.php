@@ -19,6 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('specifications');
             $table->timestamps();
+            $table->softDeletes();
+
         });
         Schema::create('product_specification',  function (Blueprint $table){
             $table->id();

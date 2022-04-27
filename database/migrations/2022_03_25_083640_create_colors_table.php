@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('hex_value');
             $table->timestamps();
+            $table->softDeletes();
+
         });
         Schema::create('color_product', function (Blueprint $table) {
             $table->id();

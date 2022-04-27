@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Specification extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
     protected $fillable = ['name', 'parent_id'];
 
     public function specs(){
@@ -15,7 +18,7 @@ class Specification extends Model
     }
     //recursive function
     public function childspecs(){
-        return $this->hasMany(Specification::class, 'parent_id')->with('specs'); //leest parent id ipv id
+        return $this->hasMany(Specification::class, 'parent_id')->with('specs' )->withTrashed(); //leest parent id ipv id
     }
 
     public function products(){

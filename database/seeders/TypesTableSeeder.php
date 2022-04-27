@@ -23,6 +23,7 @@ class TypesTableSeeder extends Seeder
             'name' => 'over-ear',
             'category_id'=> 1,
             'photo_id'=> 1,
+            'slug'=>'over-ear',
             'created_at'=>Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at'=>Carbon::now()->format('Y-m-d H:i:s'),
         ]);
@@ -30,6 +31,7 @@ class TypesTableSeeder extends Seeder
             'name' => 'earphones',
             'category_id'=> 1,
             'photo_id'=> 1,
+            'slug'=>'earphones',
             'created_at'=>Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at'=>Carbon::now()->format('Y-m-d H:i:s'),
         ]);
@@ -37,6 +39,7 @@ class TypesTableSeeder extends Seeder
             'name' => 'noise-cancelling',
             'category_id'=> 1,
             'photo_id'=> 1,
+            'slug'=>'noise-cancelling',
             'created_at'=>Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at'=>Carbon::now()->format('Y-m-d H:i:s'),
         ]);
@@ -45,6 +48,7 @@ class TypesTableSeeder extends Seeder
             'name' => 'portable',
             'category_id'=> 2,
             'photo_id'=> 1,
+            'slug'=>'portable',
             'created_at'=>Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at'=>Carbon::now()->format('Y-m-d H:i:s'),
         ]);
@@ -52,6 +56,7 @@ class TypesTableSeeder extends Seeder
             'name' => 'home audio',
             'category_id'=> 2,
             'photo_id'=> 1,
+            'slug'=>'home-audio',
             'created_at'=>Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at'=>Carbon::now()->format('Y-m-d H:i:s'),
         ]);
@@ -59,6 +64,7 @@ class TypesTableSeeder extends Seeder
             'name' => 'speaker sets',
             'category_id'=> 2,
             'photo_id'=> 1,
+            'slug'=>'speaker-sets',
             'created_at'=>Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at'=>Carbon::now()->format('Y-m-d H:i:s'),
         ]);

@@ -26,6 +26,7 @@ class ProductsTableSeeder extends Seeder
             //'photo_id'=>1,
             'category_id'=>2,
             'details' => 'lorem ipsum',
+            'slug'=> 'beosound-level',
             'created_at'=>Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at'=>Carbon::now()->format('Y-m-d H:i:s'),
         ]);

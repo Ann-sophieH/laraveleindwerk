@@ -149,8 +149,9 @@ nav img{
 .parallax{
     padding-top: 20%;
     padding-bottom: 20%;
-    background: url("../images/parallax.jpg") no-repeat fixed center;
+    background: url("../images/bigparallax.jpg") no-repeat fixed center;
     background-size:cover;
+    object-fit: cover;
 }
 #parallax2{
     padding-top: 15%;

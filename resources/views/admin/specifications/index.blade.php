@@ -1,7 +1,20 @@
 @extends('layouts.admin')
 @section('content')
     <div class="row">
+        <div class="col-11 mx-auto">
+            @include('includes.form_error')
+            @if(session('spec_message'))
+                <div class="alert alert-success opacity-7 alert-dismissible text-white" role="alert">
+                    <i class="material-icons ps-3">
+                        notifications_active
+                    </i>
+                    <span class="text-sm ps-4">{{session('spec_message')}} </span>
+                    <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close" control-id="ControlID-6">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
 
+            @endif</div>
         <div class="col-12 mt-5">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 justify-content-between ">
@@ -20,10 +33,10 @@
 
                     </div>
                 </div>
-                <form class="ms-5 mt-5">
+                <form class="ms-5 mt-5 input-group-outline">
                     @csrf
                     <input type="text" name="search" class="form-control mb-3 border-1 small"
-                           placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                           placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" onfocus="focused(this)" onfocusout="defocused(this)" control-id="ControlID-1">
                 </form>
 
 
@@ -49,9 +62,9 @@
 
                             <div class="collapse" id="collapse-{{$spec->id}}">
                                 <ul class="list-group flex-column sub-menu m-1">
-                                @if(count($spec->childspecs))
+                                @if(count($spec->childspecs) )
                                     @foreach($spec->childspecs as $childspecs)
-                                        @include('includes.sub_specs',['sub_specs'=>$childspecs])
+                                        @include('includes.sub_specs_BE',['sub_specs'=>$childspecs])
                                     @endforeach
                                 @endif
 

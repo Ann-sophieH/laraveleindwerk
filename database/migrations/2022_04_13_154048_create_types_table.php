@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('photo_id');
+            $table->string('slug')->unique();
             $table->timestamps();
         });
         Schema::create('product_type', function (Blueprint $table){

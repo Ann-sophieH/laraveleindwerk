@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Color;
 use App\Models\Specification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AdminColorsController extends Controller
 {
@@ -17,7 +18,7 @@ class AdminColorsController extends Controller
     public function index()
     {
         //
-        $colors = Color::with(['products'])->paginate(25);
+        $colors = Color::with(['products'])->withTrashed()->paginate(25);
         return view('admin.colors.index', compact('colors'));
     }
 
@@ -29,10 +30,11 @@ class AdminColorsController extends Controller
     public function create()
     {
         //
+        $product = null;
         $colors = Color::all();
         $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
         $categories = Category::all();
-        return view('admin.products.create' , compact('specs', 'colors', 'categories'));
+        return view('admin.products.create' , compact('specs', 'colors', 'categories', 'product'));
     }
 
     /**
@@ -87,6 +89,13 @@ class AdminColorsController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $color = Color::findOrFail($id);
+        $color->name = $request->name;
+        $color->hex_value = $request->hex_value;
+        $color->update();
+        Session::flash('color_message', $color->name . 'was edited and saved!'); //naam om mess. op te halen, VOOR DELETE OFC
+
+        return redirect('/admin/colors/');
     }
 
     /**
@@ -98,5 +107,13 @@ class AdminColorsController extends Controller
     public function destroy($id)
     {
         //
+        $colors = Color::findOrFail($id);
+        Session::flash('color_message', $colors->name . 'was deleted!'); //naam om mess. op te halen, VOOR DELETE OFC
+        $colors->delete();
+        return redirect()->back();
+    }
+    public function restore( $id){
+        Color::onlyTrashed()->where('id', $id)->restore();
+        return redirect('/admin/colors');
     }
 }

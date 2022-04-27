@@ -161,7 +161,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <a class="btn text-warning" type='submit'
-                                                   href="{{route('products.show', $product->id)}} "><i
+                                                   href="{{route('details', $product)}} "><i
                                                         class="fa fa-eye mt-3"></i></a>
                                                 <a class="btn text-info" type='submit'
                                                    href="{{route('products.edit', $product->id)}} "><i

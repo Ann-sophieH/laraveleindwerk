@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Products;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -30,17 +31,25 @@ Route::get('/contactformulier', 'App\Http\Controllers\ContactController@create')
 Route::post('/contactformulier', 'App\Http\Controllers\ContactController@store');
 
 
+
 Route::get('/products', 'App\Http\Controllers\FrontendController@products')->name('products');
 Route::get('/speakers', 'App\Http\Controllers\FrontendController@speakers')->name('speakers');
-Route::get('/speakers/types/{id}', '\App\Http\Controllers\FrontendController@speakersPerType')->name('speakersPerType');
+Route::get('/speakers/type/{type:slug}', '\App\Http\Controllers\FrontendController@speakersPerType')->name('speakersPerType');
 Route::get('/headphones', 'App\Http\Controllers\FrontendController@headphones')->name('headphones');
-Route::get('/headphones/types/{id}', '\App\Http\Controllers\FrontendController@headphonesPerType')->name('headphonesPerType');
+Route::get('/headphones/type/{type:slug}', '\App\Http\Controllers\FrontendController@headphonesPerType')->name('headphonesPerType');
 
-Route::get('/details/{id}', 'App\Http\Controllers\AdminProductsController@details')->name('details');
+Route::get('/products/{product:slug}', 'App\Http\Controllers\FrontendController@details')->name('details');
 
-//in welke controllers steken we deze?
-Route::get('/cart', 'App\Http\Controllers\AdminProductsController@cart')->name('cart');
-Route::get('/checkout', 'App\Http\Controllers\AdminProductsController@checkout')->name('checkout');
+
+/*Route::get('/addtocart/{id}', '\App\Http\Controllers\FrontendController@addToCart')->name('addToCart');
+Route::get('/cart', '\App\Http\Controllers\FrontendController@cart' )->name('cart');
+Route::post('/cart','App\Http\Controllers\FrontendController@updateQuantity')->name('quantity');
+Route::get('/removeitem/{id}','App\Http\Controllers\FrontendController@removeItem' )->name('removeItem');
+Route::post('/cart','App\Http\Controllers\FrontendController@updateQuantityUp')->name('updateQuantityUp');*/
+
+Route::get('/cart', '\App\Http\Controllers\FrontendController@cartList' )->name('cart.list');
+Route::post('/cart','\App\Http\Controllers\FrontendController@addToCart' )->name('cart.store');
+Route::get('/checkout','App\Http\Controllers\FrontendController@checkout')->name('checkout');
 
 
 
@@ -64,7 +73,10 @@ Route::group(['prefix' => 'admin', 'middleware'=> 'admin'], function (){
     Route::resource('reviews', \App\Http\Controllers\AdminProductReviewsController::class);
 
     Route::resource('colors', App\Http\Controllers\AdminColorsController::class);
+    Route::get('colors/restore/{id}', 'App\Http\Controllers\AdminColorsController@restore')->name('colors.restore');
+
     Route::resource('specifications', App\Http\Controllers\AdminSpecificationsController::class);
+    Route::get('specifications/restore/{id}', 'App\Http\Controllers\AdminSpecificationsController@restore')->name('specifications.restore');
 
 
 });

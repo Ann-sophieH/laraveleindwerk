@@ -12,7 +12,8 @@ class Type extends Model
     protected $fillable = [
        'name',
         'category_id',
-        'photo_id'
+        'photo_id',
+        'slug',
     ];
 
     public function category(){

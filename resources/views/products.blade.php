@@ -39,8 +39,9 @@
                 <h1 class=" fsize-3 text-uppercase mb-3">All Products</h1>
                 <div class="row row-cols-md-2 row-cols-lg-3 g-4 gy-4 fs-reg my-auto mt-2" >
                     @foreach($products as $product)
-                        <article class="card border-0 mb-4 "> <a href="{{route('details', $product->id)}}" class="br-none">
+                        <article class="card border-0 mb-4 ">
                                 <div id="carouselExampleControls" class="carousel  carousel-dark slide "  data-bs-interval="false" data-bs-ride="carousel">
+                                    <a href="{{route('details', $product)}}" class="br-none">
                                     <div class="carousel-inner ">
                                         @if(($product->photos)->isNotEmpty())
                                             @foreach($product->photos as $photo)
@@ -64,27 +65,34 @@
                                         @else
                                             <img class="card-img-top  img-fluid " src="http://via.placeholder.com/400x400" alt="{{$product->name}}">
                                         @endif
-                                    </div>
+                                    </div></a>
                                     <div class="card-body row flex-wrap mt-auto">
                                         <div class="product-details col-8   ">
                                             <h2 class="card-title text-uppercase fsize-2 "><strong>{{$product->name}}</strong></h2>
                                             <p class="card-text text-muted fsize-1">{{Str::limit($product->details, 40)}}</p>
                                             <p class="card-text fsize-1 "><strong>€{{$product->price}}</strong></p>
-
                                         </div>
-
-                                        <div class="product-color-size col-4  d-flex align-items-end justify-content-end"   aria-label="4 Colours">
-                                            @foreach($product->colors as $color )
-                                                <div class="swatch-container swatch-color-container"
-                                                     style="z-index: {{$loop->iteration}};">
-                                                    <em class="swatch-color" style="background-color: {{$color->hex_value}}"></em>
+                                        <div class="product-color-size col-4 justify-content-end "   aria-label="4 Colours">
+                                                <div class=" d-flex align-items-start justify-content-end">
+                                                    @foreach($product->colors as $color )
+                                                        <div class="swatch-container swatch-color-container"
+                                                             style="z-index: {{$loop->iteration}};">
+                                                            <em class="swatch-color" style="background-color: {{$color->hex_value}}"></em>
+                                                        </div>
+                                                    @endforeach
                                                 </div>
-                                            @endforeach
+<!--                                            <form wire:submit.prevent="addToCart({{ $product->id}})" action="">
+                                                @csrf-->
+<!--                                            <button type="submit" href="{{route('addToCart', $product->id)}}" class="btn  pt-3 ms-5 ps-5 align-items-end ">
+                                                <i class="bi bi-cart-plus fs-4"></i>
+                                           </button>-->
+                                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{route('addToCart', $product->id)}}"><i class="bi bi-cart-plus fs-4"></i></a></div>
+
                                         </div>
                                     </div>
                                 </div>
 
-                            </a>
+
                         </article>
                     @endforeach
 
