@@ -204,13 +204,13 @@ class AdminProductsController extends Controller
 
 
         /** FRONTEND CODE can be deleted now**/
-    public function products(){
+    /*public function products(){
         $products = Product::with(['photos', 'colors'])->paginate(25);
         $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
         $categories = Category::all();
 
         return view('products', compact('products', 'specs', 'categories'));
-    }
+    }*/
     public function speakers(){
         $products = Product::with(['photos', 'colors'])->where('category_id' , 2)->paginate(25);
         $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();

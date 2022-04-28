@@ -9,27 +9,33 @@ class Cart extends Model
 {
     use HasFactory;
 
-  /*  public $products = null;
+   public $products = null;
     public $totalQuantity = 0;
     public $totalPrice = 0;
+
+    public $extraProdsPrice = 0;
+
 
     public function __construct($oldCart){
         if($oldCart){
             $this->products = $oldCart->products;
             $this->totalQuantity = $oldCart->totalQuantity;
             $this->totalPrice = $oldCart->totalPrice;
+            $this->extraProdsPrice = $oldCart->extraProdsPrice;
+
         }
     }
-
     public function add($product, $product_id){
         $shopItems = [
             'quantity'=>0,
             'product_id'=>0,
             'product_name'=>$product->name,
-            'product_price' =>$product->price,
-            'product_colors' =>$product->colors,
-            'product_image'=>$product->photos->first()->file, // add if statement
+            'product_price'=>$product->price,
+            'product_image'=> ($product->photos) ? $product->photos->first()->file : 'http://via.placeholder.com/400x400',//addifstatement
             'product_details'=>$product->details,
+            'product_slug'=>$product->slug,
+            'product_category_id'=>$product->category_id,
+
             'product'=>$product
         ];
         if($this->products){
@@ -44,39 +50,41 @@ class Cart extends Model
         $shopItems['product_colors'] = $product->colors;
         $shopItems['product_image'] = $product->photos->first()->file;
         $shopItems['product_details'] = $product->details;
+        $shopItems['product_slug']=$product->slug;
+        $shopItems['product_category_id']=$product->category_id;
+
         $this->totalQuantity++;
         $this->totalPrice += $product->price;
+        $this->extraProdsPrice = $product->price;
         $this->products[$product_id] = $shopItems;
     }
-    public function updateQuantity($id, $quantity){
-        //telt het totaal aantal items in de winkelwagen
-        $this->totalQuantity -= $this->products[$id]['quantity']; //oude quantity aftrekken van totaal
-        $this->totalQuantity += $quantity; //nieuwe quant bij totaal gaan tellen
 
-        if($this->products[$id]['quantity'] < $quantity){ //als quant verhoogd wordt
-            $this->totalPrice -= ($this->products[$id]['quantity']*$this->products[$id]['product_price']);//price op null
-            $this->totalPrice += $quantity*$this->products[$id]['product_price'];//price * nieuwe hoeveelheid
-        }else{ // als quant verlaagd wordt OM NEGATIEVE WAARDEN TE VERMIJDEN !!!!
-            $this->totalPrice -= ($this->products[$id]['quantity']-$quantity)*$this->products[$id]['product_price'];
-        }
-        $this->products[$id]['quantity'] = $quantity;
+    public function up($id, $quantity){
+
+
+        $this->products[$id]['quantity'] +=1; //1 product less
+        $this->totalQuantity += 1; //1 off total
+        $this->totalPrice += $this->products[$id]['product_price'];
+        $this->extraProdsPrice = $this->products[$id]['product_price']*$this->products[$id]['quantity'];
     }
-    public function updateQuantityUp($id){
-     //   $this->totalQuantity -= $this->products[$id]['quantity']; //oude quantity aftrekken van totaal
+    public function down($id){
 
-            dd($id);
-        $this->totalQuantity += $this->products[$id]['quantity'];
-        $this->totalPrice += ($this->products[$id]['quantity']*$this->products[$id]['product_price']);
+        if(($this->products[$id]['quantity']) > 0){
+            $this->products[$id]['quantity'] -=1; //1 product less
+            $this->totalQuantity -= 1; //1 off total
+            $this->totalPrice -= $this->products[$id]['product_price'];//totalprice - itemprice
+            $this->extraProdsPrice = $this->products[$id]['product_price']*$this->products[$id]['quantity'];
 
-        $this->products[$id]['quantity'] += 1;
+        }//need else? also remove maybe
 
-           // $this->totalPrice -= ($this->products[$id]['quantity']*$this->products[$id]['product_price']);//price op null
+
 
     }
+
     public function removeItem($id){
         $this->totalQuantity -= $this->products[$id]['quantity'];
         $this->totalPrice -= ($this->products[$id]['quantity']*$this->products[$id]['product_price']);
         unset($this->products[$id]);
-    }*/
+    }
 
 }

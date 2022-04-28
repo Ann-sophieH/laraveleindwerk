@@ -25,14 +25,14 @@ class FrontendController extends Controller
     }
 
 
-   /* public function products(){
-        $products = Product::with(['photos', 'colors'])->paginate(25);
+    public function products(){
+       /* $products = Product::with(['photos', 'colors'])->paginate(25);
         $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
         $categories = Category::all();
-        $product = null;
+        $product = null;*/
 
-        return view('products', compact('products', 'specs', 'categories', 'product'));
-    }*/
+        return view('products');
+    }
     public function details(Product $product){
         //$product = Product::with(['photos', 'colors', 'productreviews.user'])->findOrFail($id);
         // $specss = Specification::whereNull('parent_id')->with( 'childspecs')->get();

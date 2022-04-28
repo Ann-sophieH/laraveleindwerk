@@ -2,9 +2,12 @@
 @section('content')
 
     <div class="container-fluid row mp-none ">
+        <livewire:products>
+
+        </livewire:products>
         {{--    filtercards home product page--}}
 
-        <div class="bg-gray-100">
+      {{--  <div class="bg-gray-100">
             <aside class="col-10 mx-auto my-5 d-flex justify-content-start ">
                 <div class="card filtercard border-0 br-none me-5" style="width: 15rem;height: 13rem;">
                     <a class="" href="{{route('products')}}">
@@ -103,7 +106,7 @@
         </div>
         <div class="row col-3  mx-auto mt-5">
             {{$products->render()}}
-        </div>
+        </div>--}}
 
     </div>
     <script>

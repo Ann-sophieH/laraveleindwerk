@@ -32,13 +32,14 @@ Route::post('/contactformulier', 'App\Http\Controllers\ContactController@store')
 
 
 
-Route::get('/products', 'App\Http\Controllers\FrontendController@products')->name('products');
+//Route::get('/products', 'App\Http\Controllers\FrontendController@products')->name('products');
 Route::get('/speakers', 'App\Http\Controllers\FrontendController@speakers')->name('speakers');
 Route::get('/speakers/type/{type:slug}', '\App\Http\Controllers\FrontendController@speakersPerType')->name('speakersPerType');
 Route::get('/headphones', 'App\Http\Controllers\FrontendController@headphones')->name('headphones');
 Route::get('/headphones/type/{type:slug}', '\App\Http\Controllers\FrontendController@headphonesPerType')->name('headphonesPerType');
 
 Route::get('/products/{product:slug}', 'App\Http\Controllers\FrontendController@details')->name('details');
+Route::get('/products', Products::class)->name('products');
 
 
 /*Route::get('/addtocart/{id}', '\App\Http\Controllers\FrontendController@addToCart')->name('addToCart');
@@ -48,7 +49,7 @@ Route::get('/removeitem/{id}','App\Http\Controllers\FrontendController@removeIte
 Route::post('/cart','App\Http\Controllers\FrontendController@updateQuantityUp')->name('updateQuantityUp');*/
 
 Route::get('/cart', '\App\Http\Controllers\FrontendController@cartList' )->name('cart.list');
-Route::post('/cart','\App\Http\Controllers\FrontendController@addToCart' )->name('cart.store');
+//Route::post('/cart','\App\Http\Controllers\FrontendController@addToCart' );
 Route::get('/checkout','App\Http\Controllers\FrontendController@checkout')->name('checkout');
 
 
