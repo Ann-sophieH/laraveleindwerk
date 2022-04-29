@@ -58,7 +58,9 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
 
-
+    public function socialiteLogin(){
+        return $this->hasMany(SocialiteLogin::class);
+    }
     public function isAdmin(){
         foreach ($this->roles as $role){
             if($role->name == 'administrator' && $this->is_active == 1){

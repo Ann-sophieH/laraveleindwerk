@@ -27,7 +27,7 @@
                                 <input  readonly class="text-center mb-4 border pt-1 "  style="max-width: 60px" value="{{$item['quantity']}}" >
                                 <button class="btn  shadow-none" type="button" wire:click="quantUp({{$item['product_id']}} , '{{$item['quantity']}}' )"><i class="bi bi-arrow-up  "></i></button>
                                 <p class="text-start text-md-center fs-bo">Item price € {{$item['product_price']}} </p>
-                                <p class="text-start text-md-center fs-bo">total: € </p>
+                                <p class="text-start text-md-center fs-bo">total: € {{Session::get('cart') ? Session::get('cart')->extraProdsPrice : '0'}}</p>
 
                             </div>
 

@@ -55,7 +55,7 @@ class Cart extends Model
 
         $this->totalQuantity++;
         $this->totalPrice += $product->price;
-        $this->extraProdsPrice = $product->price;
+        $this->extraProdsPrice += $product->price;
         $this->products[$product_id] = $shopItems;
     }
 

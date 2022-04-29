@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.index')
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center py-5 my-5">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
@@ -52,17 +52,32 @@
                         </div>
 
                         <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
+                            <div class="col-md-8 offset-md-4 d-flex justify-content-evenly">
+                                <div class="flex items-center justify-end mt-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
-                                </button>
-
+                                </button> </div>
+                                {{-- Login with GitHub --}}
+                                <div class="flex items-center justify-end mt-4">
+                                    <a class="btn" href="{{ url('login/github') }}"
+                                       style="background: #313131; color: #ffffff; padding: 10px; width: 100%; text-align: center; display: block; border-radius:3px;">
+                                        Login with GitHub
+                                    </a>
+                                </div>
+                                {{-- Login with google --}}
+                                <div class="flex items-center justify-end mt-4">
+                                    <a class="btn btn-outline" href="{{ url('/login/google') }}"
+                                       style="background: #313131; color: #ffffff; padding: 10px; width: 100%; text-align: center; display: block; border-radius:3px;">
+                                        Login with Google
+                                    </a>
+                                </div>
+                            </div>
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
-                            </div>
+
                         </div>
                     </form>
                 </div>

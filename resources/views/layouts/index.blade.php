@@ -84,7 +84,7 @@
                         <p class="mb-1 text-uppercase ">Company</p>
                         <ul class=" list-unstyled">
                             <li class=""><a href="" class="text-dark br-none">Press</a></li>
-                            <li class=""><a href="" class="text-dark br-none">Contact</a></li>
+                            <li class=""><a href="{{route('contact')}}" class="text-dark br-none">Contact</a></li>
                         </ul>
                     </div>
                     <div class="col-6">

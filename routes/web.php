@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SocialiteLoginController;
 use App\Http\Livewire\Products;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
@@ -18,20 +19,20 @@ use Illuminate\Support\Facades\Route;
 Auth::routes(['verify'=>true]); //verified email
 
 /**FRONTEND**/
-/*Route::get('/', function () {
-    $carr_products = Product::where('category_id', 1)->take(6)->get();
 
-    return view('index', compact('carr_products'));
-});*/
+/**logins **/
+Route::get('login/github', [SocialiteLoginController::class, 'redirectToGit']);
+Route::get('login/github/callback', [SocialiteLoginController::class, 'handleGitCallback']);
+Route::get('/login/google', [SocialiteLoginController::class, 'redirectToGoogle']);
+Route::get('/login/google/callback', [SocialiteLoginController::class, 'handleGoogleCallback']);
+
 Route::get('/', 'App\Http\Controllers\FrontendController@index')->name('home ');
 Route::get('/blog', 'App\Http\Controllers\FrontendController@blog')->name('blog ');
-
+/** contact **/
 Route::get('/contact', 'App\Http\Controllers\ContactController@contact')->name('contact');
 Route::get('/contactformulier', 'App\Http\Controllers\ContactController@create');
 Route::post('/contactformulier', 'App\Http\Controllers\ContactController@store');
-
-
-
+/** product pages  **/
 //Route::get('/products', 'App\Http\Controllers\FrontendController@products')->name('products');
 Route::get('/speakers', 'App\Http\Controllers\FrontendController@speakers')->name('speakers');
 Route::get('/speakers/type/{type:slug}', '\App\Http\Controllers\FrontendController@speakersPerType')->name('speakersPerType');
@@ -41,15 +42,8 @@ Route::get('/headphones/type/{type:slug}', '\App\Http\Controllers\FrontendContro
 Route::get('/products/{product:slug}', 'App\Http\Controllers\FrontendController@details')->name('details');
 Route::get('/products', Products::class)->name('products');
 
-
-/*Route::get('/addtocart/{id}', '\App\Http\Controllers\FrontendController@addToCart')->name('addToCart');
-Route::get('/cart', '\App\Http\Controllers\FrontendController@cart' )->name('cart');
-Route::post('/cart','App\Http\Controllers\FrontendController@updateQuantity')->name('quantity');
-Route::get('/removeitem/{id}','App\Http\Controllers\FrontendController@removeItem' )->name('removeItem');
-Route::post('/cart','App\Http\Controllers\FrontendController@updateQuantityUp')->name('updateQuantityUp');*/
-
+/** cart & checkout / payment  **/
 Route::get('/cart', '\App\Http\Controllers\FrontendController@cartList' )->name('cart.list');
-//Route::post('/cart','\App\Http\Controllers\FrontendController@addToCart' );
 Route::get('/checkout','App\Http\Controllers\FrontendController@checkout')->name('checkout');
 
 

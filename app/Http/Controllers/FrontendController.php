@@ -15,7 +15,6 @@ class FrontendController extends Controller
 
     public function index(){
         $carr_products = Product::where('category_id', 1)->take(6)->get();
-
         return view('index', compact('carr_products'));
     }
 
@@ -34,8 +33,6 @@ class FrontendController extends Controller
         return view('products');
     }
     public function details(Product $product){
-        //$product = Product::with(['photos', 'colors', 'productreviews.user'])->findOrFail($id);
-        // $specss = Specification::whereNull('parent_id')->with( 'childspecs')->get();
         $specs = $product->specifications()->with( 'childspecs')->get();
 
         return view('details', compact('product', 'specs'));
@@ -71,7 +68,6 @@ class FrontendController extends Controller
         //all speakers (cat 2) where type id = $id
         $types = Type::where('category_id' , 1)->get();
         $products = Type::findOrFail($type->id)->products()->with(['photos', 'colors'])->where('category_id' , 1)->paginate(25);
-
         $categories = Category::all();
         $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
         $product = null;
@@ -79,8 +75,9 @@ class FrontendController extends Controller
 
     }
     public function checkout(){
+        $cart = Session::has('cart') ? Session::get('cart'): null;
 
-        return view('checkout');
+        return view('checkout', compact('cart'));
     }
    public function cartList(){
 
@@ -95,48 +92,4 @@ class FrontendController extends Controller
         return view('cart');
     }
 
-    /**previous cart code w/o livewire**/
-   /* public function addToCart($id){
-        $product = Product::with(['specifications', 'colors', 'category', 'photos'])->where('id', $id)->first();
-        $oldCart = Session::has('cart') ? Session::get('cart'): null;
-        $cart = new Cart($oldCart);
-        $cart->add($product, $id);
-        Session::put('cart',$cart);
-        return redirect()->back();
-    }
-    public function cart(){
-        if(!Session::has('cart')){
-            return redirect('/products'); //geen sessie = back to shop
-        }else{ //there is cart so get everything from session and put it in var $currentcart
-            $currentCart = Session::has('cart') ? Session::get('cart') : null;
-            $cart = new Cart($currentCart); //nieuw model cart vullen
-            $cart = $cart->products; //
-            return view('cart',compact('cart'));
-        }
-    }
-    public function updateQuantity(Request $request){
-        //dd($request);
-        $oldCart = Session::has('cart') ? Session::get('cart'):null;
-        $cart = new Cart($oldCart);
-        $cart->updateQuantity($request->id, $request->quantity);
-        Session::put('cart', $cart);
-        return redirect()->back();
-    }
-    public function updateQuantityUp(Request $request){
-        dd($request);
-        $oldCart = Session::has('cart') ? Session::get('cart'):null;
-        $cart = new Cart($oldCart);
-        $cart->updateQuantityUp($request->id);
-        Session::put('cart', $cart);
-        return redirect()->back();
-    }
-
-    public function removeItem($id){
-        $oldCart = Session::has('cart') ? Session::get('cart'):null;
-        $cart = new Cart($oldCart);
-        $cart->removeItem($id);
-        Session::put('cart', $cart);
-        return redirect()->back();
-    }
-    */
 }
