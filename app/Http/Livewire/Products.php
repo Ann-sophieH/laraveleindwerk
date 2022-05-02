@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Specification;
+use App\Models\Type;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -16,9 +17,6 @@ class Products extends Component
     public $search;
     protected $paginationTheme = 'bootstrap';
 
-    //public $cart = null;
-
-    protected $updatesQueryString = ['search'];
 
 
     public function addToCart( $id){
@@ -27,9 +25,28 @@ class Products extends Component
         $cart = new Cart($oldCart);
         $cart->add($product, $id);
         Session::put('cart',$cart);
-
-
         //return redirect()->back();
+
+    }
+    public function headphonesPerType(Type $type){
+        //all speakers (cat 2) where type id = $id
+        $types = Type::where('category_id' , 1)->get();
+        $products = Type::findOrFail($type->id)->products()->with(['photos', 'colors'])->where('category_id' , 1)->paginate(25);
+        $categories = Category::all();
+        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
+        $product = null;
+        return view('headphones', compact('products', 'types', 'specs', 'categories', 'product'));
+
+    }
+    public function speakersPerType(Type $type){
+        //all speakers (cat 2) where type id = $id
+        $types = Type::where('category_id' , 2)->get();
+        $products = Type::findOrFail($type->id)->products()->with(['photos', 'colors'])->where('category_id' , 2)->paginate(25);
+        $product = null;
+        $categories = Category::all();
+        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
+
+        return view('speakers', compact('products', 'types', 'specs', 'categories', 'product'));
 
     }
 
@@ -39,15 +56,27 @@ class Products extends Component
     }
     public function render()
     {
-        return view('livewire.products', [
-            'products'=>Product::with(['photos', 'colors'])->paginate(10),
+        if( Session::has('cart')){
+            return view('livewire.products', [
+                'products'=>Product::with(['photos', 'colors'])->paginate(10),
             'specs'=> Specification::whereNull('parent_id')->with( 'childspecs')->get(),
-            'categories'=>Category::all(),
             'product'=>null,
+            'types'=> Type::where('category_id' , 1)->get(),
+        ])->extends('layouts.index');
 
-        ])
 
-            ->extends('layouts.index')
-            ;
+        }else{
+            return view('livewire.products', [
+                'products'=>Product::with(['photos', 'colors'])->paginate(10),
+            'specs'=> Specification::whereNull('parent_id')->with( 'childspecs')->get(),
+           // 'categories'=>Category::all(),
+            'product'=>null,
+            'types'=> Type::where('category_id' , 2)->get(),
+        ])->extends('layouts.index');
+
+        }
+
+
+
     }
 }

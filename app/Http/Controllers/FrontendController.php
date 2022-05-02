@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Specification;
@@ -17,18 +18,11 @@ class FrontendController extends Controller
         $carr_products = Product::where('category_id', 1)->take(6)->get();
         return view('index', compact('carr_products'));
     }
-
     public function blog(){
 
         return view('blog');
     }
-
-
     public function products(){
-       /* $products = Product::with(['photos', 'colors'])->paginate(25);
-        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
-        $categories = Category::all();
-        $product = null;*/
 
         return view('products');
     }
@@ -75,7 +69,11 @@ class FrontendController extends Controller
 
     }
     public function checkout(){
-        $cart = Session::has('cart') ? Session::get('cart'): null;
+        $currentCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($currentCart); //nieuw model cart vullen
+        $cart = $cart->products;
+        //nieuwe user wegschrijven if empty(Auth::user()) + address(es)
+        //if (Auth::user()) == true; first or create for address
 
         return view('checkout', compact('cart'));
     }

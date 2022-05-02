@@ -31,6 +31,7 @@ class Cart extends Model
             'product_id'=>0,
             'product_name'=>$product->name,
             'product_price'=>$product->price,
+            'product_colors'=>$product->colors,
             'product_image'=> ($product->photos) ? $product->photos->first()->file : 'http://via.placeholder.com/400x400',//addifstatement
             'product_details'=>$product->details,
             'product_slug'=>$product->slug,
@@ -59,16 +60,13 @@ class Cart extends Model
         $this->products[$product_id] = $shopItems;
     }
 
-    public function up($id, $quantity){
-
-
+    public function up($id){
         $this->products[$id]['quantity'] +=1; //1 product less
         $this->totalQuantity += 1; //1 off total
         $this->totalPrice += $this->products[$id]['product_price'];
         $this->extraProdsPrice = $this->products[$id]['product_price']*$this->products[$id]['quantity'];
     }
     public function down($id){
-
         if(($this->products[$id]['quantity']) > 0){
             $this->products[$id]['quantity'] -=1; //1 product less
             $this->totalQuantity -= 1; //1 off total
@@ -76,14 +74,12 @@ class Cart extends Model
             $this->extraProdsPrice = $this->products[$id]['product_price']*$this->products[$id]['quantity'];
 
         }//need else? also remove maybe
-
-
-
     }
 
     public function removeItem($id){
         $this->totalQuantity -= $this->products[$id]['quantity'];
         $this->totalPrice -= ($this->products[$id]['quantity']*$this->products[$id]['product_price']);
+        $this->extraProdsPrice -= ($this->products[$id]['quantity']*$this->products[$id]['product_price']);
         unset($this->products[$id]);
     }
 

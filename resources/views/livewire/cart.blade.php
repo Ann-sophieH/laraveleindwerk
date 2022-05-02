@@ -6,18 +6,20 @@
                     <!--  item -->
                     <div  >
 
-                        @foreach($cart as $item)
+                        @foreach($cart as $item){{dd($cart)}}
                             @if($item['quantity'] <= 0)
                                 <p class="text-center p-5 m-2"> Nothing to see here... <br><a href="{{route('products')}}" class="">Browse products  </a> <i class="bi bi-arrow-right"></i> </p>
                            @else()
                         <article class="row" >
                             <div class=" col-4 col-lg-3 mb-4 mb-lg-0">
-                                <img src="{{$item['product_image']?asset($item['product_image']):'http://via.placeholder.com/400'}}" alt="">
+                                <img src="{{$item['product_image'] ? asset($item['product_image']) : 'http://via.placeholder.com/400'}}" alt="{{$item['product_name']}}">
                             </div>
                             <div class="col-6 col-lg-5 mb-4 mb-lg-0 fs-li">
                                 <p >{{$item['product_name']}}</p>
                                 <p class="fs-reg">{{Str::limit($item['product_details'],30)}}</p>
-                                <p>black</p>
+                                <p> @foreach($item['product_colors'] as $color)
+                                    {{$color['name']}} <br>
+                                    @endforeach</p>
                             </div>
                             <div class="col-1 order-1 order-lg-2">
                                 <button class="btn" type="button"><i class="bi bi-x-circle" wire:click="removeItem({{$item['product_id']}})" ></i></button>
@@ -75,7 +77,7 @@
                         <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3 mt-3">
                             <div>
                                 Total amount
-                                <p class="mb-0">(including VAT)</p>
+                                <p class="mb-0">(including BTW (BE)</p>
                             </div>
                             <p>&#8364; {{Session::get('cart') ? Session::get('cart')->totalPrice : '0'}}</p>
                         </li>

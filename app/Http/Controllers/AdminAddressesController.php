@@ -49,7 +49,7 @@ class AdminAddressesController extends Controller
         $address->address_type = $request['address_type'];
         $address->save();
         $address->users()->sync($request['user_id'], true);
-        Session::flash('address_message', 'address for'. $address->name_recipient . ' was saved!');
+        Session::flash('address_message', 'address for '. $address->name_recipient . ' was saved!');
 
         return redirect('/admin/addresses');
     }
@@ -92,7 +92,7 @@ class AdminAddressesController extends Controller
         $address->addressline_1 = $request['addressline_1'];
         $address->addressline_2 = $request['addressline_2'];
         $address->address_type = $request['address_type'];
-        Session::flash('address_message', 'address for'. $address->name_recipient . ' was edited!');
+        Session::flash('address_message', 'address for '. $address->name_recipient . ' was edited!');
 
     }
 
@@ -106,7 +106,7 @@ class AdminAddressesController extends Controller
     {
         //
         $address = Address::findOrFail($id);
-        Session::flash('user_message', $address->name . 'was deleted!'); //naam om mess. op te halen, VOOR DELETE OFC
+        Session::flash('user_message', $address->name . ' was deleted!'); //naam om mess. op te halen, VOOR DELETE OFC
         $address->delete();
         return redirect()->back();
     }

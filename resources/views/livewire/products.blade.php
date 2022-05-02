@@ -1,6 +1,7 @@
 <div class="container-fluid row mp-none ">
 
 <div class="bg-gray-100">
+
         <aside class="col-10 mx-auto my-5 d-flex justify-content-start ">
             <div class="card filtercard border-0 br-none me-5" style="width: 15rem;height: 13rem;">
                 <a class="" href="{{route('products')}}">
@@ -23,8 +24,17 @@
                         <p class="card-title fsize-1 text-uppercase"><strong> headphones</strong></p>
                     </div> </a>
             </div>
-
-
+          @if($types->isNotEmpty())
+            @foreach($types as $type)
+                <div class="card filtercard border-0 me-5 br-none" style="width: 15rem;height: 13rem;">
+                    <a href="{{route('speakersPerType', $type)}}">
+                        <img src="{{asset('assetsfront/images/highlightpic.png')}}" class="card-img-top img-fluid" alt="..." style="height: 10rem;" >
+                        <div class="card-body ">
+                            <p class="card-title fsize-1 text-uppercase"><strong>{{$type->name}}</strong></p>
+                        </div></a>
+                </div>
+            @endforeach
+            @endif
         </aside>
     </div>
     <div class="flex-column d-md-flex flex-md-row col-lg-11 mx-auto mt-3">

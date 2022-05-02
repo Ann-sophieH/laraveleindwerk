@@ -7,23 +7,19 @@
         <div class="col-lg-7 row">
             <div class="col-lg-9 order-lg-2">
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="./assets/images/products/BL20_ant_Hero_2.jpg" class="d-block w-100" alt="...">
+                    @foreach($product->photos as $photo)
+                    <div class="carousel-item @if ($loop->first) active @endif">
+                        <img src="{{asset($photo->file) }}" class="d-block w-100" alt="...">
                     </div>
-                    <div class="carousel-item">
-                        <img src="./assets/images/products/BL20_Grey_iphone_2.jpg" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="./assets/images/products/BL20_grey_chaarging_e8.jpg" class="d-block w-100" alt="...">
-                    </div>
+                    @endforeach
+
                 </div>
             </div>
             <div class="col-lg-2 order-lg-1 pt-5 d-flex flex-lg-column g-2 " id="carouselindicators">
-
-                    <button  data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active bg-white shadow-sm" aria-current="true" aria-label="Slide 1">
-                        <img src="./assets/images/products/BL20_ant_Hero_2.jpg" alt=""></button>
-                    <button data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" class="bg-white shadow-sm" aria-label="Slide 2"> <img src="./assets/images/products/BL20_Grey_iphone_2.jpg" alt=""></button>
-                    <button data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="bg-white shadow-sm" aria-label="Slide 3"> <img src="./assets/images/products/BL20_grey_chaarging_e8.jpg" alt=""></button>
+                @foreach($product->photos as $photo)
+                    <button  data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{$loop->index}}" class="@if ($loop->first) active @endif bg-white " aria-current="true" aria-label="Slide 1">
+                        <img src="{{asset($photo->file) }}" alt=""></button>
+                @endforeach
 
             </div>
         </div>
@@ -33,13 +29,15 @@
             <p class="text-muted fs-li">{{$product->details}}</p>
             <div><form action="#" class=" mt-2">
                 <ul class="mt-5 mb-5 mp-none">
+                    @foreach($product->colors as $color)
                     <li class="list-inline-item">
                         <label class="btn-colour form-label " for="colour_sidebar_Kaki"
-                               style="background-color: rgb(84, 81, 66);"></label>
+                               style="background-color: {{$color->hex_value}};"></label>
                         <input name="colour" type="checkbox" id="colour_sidebar_Kaki"
                                class="input-invisible form-control">
                     </li>
-                    <li class="list-inline-item">
+                    @endforeach
+               {{--     <li class="list-inline-item">
                         <label class="btn-colour form-label" for="colour_sidebar_Blue"
                                style="background-color: rgb(38, 43, 51);"></label>
                         <input name="colour" type="checkbox" id="colour_sidebar_Blue"
@@ -68,12 +66,13 @@
                                style="background-color: rgb(169, 169, 169);"></label>
                         <input name="colour" type="checkbox" id="colour_sidebar_Grey"
                                class="input-invisible form-control">
-                    </li>
+                    </li>--}}
 
                 </ul>
             </form></div>
             <p class="fsize-3 fs-bo"> &#8364; {{$product->price}}</p>
             <button class="btn btn-dark text-uppercase text-center pt-2 mt-2 col-lg-6 br-none">Add to bag </button>
+            <button  wire:click="addToCart({{$product->id}})" class="btn btn-outline-dark mt-auto text-center" ><i class="bi bi-cart-plus fs-4"></i></button>
 
             <div class="accordion mt-5 mb-5 fs-reg text-muted br-none" id="accordionExample">
                 <div class="accordion-item">

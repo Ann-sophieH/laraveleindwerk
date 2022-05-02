@@ -151,10 +151,13 @@ class AdminUsersController extends Controller
         }
         /** code picture save **/
         if($file = $request->file('photo_id')){
-            /** delete old user picture upon update to keep things clean **/
+            /** delete old user picture upon update to keep things clean users only need 1 **/
             if($user->photos() == true){
-                $pivot = $user->photos()->where('photoable_id' == $id && 'photoable_type' == 'App\Models\User');
-                $pivot->detach(); //deletes from photoables BUT NOT LOCAL OR FROM PHOTOS !!
+                $pivot = $user->photos()->where('photoable_id' == $id && 'photoable_type' == 'App\Models\User');//getting pivot table
+                $pivot->detach(); //deletes from photoables
+                $oldPhoto = Photo::where('id', $user->photo_id)->first();//getting photo
+                unlink($oldPhoto->file);//delete locally
+                $oldPhoto->delete($oldPhoto);//delete from DB
             }
 
             $name = time() . $file->getClientOriginalName();
@@ -162,7 +165,7 @@ class AdminUsersController extends Controller
                 ->resize(520, 520, function ($constraint){
                     $constraint->aspectRatio();
                 })
-                ->crop(320, 320 )
+                //->crop(320, 320 )
                 ->save(public_path('assets/img/users/' . 'th_' . $name)); //file nodig = temporary file of pc
             $thumbnail = 'users/' . 'th_' . $name ;
             $photo = Photo::create(['file'=>$thumbnail]);
