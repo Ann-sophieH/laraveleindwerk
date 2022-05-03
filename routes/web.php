@@ -49,7 +49,7 @@ Route::get('/products', Products::class)->name('products');
 /** cart & checkout / payment  **/
 Route::get('/cart', '\App\Http\Controllers\FrontendController@cart' )->name('cart');
 Route::get('/checkout','App\Http\Controllers\FrontendController@checkout')->name('checkout');
-Route::post('/checkout', 'App\Http\Controllers\FrontendController@order')->name('order_checkout');
+Route::post('/checkout', 'App\Http\Controllers\FrontendController@order')->name('pay.order');
 
 
 

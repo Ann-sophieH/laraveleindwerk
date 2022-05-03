@@ -83,8 +83,6 @@ class AdminUsersController extends Controller
             $user->photos()->save($photo);
         }
 
-
-
         /** save roles **/
         $user->roles()->sync($request->roles, false);
         /** save address **/

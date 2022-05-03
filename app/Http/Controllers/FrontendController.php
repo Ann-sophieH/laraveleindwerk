@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Mollie\Laravel\Facades\Mollie;
 
 class FrontendController extends Controller
 {
@@ -98,95 +99,121 @@ class FrontendController extends Controller
 
         return view('checkout', compact('cart', 'user', 'delivery_address', 'facturation_address' , 'delivery_date'));
     }
-    public function order(Request $request){
-        /** new order  **/
-        $order = new Order();
-        /** getting cart to make orderdetails  **/
+
+    public function order(Request $request)
+    {
+        /** getting cart to make orderdetails and get amount **/
         $currentCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($currentCart); //nieuw model cart vullen
-        $cart = $cart->products;
-         if (Auth::user()){
-             $user = Auth::user();
-             $order->user_id = $user->id;
-             $order->transaction_code = 123;
-             $order->save();
-             /** add orderdetails for existing user  **/
-             foreach($cart as $item){
-                 $orderdetail = new Orderdetail();
-                 //dd($item);
-                 $orderdetail->order_id = $order->id;
-                 $orderdetail->product_id = $item['product_id'];
-                 $orderdetail->product_price = $item['product_price'];
-                 $orderdetail->amount = $item['quantity'];
-                 $orderdetail->save();
-             }
-             /** add facturation address for existing user  **/
-             if($request['fname_recipient'] && $request['faddressline_1'] && $request['faddressline_2'] ){
-                 $address = new Address();
-                 $address->name_recipient = $request['fname_recipient'];
-                 $address->addressline_1 = $request['faddressline_1'];
-                 $address->addressline_2 = $request['faddressline_2'];
-                 $address->address_type = 2;
-                 $address->save();
-                 $user->addresses()->sync($address->id, false);
-             }
-         }else{
-             /** create new user from form **/
-             $request->validate([
-                 'username'=>'string|max:255',
-                 'first_name'=>'required|string|max:255',
-                 'last_name'=>'required|string|max:255',
-                 'telephone'=>'max:15',//not unique cause huistelefoon
-                 'email'=>'required|email|unique:users',
-                 'password'=>'required',
-                 'name_recipient'=> 'required|string|max:255',
-                 'addressline_1'=> 'required|string|max:255',
-                 'addressline_2'=> 'required|string|max:255',
-             ]);
-             $user = new User();
-             $user->username = $request->username;
-             $user->first_name = $request->first_name;
-             $user->last_name = $request->last_name;
-             $user->email = $request->email;
-             $user->telephone = $request->telephone;
-             $user->password = Hash::make($request['password']);
-             $user->is_active = 1;
-             $user->save();
-             /** save delivery address **/
-             $address = new Address();
-             $address->name_recipient = $request['name_recipient'];
-             $address->addressline_1 = $request['addressline_1'];
-             $address->addressline_2 = $request['addressline_2'];
-             // $address->address_type = 1; default value
-             $address->save();
-             $user->addresses()->sync($address->id, false);
-             /** save facturation address **/
-            if($request['fname_recipient'] && $request['faddressline_1'] && $request['faddressline_2'] ){
+
+        $amount = number_format( $cart->totalPrice, 2, '.', '' );
+
+        $payment = Mollie::api()->payments()->create([
+            'amount' => [
+                'currency' => 'EUR', // Type of currency you want to send
+                'value' => $amount, // You must send the correct number of decimals, thus we enforce the use of strings
+            ],
+            'description' => 'Payment to BV Bing & Olufson ',
+            'redirectUrl' => route('payment.success'), // after the payment completion where you to redirect
+            "metadata" => [
+                "order_id" => "12345"
+            ],
+        ]);
+       // dd($payment);
+        if ($payment->id != null ) {
+            if (Auth::user()) {
+                $user = Auth::user();
+                /** new order  **/
+                $order = new Order();
+                $order->user_id = $user->id;
+                $order->transaction_code = $payment->id ;
+                $order->save();
+                /** add orderdetails for existing user  **/
+                $cart = $cart->products;
+                foreach ($cart as $item) {
+                    $orderdetail = new Orderdetail();
+                    //dd($item);
+                    $orderdetail->order_id = $order->id;
+                    $orderdetail->product_id = $item['product_id'];
+                    $orderdetail->product_price = $item['product_price'];
+                    $orderdetail->amount = $item['quantity'];
+                    $orderdetail->save();
+                }
+                Session::flush('cart');
+                /** add facturation address for existing user  **/
+                if ($request['fname_recipient'] && $request['faddressline_1'] && $request['faddressline_2']) {
+                    $address = new Address();
+                    $address->name_recipient = $request['fname_recipient'];
+                    $address->addressline_1 = $request['faddressline_1'];
+                    $address->addressline_2 = $request['faddressline_2'];
+                    $address->address_type = 2;
+                    $address->save();
+                    $user->addresses()->sync($address->id, false);
+                }
+            } else {
+                /** create new user from form **/
+                $request->validate([
+                    'username' => 'string|max:255',
+                    'first_name' => 'required|string|max:255',
+                    'last_name' => 'required|string|max:255',
+                    'telephone' => 'max:15',//not unique cause huistelefoon
+                    'email' => 'required|email|unique:users',
+                    'password' => 'required',
+                    'name_recipient' => 'required|string|max:255',
+                    'addressline_1' => 'required|string|max:255',
+                    'addressline_2' => 'required|string|max:255',
+                ]);
+                $user = new User();
+                $user->username = $request->username;
+                $user->first_name = $request->first_name;
+                $user->last_name = $request->last_name;
+                $user->email = $request->email;
+                $user->telephone = $request->telephone;
+                $user->password = Hash::make($request['password']);
+                $user->is_active = 1;
+                $user->save();
+                /** save delivery address **/
                 $address = new Address();
-                $address->name_recipient = $request['fname_recipient'];
-                $address->addressline_1 = $request['faddressline_1'];
-                $address->addressline_2 = $request['faddressline_2'];
-                $address->address_type = 2;
+                $address->name_recipient = $request['name_recipient'];
+                $address->addressline_1 = $request['addressline_1'];
+                $address->addressline_2 = $request['addressline_2'];
+                // $address->address_type = 1; default value
                 $address->save();
                 $user->addresses()->sync($address->id, false);
+                /** save facturation address **/
+                if ($request['fname_recipient'] && $request['faddressline_1'] && $request['faddressline_2']) {
+                    $address = new Address();
+                    $address->name_recipient = $request['fname_recipient'];
+                    $address->addressline_1 = $request['faddressline_1'];
+                    $address->addressline_2 = $request['faddressline_2'];
+                    $address->address_type = 2;
+                    $address->save();
+                    $user->addresses()->sync($address->id, false);
+                }
+                /**save order of new user **/
+                /** new order  **/
+                $order = new Order();
+                $order->user_id = $user->id;
+                $order->transaction_code = $payment->id ;
+                $order->save();
+                /** save orderdetails for order  **/
+                $cart = $cart->products;
+                foreach ($cart as $item) {
+                    $orderdetail = new Orderdetail();
+                    $orderdetail->order_id = $order->id;
+                    $orderdetail->product_id = $item['product_id'];
+                    $orderdetail->product_price = $item['product_price'];
+                    $orderdetail->amount = $item['quantity'];
+                    $orderdetail->save();
+                }
+                Session::flush('cart');
             }
-            /**save order of new user **/
-             $order->user_id = $user->id;
-             $order->transaction_code = 123;
-             $order->save();
-             /** save orderdetails for order  **/
-             foreach($cart as $item){
-                 $orderdetail = new Orderdetail();
-                 $orderdetail->order_id = $order->id;
-                 $orderdetail->product_id = $item['product_id'];
-                 $orderdetail->product_price = $item['product_price'];
-                 $orderdetail->amount = $item['quantity'];
-                 $orderdetail->save();
-             }
-         }
-         /** empty cart **/
-        Session::flush('cart');
-        return redirect(route('mollie.payment')); //to payment
+
+            /** empty cart **/
+
+        }
+        return redirect($payment->getCheckoutUrl(), 303);//to payment
+
     }
 
    public function cart(){

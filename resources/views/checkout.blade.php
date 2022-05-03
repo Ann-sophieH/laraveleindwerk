@@ -11,27 +11,29 @@
 </div>
 <div class="container-fluid col-lg-10 offset-lg-1 mt-5 fs-reg">
   <h1 class=" m-2 mt-4">Checkout</h1>
-    <p class="fs-reg ps-2"> You can create a new profile  <button type="button" class="btn p-1 shadow-none  fs-bo text-decoration-underline" data-bs-toggle="modal" data-bs-target="#exampleModal">
-
-  or login here </button> when u have made previous orders with us  </p>
-    <form method="post" action="{{route('order_checkout')}}">
+    <form method="post" action="{{route('pay.order')}}">
         @csrf
   <section class="row d-flex justify-content-center my-4">
     <div class="col-md-8">
       <div class="card mb-4 br-none ">
 
         <div class="card-body ">
+{{--            @if(Auth::user())   @endif--}}
+{{--                @if(!Auth::user())--}}
 
 {{--            @if(empty(Auth::user()) )--}}
+                        <p class="text-center  mb-0 text-uppercase">Register new account </p>
+                    <p class="text-center fsize-1"> you can also  <button type="button" class="btn p-1 shadow-none  fs-bo text-decoration-underline" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            login here</button> if you have previous orders </p>
             <div class="border mt-4">
                 <div class="form-floating offset-1 col-10">
                     <input  @if($user  != null) value="{{$user->username}}" @endif type="text" name="username" id="username" class="form-control border-0 mt-2 shadow-none" required >
-                    <label for="username" class="text-muted ">First name *</label>
+                    <label for="username" class="text-muted ">Username *</label>
                 </div>
                 <hr class="offset-1 col-10">
                 <div class="form-floating offset-1 col-10">
                     <input  @if($user  != null) value="{{$user->password}}" @endif name="password" type="password" id="password" class="form-control border-0 mb-2 shadow-none" required >
-                    <label for="password" class="text-muted">Last name *</label>
+                    <label for="password" class="text-muted">Password *</label>
                 </div>
             </div>
             <div class="border mt-4">
@@ -102,6 +104,7 @@
                 </div>
             </div>
             </div>
+
 
 
         </div>
@@ -178,31 +181,30 @@
             </li>
           </ul>
 
-            <button class="btn btn-outline-dark br-none  " type="submit">
-                    Pay now <i class="bi bi-arrow-right"></i>
-                </button>
+
+            <button class="btn btn-outline-dark br-none  "  type="submit">
+                Pay now <i class="bi bi-arrow-right"></i>
+            </button>
         </div>
       </div>
     </div>
   </section>
-  </form>
+    </form>
 </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row justify-content-center py-5 my-5">
-                        <div class="col-md-8">
-                            <div class="card">
-                                <div class="card-header">{{ __('Login') }}</div>
 
-                                <div class="card-body">
+
+                    <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="row justify-content-center py-5 my-5">
+
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <div class=" modal-title" id="exampleModalLabel">{{ __('Login') }}</div>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
                                     <form method="POST" action="{{ route('login') }}">
                                         @csrf
 
@@ -276,15 +278,12 @@
                                         </div>
                                     </form>
                                 </div>
-                            </div>
-                        </div>
+
+
+
+
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
+                    </div>
+                    </div> </div>
+
 @endsection

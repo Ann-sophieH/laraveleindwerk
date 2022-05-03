@@ -21,5 +21,8 @@ class Order extends Model
     public function orderdetails(){
         return $this->hasMany(Orderdetail::class);
     }
+    public function sendUserInfo(){
+
+    }
 
 }

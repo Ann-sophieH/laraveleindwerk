@@ -12,9 +12,9 @@ class Cart extends Model
 
    public $products = null;
     public $totalQuantity = 0;
-    public $totalPrice = 0;
+    public float $totalPrice = 0.00 ;
 
-    public $extraProdsPrice = 0;
+
 
 
     public function __construct($oldCart){
@@ -70,6 +70,7 @@ class Cart extends Model
         $this->totalQuantity++;
         $this->totalPrice += $product->price;
         $this->products[$product_id] = $shopItems;
+
     }
 
     public function up($id){
