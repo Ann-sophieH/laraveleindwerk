@@ -23,7 +23,7 @@ class Products extends Component
         $product = Product::with(['specifications', 'colors', 'category', 'photos'])->where('id', $id)->first();
         $oldCart = Session::has('cart') ? Session::get('cart'): null;
         $cart = new Cart($oldCart);
-        $cart->add($product, $id);
+        $cart->addItem($product, $id);
         Session::put('cart',$cart);
         //return redirect()->back();
 

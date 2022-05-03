@@ -4,52 +4,77 @@
     <div class="container-fluid col-lg-10 offset-lg-1 mt-4">
   <nav aria-label="breadcrumb ">
     <ol class="breadcrumb fs-li">
-      <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+      <li class="breadcrumb-item"><a href="{{url('/')}}">Home</a></li>
       <li aria-current="page" class="breadcrumb-item active">All products</li>
     </ol>
   </nav>
 </div>
 <div class="container-fluid col-lg-10 offset-lg-1 mt-5 fs-reg">
   <h1 class=" m-2 mt-4">Checkout</h1>
+    <p class="fs-reg ps-2"> You can create a new profile  <button type="button" class="btn p-1 shadow-none  fs-bo text-decoration-underline" data-bs-toggle="modal" data-bs-target="#exampleModal">
+
+  or login here </button> when u have made previous orders with us  </p>
+    <form method="post" action="{{route('order_checkout')}}">
+        @csrf
   <section class="row d-flex justify-content-center my-4">
     <div class="col-md-8">
       <div class="card mb-4 br-none ">
 
         <div class="card-body ">
-            @if(empty(Auth::user()) )
+
+{{--            @if(empty(Auth::user()) )--}}
+            <div class="border mt-4">
+                <div class="form-floating offset-1 col-10">
+                    <input  @if($user  != null) value="{{$user->username}}" @endif type="text" name="username" id="username" class="form-control border-0 mt-2 shadow-none" required >
+                    <label for="username" class="text-muted ">First name *</label>
+                </div>
+                <hr class="offset-1 col-10">
+                <div class="form-floating offset-1 col-10">
+                    <input  @if($user  != null) value="{{$user->password}}" @endif name="password" type="password" id="password" class="form-control border-0 mb-2 shadow-none" required >
+                    <label for="password" class="text-muted">Last name *</label>
+                </div>
+            </div>
+            <div class="border mt-4">
+                <div class="form-floating offset-1 col-10">
+                    <input  @if($user  != null) value="{{$user->first_name}}" @endif type="text" name="first_name" id="first_name" class="form-control border-0 mt-2 shadow-none" required >
+                    <label for="first_name" class="text-muted ">First name *</label>
+                </div>
+                <hr class="offset-1 col-10">
+                <div class="form-floating offset-1 col-10">
+                    <input  @if($user  != null) value="{{$user->last_name}}" @endif name="last_name" type="text" id="last_name" class="form-control border-0 mb-2 shadow-none" required >
+                    <label for="last_name" class="text-muted">Last name *</label>
+                </div>
+            </div>
                 <div class="border mt-4">
                     <div class="form-floating offset-1 col-10">
-                        <input type="name" id="inputName1" class="form-control border-0 mt-2 shadow-none" placeholder="First Name" required="" >
-                        <label for="inputName1" class="text-muted ">Email *</label>
+                        <input @if($user  != null) value="{{$user->email}}" @endif type="email" name="email" id="email" class="form-control border-0 mt-2 shadow-none"  required >
+                        <label for="email" class="text-muted ">Email *</label>
                     </div>
                     <hr class="offset-1 col-10">
                     <div class="form-floating offset-1 col-10">
-                        <input type="text" id="inputLastName" class="form-control border-0 mb-2 shadow-none" placeholder="Last Name" required="" >
-                        <label for="inputLastName" class="text-muted"> Telephone Number</label>
+                        <input @if($user  != null) value="{{$user->telephone ? $user->telephone : ''}}" @endif name="telephone" type="text" id="telephone" class="form-control border-0 mb-2 shadow-none"  >
+                        <label for="telephone" class="text-muted"> Telephone Number</label>
                     </div>
                 </div>
-            <h2 class="fsize-2 m-2 mt-4 text-uppercase ps-4">Delivery address</h2>
-          <div class="border mt-4">
-            <div class="form-floating offset-1 col-10">
-              <input type="name" id="inputName1" class="form-control border-0 mt-2 shadow-none" placeholder="First Name" required="" >
-              <label for="inputName1" class="text-muted ">First name *</label>
-            </div>
-            <hr class="offset-1 col-10">
-            <div class="form-floating offset-1 col-10">
-            <input type="text" id="inputLastName" class="form-control border-0 mb-2 shadow-none" placeholder="Last Name" required="" >
-              <label for="inputLastName" class="text-muted">Last name *</label>
-            </div>
-          </div>
+            <h2 class="fsize-2 m-2 mt-4 text-uppercase ps-4 py-3">Delivery address</h2>
 
+            <div class="border mt-4 ">
+                <div class="form-floating offset-1 col-10">
+                    <input @if($delivery_address  != null) value="{{$delivery_address->name_recipient}}" @endif name="name_recipient" type="text" id="adress" class="form-control border-0 mt-2 shadow-none"  required="" >
+                    <label for="name_recipient" class="text-muted">Name recipient</label>
+                </div>
+
+            </div>
           <div class="border mt-4 ">
+              <input type="hidden" name="address_type" value="1">
             <div class="form-floating offset-1 col-10">
-              <input type="name" id="adress" class="form-control border-0 mt-2 shadow-none" placeholder="Name" required="" >
-              <label for="adress" class="text-muted">Street and number</label>
+              <input @if($delivery_address  != null) value="{{$delivery_address->addressline_1}}" @endif name="addressline_1" type="text" id="addressline_1" class="form-control border-0 mt-2 shadow-none"  required="" >
+              <label for="addressline_1" class="text-muted">Street and number</label>
             </div>
             <hr class="offset-1 col-10">
             <div class="form-floating offset-1 col-10">
-              <input type="text" id="adresslijn2" class="form-control border-0 mb-2 shadow-none" placeholder="Last Name" required="" >
-              <label for="adresslijn2" class="text-muted">City and Postalcode</label>
+              <input @if($delivery_address  != null) value="{{$delivery_address->addressline_2}}" @endif name="addressline_2" type="text" id="addressline_2" class="form-control border-0 mb-2 shadow-none"  required="" >
+              <label for="addressline_2" class="text-muted">City and Postalcode</label>
             </div>
           </div>
 
@@ -57,31 +82,27 @@
                     <i class="bi bi-plus " ></i>   Facturation address (optional) </a> </h2>
 
             <div class="collapse" id="collapseExample">
-            <div class="border mt-4">
-                <div class="form-floating offset-1 col-10">
-                    <input type="name" id="inputName1" class="form-control border-0 mt-2 shadow-none" placeholder="First Name" required="" >
-                    <label for="inputName1" class="text-muted ">First name</label>
+                <div class="border mt-4 ">
+                    <div class="form-floating offset-1 col-10">
+                        <input @if($facturation_address  != null) value="{{$facturation_address->name_recipient}}" @endif name="fname_recipient" type="text" id="fname_recipient" class="form-control border-0 mt-2 shadow-none"  >
+                        <label for="fname_recipient" class="text-muted">Name recipient</label>
+                    </div>
+
                 </div>
-                <hr class="offset-1 col-10">
-                <div class="form-floating offset-1 col-10">
-                    <input type="text" id="inputLastName" class="form-control border-0 mb-2 shadow-none" placeholder="Last Name" required="" >
-                    <label for="inputLastName" class="text-muted">Last name</label>
-                </div>
-            </div>
 
             <div class="border mt-4 ">
                 <div class="form-floating offset-1 col-10">
-                    <input type="name" id="adress" class="form-control border-0 mt-2 shadow-none" placeholder="Name" required="" >
-                    <label for="adress" class="text-muted">Street and number</label>
+                    <input @if($facturation_address  != null) value="{{$facturation_address->addressline_1}}" @endif name="faddressline_1" type="text" id="faddressline_1" class="form-control border-0 mt-2 shadow-none"  >
+                    <label for="faddressline_1" class="text-muted">Street and number</label>
                 </div>
                 <hr class="offset-1 col-10">
                 <div class="form-floating offset-1 col-10">
-                    <input type="text" id="adresslijn2" class="form-control border-0 mb-2 shadow-none" placeholder="Last Name" required="" >
-                    <label for="adresslijn2" class="text-muted">City and Postalcode</label>
+                    <input  @if($facturation_address  != null) value="{{$facturation_address->addressline_2}}" @endif name="faddressline_2" type="text" id="faddressline_2" class="form-control border-0 mb-2 shadow-none"  >
+                    <label for="faddressline_2" class="text-muted">City and Postalcode</label>
                 </div>
             </div>
             </div>
-                @endif
+
 
         </div>
 
@@ -89,8 +110,9 @@
       </div>
       <div class="card mb-4">
         <div class="card-body ">
-          <h2 class="fsize-2 m-2 mt-4 text-uppercase ps-4">Delivery option(s)</h2>
-          <p class="mb-0 ps-5">12.12.2021 - 14.10.2022</p>
+          <h2 class="fsize-2 m-2 mt-4 text-uppercase ps-4">Delivery date</h2>
+            <p class="ps-5 text-muted pt-3">Delivery takes 1 to 5 days, you can expect your package by: </p>
+          <p class="mb-0 ps-5">{{$delivery_date}}</p>
         </div>
       </div>
       <div class="card mb-4 mb-lg-0">
@@ -130,7 +152,7 @@
 
             </div>
             <div class="col  mb-4 mb-lg-0  ">
-              <p class="text-center fs-bo">{{$item['quantity']}} x &#8364; {{$item['product_price']}}  </p>
+              <p class="text-center ">{{$item['quantity']}} x &#8364; {{$item['product_price']}} =  <span class="fs-bo"> &#8364;{{$item['product_price'] * $item['quantity'] }} </span></p>
             </div>
           </article>
           <hr class="my-4"/>
@@ -156,11 +178,113 @@
             </li>
           </ul>
 
-
+            <button class="btn btn-outline-dark br-none  " type="submit">
+                    Pay now <i class="bi bi-arrow-right"></i>
+                </button>
         </div>
       </div>
     </div>
   </section>
-
+  </form>
 </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row justify-content-center py-5 my-5">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header">{{ __('Login') }}</div>
+
+                                <div class="card-body">
+                                    <form method="POST" action="{{ route('login') }}">
+                                        @csrf
+
+                                        <div class="row mb-3">
+                                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+
+                                            <div class="col-md-6">
+                                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+                                                @error('email')
+                                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+
+                                            <div class="col-md-6">
+                                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                                                @error('password')
+                                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-6 offset-md-4">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+
+                                                    <label class="form-check-label" for="remember">
+                                                        {{ __('Remember Me') }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-0">
+                                            <div class="col-md-8 offset-md-4 d-flex justify-content-evenly">
+                                                <div class="flex items-center justify-end mt-4">
+                                                    <button type="submit" class="btn btn-primary">
+                                                        {{ __('Login') }}
+                                                    </button> </div>
+                                                {{-- Login with GitHub --}}
+                                                <div class="flex items-center justify-end mt-4">
+                                                    <a class="btn" href="{{ url('login/github') }}"
+                                                       style="background: #313131; color: #ffffff; padding: 10px; width: 100%; text-align: center; display: block; border-radius:3px;">
+                                                        Login with GitHub
+                                                    </a>
+                                                </div>
+                                                {{-- Login with google --}}
+                                                <div class="flex items-center justify-end mt-4">
+                                                    <a class="btn btn-outline" href="{{ url('/login/google') }}"
+                                                       style="background: #313131; color: #ffffff; padding: 10px; width: 100%; text-align: center; display: block; border-radius:3px;">
+                                                        Login with Google
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            @if (Route::has('password.request'))
+                                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                                    {{ __('Forgot Your Password?') }}
+                                                </a>
+                                            @endif
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

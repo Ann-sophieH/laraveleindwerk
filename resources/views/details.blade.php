@@ -71,8 +71,15 @@
                 </ul>
             </form></div>
             <p class="fsize-3 fs-bo"> &#8364; {{$product->price}}</p>
-            <button class="btn btn-dark text-uppercase text-center pt-2 mt-2 col-lg-6 br-none">Add to bag </button>
-            <button  wire:click="addToCart({{$product->id}})" class="btn btn-outline-dark mt-auto text-center" ><i class="bi bi-cart-plus fs-4"></i></button>
+<!--
+            <form action="" method="post">
+
+                <button class="btn btn-dark text-uppercase text-center pt-2 mt-2 col-lg-6 br-none" type="submit">Add to bag </button>
+            </form>
+
+            <button  wire:click="addToCart()" class="btn btn-outline-dark mt-auto text-center" ><i class="bi bi-cart-plus fs-4"></i></button>
+-->
+            @livewire('add-to-cart', ['product' => $product])
 
             <div class="accordion mt-5 mb-5 fs-reg text-muted br-none" id="accordionExample">
                 <div class="accordion-item">

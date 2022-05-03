@@ -41,10 +41,12 @@ Route::get('/headphones/type/{type:slug}', '\App\Http\Controllers\FrontendContro
 
 Route::get('/products/{product:slug}', 'App\Http\Controllers\FrontendController@details')->name('details');
 Route::get('/products', Products::class)->name('products');
+//Route::post('/addtocart', 'App\Http\Controllers\FrontendController@addToCart')->name('addToCart');
 
 /** cart & checkout / payment  **/
-Route::get('/cart', '\App\Http\Controllers\FrontendController@cartList' )->name('cart.list');
+Route::get('/cart', '\App\Http\Controllers\FrontendController@cart' )->name('cart');
 Route::get('/checkout','App\Http\Controllers\FrontendController@checkout')->name('checkout');
+Route::post('/checkout', 'App\Http\Controllers\FrontendController@order')->name('order_checkout');
 
 
 

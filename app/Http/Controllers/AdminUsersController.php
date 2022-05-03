@@ -93,7 +93,7 @@ class AdminUsersController extends Controller
         $address->name_recipient = $request['name_recipient'];
         $address->addressline_1 = $request['addressline_1'];
         $address->addressline_2 = $request['addressline_2'];
-       // $address->address_type = 1;
+       // $address->address_type = 1; standard
         $address->save();
         $user->addresses()->sync($address->id, false);
         Session::flash('user_message', 'A new user was added!');

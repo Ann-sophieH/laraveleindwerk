@@ -6,7 +6,7 @@
                     <!--  item -->
                     <div  >
 
-                        @foreach($cart as $item){{dd($cart)}}
+                        @foreach($cart as $item)
                             @if($item['quantity'] <= 0)
                                 <p class="text-center p-5 m-2"> Nothing to see here... <br><a href="{{route('products')}}" class="">Browse products  </a> <i class="bi bi-arrow-right"></i> </p>
                            @else()
@@ -29,7 +29,7 @@
                                 <input  readonly class="text-center mb-4 border pt-1 "  style="max-width: 60px" value="{{$item['quantity']}}" >
                                 <button class="btn  shadow-none" type="button" wire:click="quantUp({{$item['product_id']}} , '{{$item['quantity']}}' )"><i class="bi bi-arrow-up  "></i></button>
                                 <p class="text-start text-md-center fs-bo">Item price € {{$item['product_price']}} </p>
-                                <p class="text-start text-md-center fs-bo">total: € {{Session::get('cart') ? Session::get('cart')->extraProdsPrice : '0'}}</p>
+                                <p class="text-start text-md-center fs-bo">total: € {{$item['product_price'] * $item['quantity'] }}</p>
 
                             </div>
 
@@ -38,7 +38,7 @@
                             @endif
                             @endforeach
                     </div>
-                 @else( )
+                 @else(!Session::has('cart'))
 
                     <div>
                         <p class="p-2">

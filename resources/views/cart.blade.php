@@ -8,9 +8,9 @@
 
     <div>
 
-        <livewire:cart>
+        <livewire:cart-list>
 
-        </livewire:cart>
+        </livewire:cart-list>
 
     </div>
 

@@ -41,7 +41,7 @@ class CartList extends Component
             $currentCart = Session::has('cart') ? Session::get('cart') : null;
             $cart = new Cart($currentCart); //nieuw model cart vullen
      //   dd($cart->quantity);
-            return view('livewire.cart', [
+            return view('livewire.cart-list', [
                 'totalPrice'=> $cart->totalPrice,
                 'totalQuantity'=> $cart->totalQuantity,
                 $cart = $cart->products,
