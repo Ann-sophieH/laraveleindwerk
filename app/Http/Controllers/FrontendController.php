@@ -105,9 +105,9 @@ class FrontendController extends Controller
         /** getting cart to make orderdetails and get amount **/
         $currentCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($currentCart); //nieuw model cart vullen
-
+        /** formatting integer to string for mollie  **/
         $amount = number_format( $cart->totalPrice, 2, '.', '' );
-
+        /** create new mollie payment through API  **/
         $payment = Mollie::api()->payments()->create([
             'amount' => [
                 'currency' => 'EUR', // Type of currency you want to send
@@ -215,7 +215,14 @@ class FrontendController extends Controller
         return redirect($payment->getCheckoutUrl(), 303);//to payment
 
     }
+    public function paymentSuccess() {
+        //echo 'payment has been received';
+        //$payment = Mollie::api()->payments()->get($payment->id);
+        //dd( Mollie::api()->payments());
+        Session::flash('payment_message', 'Your order has been placed successfully, we will start packing soon!');//put message in cart!!
 
+        return redirect('cart');
+    }
    public function cart(){
 
         return view('cart');

@@ -1,5 +1,6 @@
 @extends('layouts/index')
 @section('content')
+    @include('includes.form_error')
 
     <div class="container-fluid col-lg-10 offset-lg-1 mt-4">
   <nav aria-label="breadcrumb ">
@@ -49,7 +50,7 @@
             </div>
                 <div class="border mt-4">
                     <div class="form-floating offset-1 col-10">
-                        <input @if($user  != null) value="{{$user->email}}" @endif type="email" name="email" id="email" class="form-control border-0 mt-2 shadow-none"  required >
+                        <input @if($user  != null) value="{{$user->email}}" @endif type="email"  name="email" id="email" class="form-control border-0 mt-2 shadow-none @error('email') is-invalid @enderror"  required >
                         <label for="email" class="text-muted ">Email *</label>
                     </div>
                     <hr class="offset-1 col-10">
@@ -182,7 +183,7 @@
           </ul>
 
 
-            <button class="btn btn-outline-dark br-none  "  type="submit">
+            <button class="btn btn-outline-dark br-none  " @empty( Session::get('cart') ) disabled @endempty type="submit">
                 Pay now <i class="bi bi-arrow-right"></i>
             </button>
         </div>
@@ -249,28 +250,30 @@
                                         </div>
 
                                         <div class="row mb-0">
-                                            <div class="col-md-8 offset-md-4 d-flex justify-content-evenly">
-                                                <div class="flex items-center justify-end mt-4">
-                                                    <button type="submit" class="btn btn-primary">
-                                                        {{ __('Login') }}
-                                                    </button> </div>
-                                                {{-- Login with GitHub --}}
-                                                <div class="flex items-center justify-end mt-4">
-                                                    <a class="btn" href="{{ url('login/github') }}"
-                                                       style="background: #313131; color: #ffffff; padding: 10px; width: 100%; text-align: center; display: block; border-radius:3px;">
-                                                        Login with GitHub
-                                                    </a>
+
+                                                <button type="submit" class="btn btn-outline-secondary col-3 mx-auto my-3"><i class="bi bi-door-open"></i>
+                                                    {{ __('Login') }}
+                                                </button>
+                                                <div class="d-flex justify-content-evenly mt-4">
+                                                    {{-- Login with GitHub --}}
+                                                    <div class="  ">
+                                                        <a class="btn btn-outline-warning" href="{{ url('login/github') }}"
+                                                        ><i class="bi bi-github"></i> <br>
+                                                            Login with GitHub
+                                                        </a>
+                                                    </div>
+                                                    {{-- Login with google --}}
+                                                    <div class="  ">
+                                                        <a class="btn btn-outline-primary" href="{{ url('/login/google') }}"
+                                                        >
+                                                            <i class="bi bi-google"></i> <br>Login with Google
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                                {{-- Login with google --}}
-                                                <div class="flex items-center justify-end mt-4">
-                                                    <a class="btn btn-outline" href="{{ url('/login/google') }}"
-                                                       style="background: #313131; color: #ffffff; padding: 10px; width: 100%; text-align: center; display: block; border-radius:3px;">
-                                                        Login with Google
-                                                    </a>
-                                                </div>
-                                            </div>
+
                                             @if (Route::has('password.request'))
-                                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                                <a class="btn btn-link link-secondary mt-3"
+                                                   href="{{ route('password.request') }}">
                                                     {{ __('Forgot Your Password?') }}
                                                 </a>
                                             @endif
@@ -280,9 +283,7 @@
                                 </div>
 
 
-
-
-                    </div>
+                            </div>
                     </div>
                     </div> </div>
 

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center py-5 my-5">
-        <div class="col-md-8">
+        <div class="col-md-8 my-4">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 
@@ -52,31 +52,34 @@
                         </div>
 
                         <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4 d-flex justify-content-evenly">
-                                <div class="flex items-center justify-end mt-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button> </div>
+
+                            <button type="submit" class="btn btn-outline-secondary col-3 mx-auto py-2 my-3"><i
+                                    class="bi bi-door-open"></i>
+                                {{ __('Login') }}
+                            </button>
+                            <div class="d-flex justify-content-evenly mt-4">
                                 {{-- Login with GitHub --}}
-                                <div class="flex items-center justify-end mt-4">
-                                    <a class="btn" href="{{ url('login/github') }}"
-                                       style="background: #313131; color: #ffffff; padding: 10px; width: 100%; text-align: center; display: block; border-radius:3px;">
+                                <div class="  ">
+                                    <a class="btn btn-outline-warning" href="{{ url('login/github') }}">
+                                        <i class="bi bi-github"></i>
+                                        <br>
                                         Login with GitHub
                                     </a>
                                 </div>
                                 {{-- Login with google --}}
-                                <div class="flex items-center justify-end mt-4">
-                                    <a class="btn btn-outline" href="{{ url('/login/google') }}"
-                                       style="background: #313131; color: #ffffff; padding: 10px; width: 100%; text-align: center; display: block; border-radius:3px;">
-                                        Login with Google
+                                <div class="  ">
+                                    <a class="btn btn-outline-primary" href="{{ url('/login/google') }}">
+                                        <i class="bi bi-google"></i> <br>Login with Google
                                     </a>
                                 </div>
                             </div>
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
+
+                            @if (Route::has('password.request'))
+                                <a class="btn btn-link link-secondary mt-3"
+                                   href="{{ route('password.request') }}">
+                                    {{ __('Forgot Your Password?') }}
+                                </a>
+                            @endif
 
                         </div>
                     </form>

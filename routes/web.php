@@ -21,8 +21,7 @@ Auth::routes(['verify'=>true]); //verified email
 /**FRONTEND**/
 
 /** payments **/
-Route::get('mollie-payment',[MollieController::Class,'preparePayment'])->name('mollie.payment');
-Route::get('payment-success',[MollieController::Class, 'paymentSuccess'])->name('payment.success');
+
 /** socialite logins **/
 Route::get('login/github', [SocialiteLoginController::class, 'redirectToGit']);
 Route::get('login/github/callback', [SocialiteLoginController::class, 'handleGitCallback']);
@@ -49,7 +48,9 @@ Route::get('/products', Products::class)->name('products');
 /** cart & checkout / payment  **/
 Route::get('/cart', '\App\Http\Controllers\FrontendController@cart' )->name('cart');
 Route::get('/checkout','App\Http\Controllers\FrontendController@checkout')->name('checkout');
+
 Route::post('/checkout', 'App\Http\Controllers\FrontendController@order')->name('pay.order');
+Route::get('payment-success','App\Http\Controllers\FrontendController@paymentSuccess')->name('payment.success');
 
 
 
