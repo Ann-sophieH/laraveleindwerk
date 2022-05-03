@@ -186,7 +186,7 @@ class FrontendController extends Controller
          }
          /** empty cart **/
         Session::flush('cart');
-        return redirect()->back(); //back to empty cart
+        return redirect(route('mollie.payment')); //to payment
     }
 
    public function cart(){

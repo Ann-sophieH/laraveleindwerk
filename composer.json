@@ -15,7 +15,8 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^3.4",
         "laravelcollective/html": "^6.3",
-        "livewire/livewire": "^2.10"
+        "livewire/livewire": "^2.10",
+        "mollie/laravel-mollie": "^2.19"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",

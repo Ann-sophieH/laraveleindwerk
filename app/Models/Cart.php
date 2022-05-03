@@ -46,9 +46,7 @@ class Cart extends Model
 
         }else{
             $shopItems = Arr::prepend($shopItems, 'product_image', 'http://via.placeholder.com/400x400');
-          /*  $shopItems =[
-                'product_image'=>'http://via.placeholder.com/400x400'
-            ] ;*/
+
         }
         if($this->products){
             if(array_key_exists($product_id, $this->products)){

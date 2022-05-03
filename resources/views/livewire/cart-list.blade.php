@@ -2,13 +2,13 @@
         <div class="col-md-8">
             <div class="card mb-4 br-none ">
                 <div class="card-body ">
-                    @if(Session::has('cart'))
+                    @if( Session::has('cart'))
                     <!--  item -->
                     <div  >
 
                         @foreach($cart as $item)
-                            @if($item['quantity'] <= 0)
-                                <p class="text-center p-5 m-2"> Nothing to see here... <br><a href="{{route('products')}}" class="">Browse products  </a> <i class="bi bi-arrow-right"></i> </p>
+                            @if($item['quantity'] <= 0 )
+                                <p class="text-center p-5 m-2"> Oops, you have to order at least one...  <br><a href="{{route('products')}}" >Browse other products  </a> <i class="bi bi-arrow-right"></i> </p>
                            @else()
                         <article class="row" >
                             <div class=" col-4 col-lg-3 mb-4 mb-lg-0">
@@ -38,11 +38,11 @@
                             @endif
                             @endforeach
                     </div>
-                 @else(!Session::has('cart'))
+                 @else()
 
                     <div>
-                        <p class="p-2">
-                            this cart has no items yet! <a href="{{route('products')}}">shop now </a>
+                        <p class="p-5">
+                            Your cart has no items yet! <a href="{{route('products')}}" class="fs-bo text-decoration-underline ps-2">shop now <i class="bi bi-arrow-right"></i> </a>
                         </p>
                     </div>
 
