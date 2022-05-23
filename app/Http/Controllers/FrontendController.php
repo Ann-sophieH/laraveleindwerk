@@ -24,7 +24,7 @@ class FrontendController extends Controller
     //
 
     public function index(){
-        $carr_products = Product::where('category_id', 1)->take(6)->get();
+        $carr_products = Product::where('category_id', 1)->with('photos')->take(6)->get();
 
         return view('index', compact('carr_products'));
     }
@@ -37,7 +37,8 @@ class FrontendController extends Controller
         return view('products');
     }
     public function details(Product $product){
-        $specs = $product->specifications()->with( 'childspecs')->get();
+       // $specs = $product->specifications()->with( 'childspecs')->get();
+        $specs = $product->specifications()->whereNull('parent_id')->with( 'childspecs')->get();
 
         return view('details', compact('product', 'specs'));
     }
@@ -206,7 +207,7 @@ class FrontendController extends Controller
                     $orderdetail->amount = $item['quantity'];
                     $orderdetail->save();
                 }
-                Session::flush('cart');
+                Session::forget('cart');//flushes all sessions why not only cart
             }
 
             /** empty cart **/

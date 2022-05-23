@@ -108,7 +108,7 @@ class AdminUsersController extends Controller
     {
         //detailpage user
 
-        Session::flash('user_message', 'Here is all the info we have on ' . $user->username );
+        //Session::flash('user_message', 'Here is all the info we have on ' . $user->username );
 
         return view('admin.users.show', compact('user'));
 
@@ -150,7 +150,7 @@ class AdminUsersController extends Controller
         /** code picture save **/
         if($file = $request->file('photo_id')){
             /** delete old user picture upon update to keep things clean users only need 1 **/
-            if($user->photos() == true){
+            if($user->photos() === true){
                 $pivot = $user->photos()->where('photoable_id' == $id && 'photoable_type' == 'App\Models\User');//getting pivot table
                 $pivot->detach(); //deletes from photoables
                 $oldPhoto = Photo::where('id', $user->photo_id)->first();//getting photo
@@ -186,10 +186,21 @@ class AdminUsersController extends Controller
                         'addressline_2' => $request['addressline_2'],
 
             ]);
-        Session::flash('user_message', $user->name . ' was edited!');
+        Session::flash('user_message', $user->username . ' was edited!');
         return redirect('/admin/users');
     }
+    public function changestatus(Request $request, $id){
+        $user = User::findOrFail($id);
+        if($user){
+            $user->is_active = !$request->is_active;
+            $user->save();
 
+
+
+            return redirect()->back();
+
+    }
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -200,7 +211,7 @@ class AdminUsersController extends Controller
     {
         //
         $user = User::findOrFail($id);
-        Session::flash('user_message', $user->name . 'was deleted!'); //naam om mess. op te halen, VOOR DELETE OFC
+        Session::flash('user_message', $user->username . 'was deleted!'); //naam om mess. op te halen, VOOR DELETE OFC
         UsersSoftDelete::dispatch($user);
         $user->delete();
         return redirect('/admin/users');

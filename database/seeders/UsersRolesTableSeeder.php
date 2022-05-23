@@ -25,7 +25,7 @@ class UsersRolesTableSeeder extends Seeder
             $user->roles()->sync([3]);
             }else{
                 $user->roles()->attach(
-                    $roles->random(rand(1,3))->pluck('id')->toArray()
+                    $roles->random(rand(2,3))->pluck('id')->toArray()
                 );
             }
         });

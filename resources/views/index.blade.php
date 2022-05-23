@@ -117,11 +117,22 @@
                     <div class=" row row-cols-lg-3">
                         @foreach($three as $product)
                         <div class=" mi position-relative mt-2 col-lg-4">
-                            <img alt="..." class="img-fluid " src="assetsfront/images/GG_3.jpg">
+
+                            @if(($product->photos)->isNotEmpty())
+                                @foreach($product->photos as $photo)
+                                    @if($loop->first)
+                                        <img class="img-fluid" src="{{ empty($photo) ? 'http://via.placeholder.com/700' : asset($photo->file) }}" alt="{{$product->name}}">
+                                    @endif
+                                @endforeach
+                            @else
+                                <img  class="img-fluid" src="http://via.placeholder.com/700" alt="{{$product->name}}">
+
+                            @endif
+                                <a href="{{route('details', $product)}}">
                             <div class="kader position-absolute mx-auto m-1 ps-2 ">
                                 <p class="text-uppercase mp-none">{{$product->name}}</p>
                                 <p class="text-muted mp-none">{{$product->details}}</p>
-                            </div>
+                            </div></a>
                         </div>
                         @endforeach
                     </div>

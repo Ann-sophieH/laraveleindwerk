@@ -62,6 +62,7 @@ Route::group(['prefix' => 'admin', 'middleware'=> 'admin'], function (){
     Route::get('users/restore/{user}', 'App\Http\Controllers\AdminUsersController@restore')->name('users.restore');
     Route::get('users/edit/{user}', 'App\Http\Controllers\AdminUsersController@edit')->name('users.edit');
     Route::get('users/roles/{id}', '\App\Http\Controllers\AdminUsersController@usersPerRole')->name('admin.usersPerRole');
+    Route::post('users/changestatus/{user}', 'App\Http\Controllers\AdminUsersController@changestatus')->name('users.status');
 
     Route::resource('addresses', App\Http\Controllers\AdminAddressesController::class);
     Route::get('addresses/restore/{address}', 'App\Http\Controllers\AdminAddressesController@restore')->name('addresses.restore');

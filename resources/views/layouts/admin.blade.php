@@ -21,7 +21,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="{{asset('./assets/img/apple-icon.png')}}">
     <link rel="icon" type="image/png" href="{{asset('./assets/img/favicon.png')}}">
     <title>
-        Material Dashboard 2 by Creative Tim
+        Content management system of Anso Herman
     </title>
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
@@ -71,19 +71,21 @@
             <li class="nav-item">
                 <a class="nav-link text-white "  data-bs-toggle="collapse" href="#sidebar-products" aria-expanded="false" aria-controls="sidebar-products">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">shopping_basket </i>
+                        <i class="material-icons opacity-10">shopping_cart </i>
                     </div>
                     <span class="nav-link-text ms-1">Products</span>
                 </a>
                 <div class="collapse" id="sidebar-products">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item ps-3"> <a class="nav-link text-white" href="{{route('products.index')}}">All products</a></li>
-                        <li class="nav-item ps-3   "> <a class="nav-link text-white" href="{{route('products.create')}}"><i class="icon-xxs material-icons pe-2">add</i>Add new product</a></li>
-                        <li class="nav-item ps-3"> <a class="nav-link text-white" href="{{route('colors.index')}}">Product colors</a></li>
-                        <li class="nav-item ps-3"> <a class="nav-link text-white" href="{{route('colors.create')}}"><i class="icon-xxs material-icons pe-2">add</i>Add new color</a></li>
+                        <li class="nav-item ps-3"> <a class="nav-link text-white  p-2" href="{{route('products.index')}}"><b>All products</b></a></li>
+                        <li class="nav-item ps-4  "> <a class="nav-link text-white p-2" href="{{route('products.create')}}"><i class="icon-xxs material-icons pe-2" style="font-size: 1.2rem">add</i>new product</a></li>
+                        <li class="nav-item ps-4   "> <a class="nav-link text-white p-2" href="{{route('reviews.index')}}"><i class="icon-xxs material-icons pe-2" style="font-size:  1.2rem">reviews</i>reviews</a></li>
 
-                        <li class="nav-item ps-3"> <a class="nav-link text-white" href="{{route('specifications.index')}}">Product specifications </a></li>
-                        <li class="nav-item ps-3"> <a class="nav-link text-white" href="{{route('specifications.create')}}"><i class="icon-xxs material-icons pe-2">add</i>Add new specifications</a></li>
+                        <li class="nav-item ps-3"> <a class="nav-link text-white p-2" href="{{route('colors.index')}}"> Colors</a></li>
+                        <li class="nav-item ps-4 "> <a class="nav-link text-white p-2" href="{{route('colors.create')}}"><i class="icon-xxs material-icons pe-2" style="font-size: 1.2rem">add</i> color</a></li>
+
+                        <li class="nav-item ps-3"> <a class="nav-link text-white p-2" href="{{route('specifications.index')}}">Specifications </a></li>
+                        <li class="nav-item ps-4 "> <a class="nav-link text-white p-2" href="{{route('specifications.create')}}"><i class="icon-xxs material-icons pe-2" style="font-size: 1.2rem">add</i> specifications</a></li>
 
 
                     </ul>
@@ -123,8 +125,8 @@
                 </a>
                 <div class="collapse" id="sidebar-users">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item ps-3"> <a class="nav-link text-white" href="{{route('users.index')}}">All users</a></li>
-                        <li class="nav-item ps-3   "> <a class="nav-link text-white" href="{{route('users.create')}}"><i class="icon-xxs material-icons pe-2">add</i>Add new user</a></li>
+                        <li class="nav-item ps-3"> <a class="nav-link text-white" href="{{route('users.index')}}"><b>All users</b></a></li>
+                        <li class="nav-item ps-4   "> <a class="nav-link text-white" href="{{route('users.create')}}"><i class="icon-xxs material-icons pe-2" style="font-size: 1.2rem">add</i>Add new user</a></li>
                         <li class="nav-item ps-3   "> <a class="nav-link " href="{{route('users.index')}}">Roles & <br> managing site access</a></li>
 
 
@@ -147,7 +149,7 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white " href="./pages/profile.html">
+                <a class="nav-link text-white " href="{{route('users.show', Auth::user()->id)}}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">person</i>
                     </div>
@@ -178,7 +180,7 @@
             </li>
         </ul>
     </div>
-    <div class="sidenav-footer position-absolute w-100 bottom-0 ">
+    <div class="sidenav-footer  w-100 ">
         <div class="mx-3">
             <a class="btn bg-gradient-warning opacity-8 mt-4 w-100" href="{{url('/ ')}}" type="button">See Frontend </a>
         </div>

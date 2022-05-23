@@ -47,10 +47,25 @@
         </div>
         <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
 
-        <div class="form-check form-switch  ps-0">
-            <input class="form-check-input ms-auto {{$user->is_active ? 'bg-success' : '' }}" type="checkbox" id="flexSwitchCheckDefault4" checked="" control-id="ControlID-6">
-            <label class="form-check-label text-body ms-3 text-truncate w-80 mb-0" for="flexSwitchCheckDefault4">User active</label>
-        </div>
+            <form class="d-flex" action="{{route('users.status', $user->id)}}" method="POST">
+                @csrf
+                @method('POST')
+                @if($user->is_active === 1)
+
+                    <input type="hidden" name="is_active" value="{{$user->is_active}}">
+                    <button href="{{route('users.status', $user->id)}}" type="submit" data-toggle="tooltip" data-placement="top" class="btn btn-outline-success text-success">
+                        <i class="fas fa-running"></i> active user
+                    </button>
+                @else
+                    <input type="hidden" name="is_active" value="{{$user->is_active}}">
+                    <button   type="submit"  class="btn btn-outline-danger text-danger">
+                       <span class="material-icons">
+                    person_off
+                       </span> deactivated user
+                    </button>
+                @endif
+                 </form>
+
         </div>
 
     </div>

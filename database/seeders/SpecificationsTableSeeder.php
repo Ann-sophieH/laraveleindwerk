@@ -22,11 +22,12 @@ class SpecificationsTableSeeder extends Seeder
         //
         DB::table('specifications')
             ->insert([
-                'name'=>'wifi',
+                'name'=>'wifi type',
                 'parent_id'=>NULL,
                 'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
             ]);
+
         DB::table('specifications')
             ->insert([
                 'name'=>'bluetooth',
@@ -34,6 +35,7 @@ class SpecificationsTableSeeder extends Seeder
                 'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
             ]);
+
         DB::table('specifications')
             ->insert([
                 'name'=>'charging',
@@ -41,6 +43,7 @@ class SpecificationsTableSeeder extends Seeder
                 'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
             ]);
+
         DB::table('specifications')
             ->insert([
                 'name'=>'size',
@@ -48,6 +51,7 @@ class SpecificationsTableSeeder extends Seeder
                 'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
             ]);
+
         DB::table('specifications')
             ->insert([
                 'name'=>'Noise cancelling',
@@ -55,6 +59,7 @@ class SpecificationsTableSeeder extends Seeder
                 'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
             ]);
+
         DB::table('specifications')
             ->insert([
                 'name'=>'Pairing options',
@@ -63,8 +68,139 @@ class SpecificationsTableSeeder extends Seeder
                 'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
             ]);
 
-
-
+        DB::table('specifications')
+            ->insert([
+                'name'=>'wifi 7',
+                'parent_id'=>1,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'wifi 8',
+                'parent_id'=>1,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'bluetooth pairing',
+                'parent_id'=>2,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'bluetooth 4.0',
+                'parent_id'=>2,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'bluetooth 3.0',
+                'parent_id'=>2,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'cable connector',
+                'parent_id'=>3,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'wireless charging',
+                'parent_id'=>3,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'charges all products',
+                'parent_id'=>3,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'USB C',
+                'parent_id'=>3,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'small',
+                'parent_id'=>4,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'medium',
+                'parent_id'=>4,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'large',
+                'parent_id'=>4,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'Ambient sound',
+                'parent_id'=>5,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'High quality noise block',
+                'parent_id'=>5,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'Travel proof',
+                'parent_id'=>5,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'bluetooth 4.0',
+                'parent_id'=>6,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'wifi connecting',
+                'parent_id'=>6,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'multipairing up to 6',
+                'parent_id'=>6,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        DB::table('specifications')
+            ->insert([
+                'name'=>'compatible over brands',
+                'parent_id'=>6,
+                'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
         $specifications = Specification::all();
         Category::all()->each(function ($category) use ($specifications){
             $category->specifications()->attach(
@@ -72,7 +208,7 @@ class SpecificationsTableSeeder extends Seeder
                 );
         });
 
-        Specification::factory()->count(50)->create();
+       // Specification::factory()->count(50)->create();
 
 
     }

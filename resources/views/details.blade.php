@@ -96,9 +96,11 @@
                             <ul class="list-unstyled ps-0">
                                 @foreach($specs as $spec)
                                     <li class="mb-1">
-                                        <p >
+                                        <button aria-expanded="false"
+                                                class="btn btn-toggle  collapsed shadow-none"
+                                                data-bs-target="#specs-collapse{{$spec->id}}" data-bs-toggle="collapse">
                                             {{$spec->name}}
-                                        </p>
+                                        </button>
 
                                             <ul class=" list-unstyled fw-normal ps-4 small">
                                                 @if(count($spec->childspecs))
@@ -125,13 +127,14 @@
                             Shipping & returns
                         </button>
                     </h2>
-                    <div aria-labelledby="headingTwo" class="accordion-collapse collapse"
+                    <div aria-labelledby="headingTwo" class="accordion-collapse collapse shadow-none"
                          data-bs-parent="#accordionExample"
                          id="collapseTwo">
                         <div class="accordion-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab beatae distinctio eius
-                                enim ipsa nam officiis quae rerum sint voluptatibus? Consequatur perspiciatis
-                                quibusdam rerum velit? Doloremque eligendi magnam nam quam.</p>
+                            <p> Shipping takes approximately 1 to 5 businessdays. Arrival of your package will be calculated at checkout</p>
+                            <p> Returns can be made within 14 days of having the product delivered. If anything is not to your liking you can
+                                email us withing 14 days of arrival.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -173,6 +176,7 @@
                                         optio! Animi aperiam consequuntur officiis.</p>
                                 </li>--}}
                             </ul>
+                            @if(Auth::user())
                             <a class="btn reply-btn mb-2" data-bs-toggle="collapse" href="#collapseLeaveReview" role="button" aria-expanded="false" aria-controls="#collapseLeaveReview">
                                 Leave a review  <i class="fas fa-reply" aria-hidden="true"></i>
                             </a>
@@ -186,10 +190,14 @@
                                         <div class="form-group mt-2">
                                             <textarea class="form-control" name="body" id="body" cols="20" rows="10" placeholder=" Leave a review on {{$product->name}}" required></textarea>
                                         </div>
-                                        <button type="submit" class="btn btn-outline-secondary mt-1">SUBMIT <i class="fas fa-angle ml-2"></i></button>
+                                        <button type="submit" class="btn btn-outline-secondary mt-1" >SUBMIT <i class="fas fa-angle ml-2"></i></button>
                                     </form>
                                 </div>
                             </div>
+                                @else
+                                <p class="text-center fsize-1 pt-2"> you can   <button type="button" class="btn p-1 shadow-none  fs-bo text-decoration-underline" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        login here</button> if you want to leave a review for {{$product->name}}  </p>
+                            @endif
                         </div>
                     </div>
                 </div>

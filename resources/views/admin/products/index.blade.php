@@ -102,7 +102,7 @@
                             <thead>
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Product</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Product specifications</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Product child_specifications</th>
 
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Amount</th>
 
@@ -141,7 +141,7 @@
                                     </td>
 
                                     <td class="align-middle text-center">
-                                        @foreach($product->specifications as $spec)
+                                        @foreach($product->specifications->whereNotNull('parent_id') as $spec)
                                             <span class="badge badge-sm bg-gradient-faded-success text-secondary text-xxs font-weight-bold">{{$spec->name}}</span>
                                         @endforeach
                                     </td>

@@ -26,7 +26,7 @@ class AdminProductsController extends Controller
         $categories = Category::all();
         $products = Product::with(['specifications', 'colors', 'category', 'photos'])->withTrashed()->filter(request(['search']))->paginate(15);
        // Session::flash('product_message', 'these are all the products found in database!');
-        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
+        $specs = Specification::whereNotNull('parent_id')->with( 'childspecs')->get();
         $product = null;
         return view('admin.products.index', compact('products', 'specs', 'categories', 'product'));
     }

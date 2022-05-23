@@ -39,9 +39,10 @@ class AdminProductReviewsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //only store reviews of logged users to avoid anon spam
 
-        if($user = Auth::user()){
+        if(Auth::user()){
+            $user = Auth::user();
             $data = [
                 'product_id'=>$request->product_id,
                 'body'=>$request->body,
