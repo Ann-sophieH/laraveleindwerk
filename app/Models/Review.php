@@ -13,6 +13,7 @@ class Review extends Model
         //'photo_id',
         'user_id',
         'body',
+        'stars',
         'is_active'
     ];
     public function user(){

@@ -12,13 +12,13 @@
 
 
 
-<div id="parallax2">
+<section id="parallax2">
 
-    <div class="container-fluid  col-lg-10 offset-lg-1 mt-4  row">
+    <div class="container-fluid row col-lg-10 offset-lg-1 mt-3  ">
 
         <div class="d-lg-flex justify-content-between fs-reg">
 
-            <div class="card bg-light p-5 col-md-8 col-lg-4 m-1 m-xl-2">
+            <article class="card bg-light p-5 col-md-8 col-lg-4 m-1 m-xl-2">
                 <div class="card-body text-center ">
                     <a href="tel:00323334455">
                     <i class="bi bi-telephone text-muted" style="font-size: 3rem;"></i>
@@ -28,9 +28,9 @@
                     </a>
                 </div>
 
-            </div>
+            </article>
 
-            <div class="card bg-light p-5 col-md-8 col-lg-4 m-1 m-xl-2">
+            <article class="card bg-light p-5 col-md-8 col-lg-4 m-1 m-xl-2">
                 <div class="card-body text-center br-none">
                    <a {{-- href="mailto:info@test.be"--}} href="{{url('/contactformulier')}}">
                     <i class="bi bi-envelope text-muted" style="font-size: 3rem;"></i>
@@ -40,9 +40,9 @@
                     </a>
                 </div>
 
-            </div>
+            </article>
 
-            <div class="card bg-light p-5 col-md-8 col-lg-4 m-1 m-xl-2">
+            <article class="card bg-light p-5 col-md-8 col-lg-4 m-1 m-xl-2">
                 <div class="card-body text-center ">
                     <a href="blog.html">
                     <i class="bi bi-chat text-muted" style="font-size: 3rem;"></i>
@@ -52,11 +52,11 @@
                     </a>
                 </div>
 
-            </div>
+            </article>
         </div>
 
 
     </div>
-</div>
+</section>
 
 @endsection

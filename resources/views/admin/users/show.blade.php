@@ -80,7 +80,7 @@
                             </div>
                             <div class="col-md-4 text-end">
                                 <a href="{{route('users.edit', $user->id)}}">
-                                    <i class="fas fa-user-edit text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="" aria-hidden="true" data-bs-original-title="Edit Profile" aria-label="Edit Profile"></i><span class="sr-only">Edit Profile</span>
+                                    <i class="fas fa-user-edit text-warning text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="" aria-hidden="true" data-bs-original-title="Edit Profile" aria-label="Edit Profile"></i><span class="sr-only">Edit Profile</span>
                                 </a>
                             </div>
                         </div>
@@ -94,7 +94,9 @@
                             <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp;{{$user->telephone}} </li>
                             <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; {{$user->email}} </li>
                             @foreach($user->addresses->where('address_type', 1)->take(1) as $delivery_address)
-                            <li class="list-group-item border-0 ps-0 pt-5 text-sm"><strong class="text-dark"> Delivery address:</strong> &nbsp;<br>
+                                <h6 class="text-uppercase text-dark text-xs font-weight-bolder pt-5">Delivery address</h6>
+
+                                <li class="list-group-item border-0 ps-0  text-sm">
                                 {{$delivery_address->name_recipient}} <br>
                                 {{$delivery_address->addressline_1}} <br>
                                 {{$delivery_address->addressline_2}} <br>
@@ -118,35 +120,16 @@
             <div class="col-12 col-xl-4">
                 <div class="card card-plain h-100">
                     <div class="card-header pb-0 p-3">
-                        <h6 class="mb-0">Platform Settings</h6>
+                        <h6 class="mb-0">Other addresses </h6>
 
                     </div>
                     <div class="card-body p-3">
 
-                        <h6 class="text-uppercase text-body text-xs font-weight-bolder ">Application</h6>
-                        <ul class="list-group">
-                            <li class="list-group-item border-0 px-0">
-                                <div class="form-check form-switch ps-0">
-                                    <input class="form-check-input ms-auto" type="checkbox" id="flexSwitchCheckDefault3" control-id="ControlID-5">
-                                    <label class="form-check-label text-body ms-3 text-truncate w-80 mb-0" for="flexSwitchCheckDefault3">New products and launches</label>
-                                </div>
-                            </li>
-                            <li class="list-group-item border-0 px-0">
-                                <div class="form-check form-switch ps-0">
-                                    <input class="form-check-input ms-auto" type="checkbox" id="flexSwitchCheckDefault4" checked="" control-id="ControlID-6">
-                                    <label class="form-check-label text-body ms-3 text-truncate w-80 mb-0" for="flexSwitchCheckDefault4">Monthly product updates</label>
-                                </div>
-                            </li>
-                            <li class="list-group-item border-0 px-0 pb-0">
-                                <div class="form-check form-switch ps-0">
-                                    <input class="form-check-input ms-auto" type="checkbox" id="flexSwitchCheckDefault5" control-id="ControlID-7">
-                                    <label class="form-check-label text-body ms-3 text-truncate w-80 mb-0" for="flexSwitchCheckDefault5">Subscribe to newsletter</label>
-                                </div>
-                            </li>
-                        </ul>
-                        @foreach($user->addresses->where('address_type', 2) as $billing_address)
 
-                            <li class="list-group-item border-0 ps-0 pt-4 text-sm"><strong class="text-dark">Billing address:</strong> &nbsp;<br>
+                        @foreach($user->addresses->where('address_type', 2) as $billing_address)
+                            <h6 class="text-uppercase text-dark text-xs font-weight-bolder ">Billing address</h6>
+
+                            <li class="list-group-item border-0 ps-0  text-sm">
                                 {{$billing_address->name_recipient}} <br>
                                 {{$billing_address->addressline_1}} <br>
                                 {{$billing_address->addressline_2}} <br>
@@ -233,144 +216,48 @@
             <div class="col-12 mt-4">
                 <div class="mb-5 ps-3">
                     <h6 class="mb-1">Products</h6>
-                    <p class="text-sm">Recently bought items (need relation with orders) </p>
+                    <p class="text-sm">Recently bought items  </p>
                 </div>
-                <div class="row">
+                <div class="row mb-2">
+                    @foreach ($orders->take(2) as $order )
+                        @foreach ($order->orderdetails->take(4) as $item )
+                    <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 mt-4">
+                        <div class="card card-blog card-plain">
+                            <div class="card-header p-0 mt-n4 mx-3">
+                                <a class="d-block shadow-xl border-radius-xl">
 
-                    <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-                        <div class="card card-blog card-plain">
-                            <div class="card-header p-0 mt-n4 mx-3">
-                                <a class="d-block shadow-xl border-radius-xl">
-                                    <img src="https://images.unsplash.com/photo-1606744824163-985d376605aa?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
+                                    @if(($item->photos) != null)
+                                        @foreach($item->photos as $photo)
+                                            <img alt="{{$item->name}}" class=" img-fluid shadow border-radius-xl" src="{{asset($photo->file) }}">
+
+                                        @endforeach
+                                    @else
+                                        <img  class=" img-fluid shadow border-radius-xl" src="http://via.placeholder.com/400x200" alt="{{$item->name}}">
+
+                                    @endif
                                 </a>
                             </div>
                             <div class="card-body p-3">
-                                <p class="mb-0 text-sm">Project #id</p>
+                                <p class="mb-0 text-sm">Order # {{$order->id}} </p>
                                 <a href="javascript:;">
                                     <h5>
-                                        Modern name
+                                        {{$item->product->name}}
                                     </h5>
                                 </a>
                                 <p class="mb-4 text-sm">
-                                    Description As Uber works through a huge amount of internal management turmoil.
+                                    {{$item->product->details}}
                                 </p>
 
-                                    <button type="button" class="btn btn-primary opacity-6 btn-sm mb-0" control-id="ControlID-8">View product</button>
+                                <a
+                                    href="{{route('details', $item->product)}} ">  <button type="button" href="{{route('details', $item->product)}} " class="btn btn-primary opacity-6 btn-sm mb-0" control-id="ControlID-8"> <i
+                                            class="fa fa-eye mt-3"></i> View product</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                        @endforeach
+                    @endforeach
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-                        <div class="card card-blog card-plain">
-                            <div class="card-header p-0 mt-n4 mx-3">
-                                <a class="d-block shadow-xl border-radius-xl">
-                                    <img src="https://images.unsplash.com/photo-1606744824163-985d376605aa?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
-                                </a>
-                            </div>
-                            <div class="card-body p-3">
-                                <p class="mb-0 text-sm">Project #1</p>
-                                <a href="javascript:;">
-                                    <h5>
-                                        Scandinavian
-                                    </h5>
-                                </a>
-                                <p class="mb-4 text-sm">
-                                    Music is something that every person has his or her own specific opinion about.
-                                </p>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <button type="button" class="btn btn-outline-primary btn-sm mb-0" control-id="ControlID-9">View Project</button>
-                                    <div class="avatar-group mt-2">
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Nick Daniel">
-                                            <img alt="Image placeholder" src="../assets/img/team-3.jpg">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Peterson">
-                                            <img alt="Image placeholder" src="../assets/img/team-4.jpg">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Elena Morison">
-                                            <img alt="Image placeholder" src="../assets/img/team-1.jpg">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Ryan Milly">
-                                            <img alt="Image placeholder" src="../assets/img/team-2.jpg">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-                        <div class="card card-blog card-plain">
-                            <div class="card-header p-0 mt-n4 mx-3">
-                                <a class="d-block shadow-xl border-radius-xl">
-                                    <img src="https://images.unsplash.com/photo-1606744824163-985d376605aa?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
-                                </a>
-                            </div>
-                            <div class="card-body p-3">
-                                <p class="mb-0 text-sm">Project #3</p>
-                                <a href="javascript:;">
-                                    <h5>
-                                        Minimalist
-                                    </h5>
-                                </a>
-                                <p class="mb-4 text-sm">
-                                    Different people have different taste, and various types of music.
-                                </p>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <button type="button" class="btn btn-outline-primary btn-sm mb-0" control-id="ControlID-10">View Project</button>
-                                    <div class="avatar-group mt-2">
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Peterson">
-                                            <img alt="Image placeholder" src="../assets/img/team-4.jpg">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Nick Daniel">
-                                            <img alt="Image placeholder" src="../assets/img/team-3.jpg">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Ryan Milly">
-                                            <img alt="Image placeholder" src="../assets/img/team-2.jpg">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Elena Morison">
-                                            <img alt="Image placeholder" src="../assets/img/team-1.jpg">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-                        <div class="card card-blog card-plain">
-                            <div class="card-header p-0 mt-n4 mx-3">
-                                <a class="d-block shadow-xl border-radius-xl">
-                                    <img src="https://images.unsplash.com/photo-1606744824163-985d376605aa?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
-                                </a>
-                            </div>
-                            <div class="card-body p-3">
-                                <p class="mb-0 text-sm">Project #4</p>
-                                <a href="javascript:;">
-                                    <h5>
-                                        Gothic
-                                    </h5>
-                                </a>
-                                <p class="mb-4 text-sm">
-                                    Why would anyone pick blue over pink? Pink is obviously a better color.
-                                </p>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <button type="button" class="btn btn-outline-primary btn-sm mb-0" control-id="ControlID-11">View Project</button>
-                                    <div class="avatar-group mt-2">
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Peterson">
-                                            <img alt="Image placeholder" src="../assets/img/team-4.jpg">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Nick Daniel">
-                                            <img alt="Image placeholder" src="../assets/img/team-3.jpg">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Ryan Milly">
-                                            <img alt="Image placeholder" src="../assets/img/team-2.jpg">
-                                        </a>
-                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Elena Morison">
-                                            <img alt="Image placeholder" src="../assets/img/team-1.jpg">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

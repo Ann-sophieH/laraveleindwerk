@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id')->index();
             $table->unsignedBigInteger('user_id');
             $table->integer('is_active')->default(0);
+            $table->integer('stars')->default(5);
             $table->text('body');
             $table->timestamps();
         });

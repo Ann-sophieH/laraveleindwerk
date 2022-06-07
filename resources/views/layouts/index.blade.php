@@ -82,42 +82,43 @@
                         </ul>
                     </div>-->
                     <div class="col-6">
-                        <p class="mb-1 text-uppercase ">Company</p>
-                        <ul class=" list-unstyled">
-                            <li class=""><a href="" class="text-dark br-none">Press</a></li>
+                        <p class="mb-1 text-uppercase ">Help Center</p>
+                        <ul class="list-unstyled ">
+                            <li class=""><a href="{{route('faq')}}" class="text-dark br-none">Shipping & Returns</a></li>
+                            <li class="menu-list-item"><a href="{{route('faq')}}" class="text-dark br-none">Payment</a></li>
                             <li class=""><a href="{{route('contact')}}" class="text-dark br-none">Contact</a></li>
+
                         </ul>
                     </div>
-                    <div class="col-6">
-                        <p class="mb-1 text-uppercase ">Help Center</p>
-                        <ul class="list-unstyled">
-                            <li class=""><a href="" class="text-dark br-none">Shipping</a></li>
-                            <li class="menu-list-item "><a href="" class="text-dark br-none">Returns</a></li>
-                            <li class="menu-list-item"><a href="" class="text-dark br-none">Payment</a></li>
+                    <div class="col-6 ">
+                        <p class="mb-1 text-uppercase ">Follow us </p>
+
+                        <ul class="list-unstyled d-flex justify-content-between  pt-3 ">
+
+                            <li><a href="https://www.facebook.com/" class="text-hover-facebook socialIcons "><i class="bi bi-facebook text-white"></i></a></li>
+
+                            <li><a href="https://www.instagram.com/" class="text-hover-instagram socialIcons"><i class="bi bi-instagram text-white"></i></a></li>
+                            <li><a href="https://twitter.com/?lang=nl" class="text-hover-twitter socialIcons"><i class="bi bi-twitter text-white"></i></a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="row order-2 order-md-3 order-lg-2 col-md-8 col-lg-4 text-white fs-reg ">
                 <p class=" mb-1 text-uppercase ">Subscribe to our Newsletter !</p>
-                    <div class="input-group mb-2 border-2 border-white br-none pt-2">
+                    <div class="input-group mb-2 border-2 border-white br-none ">
                         <input id="email" type="email" class="form-control shadow-none " placeholder="Your email" aria-label="Your email" aria-describedby="button-addon2">
-                        <button class="btn border-white text-white pt-3 pb-3 shadow-none" type="button" id="button-addon2">Subscribe</button>
+                        <button class="btn border-white text-white pt-2 pb-2 shadow-none" type="button" id="button-addon2">Subscribe</button>
                     </div>
-              <ul class="list-unstyled d-flex justify-content-between mt-5">
 
-                        <li><a href="https://www.facebook.com/" class="text-hover-facebook socialIcons "><i class="bi bi-facebook text-white"></i></a></li>
-
-                    <li><a href="https://www.instagram.com/" class="text-hover-instagram socialIcons"><i class="bi bi-instagram text-white"></i></a></li>
-                    <li><a href="https://twitter.com/?lang=nl" class="text-hover-twitter socialIcons"><i class="bi bi-twitter text-white"></i></a></li>
-                </ul>
             </div>
             <div class="order-3 order-md-2 order-lg-3 col-md-4 col-lg-3  text-white fs-reg">
                 <p class=" mb-1 text-uppercase ">Payment methods</p>
-                <ul class="list-unstyled d-flex mt-2 justify-content-between">
-                    <li><img src="{{asset('assetsfront/images/visa@2x.png')}}" class="img-fluid" alt="Image"></li>
-                    <li><img src="{{asset('assetsfront/images/paypal@2x.png')}}" class="img-fluid" alt="Image"></li>
-                    <li><img src="{{asset('assetsfront/images/mastercard@2x.png')}}" class="img-fluid" alt="Image"></li>
+                <ul class="list-unstyled d-flex mt-2 justify-content-between pt-3 ">
+                    <li><img src="{{asset('assetsfront/images/payment_icons/bancontact@2x.png')}}" class="img-fluid" alt="Image"></li>
+                    <li><img src="{{asset('assetsfront/images/payment_icons/paypal@2x.png')}}" class="img-fluid" alt="Image"></li>
+                    <li><img src="{{asset('assetsfront/images/payment_icons/ideal@2x.png')}}" class="img-fluid" alt="Image"></li>
+                    <li><img src="{{asset('assetsfront/images/payment_icons/creditcard@2x.png')}}" class="img-fluid" alt="Image"></li>
+
                 </ul>
             </div>
         </div>

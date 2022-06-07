@@ -6,6 +6,8 @@ use App\Events\UsersSoftDelete;
 use App\Http\Requests\UsersEditRequest;
 use App\Http\Requests\UsersRequest;
 use App\Models\Address;
+use App\Models\Order;
+use App\Models\Orderdetail;
 use App\Models\Photo;
 use App\Models\Role;
 use App\Models\User;
@@ -107,10 +109,11 @@ class AdminUsersController extends Controller
     public function show(User $user)
     {
         //detailpage user
-
+       // $orderdetails = [];
         //Session::flash('user_message', 'Here is all the info we have on ' . $user->username );
+        $orders = Order::with('user', 'orderdetails', 'orderdetails.product')->where('user_id' , $user->id)->latest()->get();
 
-        return view('admin.users.show', compact('user'));
+        return view('admin.users.show', compact('user', 'orders'));
 
     }
 
@@ -222,18 +225,11 @@ class AdminUsersController extends Controller
     }
     public function usersPerRole($id){
         $roles = Role::all();
-        $users = Role::with(['users.photos',])->findOrFail($id)->users()->paginate(15);
-        //EAGER loading problem not fixed
+        $users = Role::findOrFail($id)->users()->with('photos', 'roles')->paginate(15);
 
         Session::flash('user_message', 'Here are all the users with this role: '); //naam om mess. op te halen, VOOR DELETE OFC
 
         return view('admin.users.index', compact('users', 'roles'));
-        /*$role = $request->input('role');
 
-        $users = DB::table('users')
-            ->when($role, function ($query, $role) {
-                $query->where('role_id', $role);
-            })
-            ->get();*/ //alternative query to consider
     }
 }

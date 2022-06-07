@@ -108,7 +108,7 @@
             <a href="{{route('headphones')}}" class="text-muted">view more headphones</a>
         </div>
     </div>
-    <div id="carouselExampleControls" class="carousel slide row" data-bs-ride="carousel">
+    <div id="carouselExampleControls" class="carousel  row" data-bs-ride="carousel">
 
             <div class="carousel-inner">
                 <div class=" col-10 offset-1 g-3 ">

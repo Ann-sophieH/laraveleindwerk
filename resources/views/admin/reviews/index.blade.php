@@ -16,7 +16,7 @@
         @endif
     </div>
 
-    <div class=" stretch-card mb-5">
+    <div class=" stretch-card mb-5 m-2 mt-5">
         <div class="card">
                 <div class="d-flex justify-content-between p-3 mt-4">
                     <div>
@@ -31,13 +31,14 @@
                     </div>
                 </div>
 
-        <table class="table table-hover">
+        <table class="table table-hover m-2">
             <thead>
             <tr>
                 <th>#</th>
                 <th>Author</th>
-                <th>Email</th>
-                <th>Body</th>
+                <th>Product</th>
+                <th class="text-center">Stars</th>
+                <th>Review</th>
                 <th>Created</th>
                 <th>Updated</th>
                 <th>Actions</th>
@@ -57,8 +58,9 @@
 
                                 </p>
                             </td>
-                            <td>{{$review->user->email}}</td>
-                            <td>{{$review->body}}</td>
+                            <td>{{$review->product->name}}</td>
+                            <td class=" text-center "><span class="badge badge-circle @if($review->stars >= 3 ) bg-success @elseif($review->stars == 2) bg-warning @else bg-danger @endif">{{$review->stars}}</span></td>
+                            <td>{{Str::limit($review->body, 35)}}</td>
                             <td><p class="text-small text-muted">{{$review->created_at}}</p></td>
                             <td><p class="text-small text-muted">{{$review->updated_at}}</p></td>
                             <td>

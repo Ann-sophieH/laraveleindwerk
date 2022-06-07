@@ -44,6 +44,7 @@ Route::get('/headphones/type/{type:slug}', '\App\Http\Controllers\FrontendContro
 Route::get('/products/{product:slug}', 'App\Http\Controllers\FrontendController@details')->name('details');
 Route::get('/products', Products::class)->name('products');
 //Route::post('/addtocart', 'App\Http\Controllers\FrontendController@addToCart')->name('addToCart');
+Route::get('/faq', '\App\Http\Controllers\FrontendController@faq' )->name('faq');
 
 /** cart & checkout / payment  **/
 Route::get('/cart', '\App\Http\Controllers\FrontendController@cart' )->name('cart');

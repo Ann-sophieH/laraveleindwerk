@@ -15,7 +15,6 @@ class Colors extends Component
     public $search;
     public $sortField;
     public $sortAsc = true;
-    protected $queryString = ['search','active','sortAsc','sortField']; //om in link vanboven te zetten
 
 
     public function updatingSearch(){
@@ -29,9 +28,7 @@ class Colors extends Component
         }
         $this->sortField = $field;
     }
-    public function edit(){
 
-    }
     public function render()
     {
         return view('livewire.colors',  ['colors'=>Color::

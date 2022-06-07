@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Color;
 use App\Models\Product;
 use App\Models\Specification;
 use App\Models\Type;
@@ -15,7 +16,15 @@ class Products extends Component
 {
     use WithPagination;
     public $search;
+
     protected $paginationTheme = 'bootstrap';
+    protected $queryString = ['specifications','maxPrice', 'colorsfilter', 'category', 'type']; //om in link vanboven te zetten
+
+    public $specifications;
+    public $category;
+    public $colorsfilter;
+    public $type;
+    public $maxPrice;
 
 
 
@@ -26,8 +35,8 @@ class Products extends Component
         $cart->addItem($product, $id);
         Session::put('cart',$cart);
         //return redirect()->back();
-
     }
+
     public function headphonesPerType(Type $type){
         //all speakers (cat 2) where type id = $id
         $types = Type::where('category_id' , 1)->get();
@@ -54,29 +63,89 @@ class Products extends Component
     {
         $this->search = request()->query('search', $this->search);
     }
+    public function updatedSpecifications()// to filter out all unchecked boxes (cause they dont go out of the array but are set to false!)
+    {
+        if (!is_array($this->specifications)) return;
+
+        $this->specifications = array_filter($this->specifications, function ($specification) {
+            return $specification != false;
+        });
+    }
+    public function updatedColorsfilter()// to filter out all unchecked boxes (cause they dont go out of the array but are set to false!)
+    {
+        if (!is_array($this->colorsfilter)) return;
+
+        $this->colorsfilter = array_filter($this->colorsfilter, function ($colorsfilter) {
+            return $colorsfilter != false;
+        });
+    }
+    public function updatedType()// to filter out all unchecked boxes (cause they dont go out of the array but are set to false!)
+    {
+        if (!is_array($this->type)) return;
+
+        $this->type = array_filter($this->type, function ($type) {
+            return $type != false;
+        });
+    }
     public function render()
     {
-        if( Session::has('cart')){
             return view('livewire.products', [
-                'products'=>Product::with(['photos', 'colors'])->paginate(10),
-            'specs'=> Specification::whereNull('parent_id')->with( 'childspecs')->get(),
-            'product'=>null,
-            'types'=> Type::where('category_id' , 1)->get(),
-        ])->extends('layouts.index');
+                'products'=>Product::with(['photos', 'colors'])
+
+                    ->when($this->maxPrice, function ($query) {
+                         $query->where( 'price' , '<=',  $this->maxPrice);
+                    })
+
+                    ->when($this->specifications, function ($query){
+                        foreach ($this->specifications as $k => $v){
+                         $query->whereHas('specifications', function($query) use ($v){
+                             $query->where('name', $v);
+                        });
+                        }
+                    })
+                    ->when($this->colorsfilter, function ($query){
+                        foreach ($this->colorsfilter as $k => $v){
+                            $query->whereHas('colors', function($query) use ($k){
+                                $query->where('name', $k);
+                            });
+                        }
+                    })
+                    ->when($this->category, function ($query){
+                        $query->where('category_id', $this->category);
+
+                    })
+                    ->when($this->type, function ($query){
+                        foreach ($this->type as $k => $v){
+                            $query->whereHas('types', function($query) use ($v){
+                                $query->where('type_id', $v);
+                            });
+                        }
+                    })
+                    /*->where(function($query){
+                        $query->where('price', 'like', '%' . $this->search .'%')
+                            ->orWhere('name','like', '%' . $this->search .'%')
+                            ->orWhereHas('specifications', function ($query){ //query tussentabel
+                                $query->where('name', 'like', '%' . $this->search .'%');
+                            })
+                            ->orWhereHas('colors', function ($query){ //query tussentabel
+                                $query->where('name', 'like', '%' . $this->search .'%');
+                                $query->where('hex_value', 'like', '%' . $this->search .'%');
+
+                            });
 
 
-        }else{
-            return view('livewire.products', [
-                'products'=>Product::with(['photos', 'colors'])->paginate(10),
-            'specs'=> Specification::whereNull('parent_id')->with( 'childspecs')->get(),
-           // 'categories'=>Category::all(),
-            'product'=>null,
-            'types'=> Type::where('category_id' , 2)->get(),
-        ])->extends('layouts.index');
+                    })*/
+                    ->paginate(25),
+
+                'specs'=> Specification::whereNull('parent_id')->with( 'childspecs')->get(),
+                'product'=>null,
+                'types'=> Type::where('category_id' , $this->category)->get(),
+                'colors'=>Color::all()
+            ])->extends('layouts.index');
 
         }
 
 
 
-    }
+
 }

@@ -36,6 +36,10 @@ class FrontendController extends Controller
 
         return view('products');
     }
+    public function faq(){
+
+        return view('faq');
+    }
     public function details(Product $product){
        // $specs = $product->specifications()->with( 'childspecs')->get();
         $specs = $product->specifications()->whereNull('parent_id')->with( 'childspecs')->get();
@@ -140,7 +144,7 @@ class FrontendController extends Controller
                     $orderdetail->amount = $item['quantity'];
                     $orderdetail->save();
                 }
-                Session::flush('cart');
+                Session::forget('cart'); // empties only the cart not
                 /** add facturation address for existing user  **/
                 if ($request['fname_recipient'] && $request['faddressline_1'] && $request['faddressline_2']) {
                     $address = new Address();
@@ -173,6 +177,7 @@ class FrontendController extends Controller
                 $user->password = Hash::make($request['password']);
                 $user->is_active = 1;
                 $user->save();
+                auth()->login($user);
                 /** save delivery address **/
                 $address = new Address();
                 $address->name_recipient = $request['name_recipient'];
@@ -207,10 +212,10 @@ class FrontendController extends Controller
                     $orderdetail->amount = $item['quantity'];
                     $orderdetail->save();
                 }
+                /** empty cart **/
                 Session::forget('cart');//flushes all sessions why not only cart
             }
 
-            /** empty cart **/
 
         }
         return redirect($payment->getCheckoutUrl(), 303);//to payment

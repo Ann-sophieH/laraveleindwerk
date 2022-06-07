@@ -47,7 +47,7 @@
 
                                 </p>
                             </td>
-                            <td>{{$reply->user->email}}</td>
+                            <td>{{$reply->product->name}}</td>
                             <td>{{$reply->body}}</td>
                             <td><p class="text-small text-muted">{{$reply->created_at}}</p></td>
                             <td><p class="text-small text-muted">{{$reply->updated_at}}</p></td>
