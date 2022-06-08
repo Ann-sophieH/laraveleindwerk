@@ -94,6 +94,7 @@ class AdminProductsController extends Controller
         }*/
         //dd($request->specifications);
         $product->colors()->sync($request->colors,false);
+
         $product->specifications()->sync($request->specifications,false);
         Session::flash('product_message', 'A new product was added!');
 
@@ -195,10 +196,10 @@ class AdminProductsController extends Controller
     }
     public function productsPerCat($id){
         $categories = Category::all();
-        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
-
+        //$specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
+     //   $product = null;
         $products = Product::where('category_id' , $id)->with(['colors', 'photos', 'specifications'])->paginate(25);
-        return view('admin.products.index', compact('categories', 'products', 'specs'));
+        return view('admin.products.index', compact('categories', 'products'));
 
     }
 

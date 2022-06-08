@@ -37,27 +37,7 @@ class Products extends Component
         //return redirect()->back();
     }
 
-    public function headphonesPerType(Type $type){
-        //all speakers (cat 2) where type id = $id
-        $types = Type::where('category_id' , 1)->get();
-        $products = Type::findOrFail($type->id)->products()->with(['photos', 'colors'])->where('category_id' , 1)->paginate(25);
-        $categories = Category::all();
-        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
-        $product = null;
-        return view('headphones', compact('products', 'types', 'specs', 'categories', 'product'));
 
-    }
-    public function speakersPerType(Type $type){
-        //all speakers (cat 2) where type id = $id
-        $types = Type::where('category_id' , 2)->get();
-        $products = Type::findOrFail($type->id)->products()->with(['photos', 'colors'])->where('category_id' , 2)->paginate(25);
-        $product = null;
-        $categories = Category::all();
-        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
-
-        return view('speakers', compact('products', 'types', 'specs', 'categories', 'product'));
-
-    }
 
     public function mount(): void
     {
@@ -91,16 +71,14 @@ class Products extends Component
     {
             return view('livewire.products', [
                 'products'=>Product::with(['photos', 'colors'])
-
                     ->when($this->maxPrice, function ($query) {
                          $query->where( 'price' , '<=',  $this->maxPrice);
                     })
-
                     ->when($this->specifications, function ($query){
                         foreach ($this->specifications as $k => $v){
                          $query->whereHas('specifications', function($query) use ($v){
-                             $query->where('name', $v);
-                        });
+                                $query->where('name', $v);
+                            });
                         }
                     })
                     ->when($this->colorsfilter, function ($query){
@@ -112,7 +90,6 @@ class Products extends Component
                     })
                     ->when($this->category, function ($query){
                         $query->where('category_id', $this->category);
-
                     })
                     ->when($this->type, function ($query){
                         foreach ($this->type as $k => $v){
@@ -121,20 +98,6 @@ class Products extends Component
                             });
                         }
                     })
-                    /*->where(function($query){
-                        $query->where('price', 'like', '%' . $this->search .'%')
-                            ->orWhere('name','like', '%' . $this->search .'%')
-                            ->orWhereHas('specifications', function ($query){ //query tussentabel
-                                $query->where('name', 'like', '%' . $this->search .'%');
-                            })
-                            ->orWhereHas('colors', function ($query){ //query tussentabel
-                                $query->where('name', 'like', '%' . $this->search .'%');
-                                $query->where('hex_value', 'like', '%' . $this->search .'%');
-
-                            });
-
-
-                    })*/
                     ->paginate(25),
 
                 'specs'=> Specification::whereNull('parent_id')->with( 'childspecs')->get(),
@@ -142,7 +105,6 @@ class Products extends Component
                 'types'=> Type::where('category_id' , $this->category)->get(),
                 'colors'=>Color::all()
             ])->extends('layouts.index');
-
         }
 
 

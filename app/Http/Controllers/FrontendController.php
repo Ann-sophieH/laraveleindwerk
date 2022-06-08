@@ -6,6 +6,7 @@ use App\Http\Requests\OrdersUserRequest;
 use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Newsletter;
 use App\Models\Order;
 use App\Models\Orderdetail;
 use App\Models\Product;
@@ -25,7 +26,6 @@ class FrontendController extends Controller
 
     public function index(){
         $carr_products = Product::where('category_id', 1)->with('photos')->take(6)->get();
-
         return view('index', compact('carr_products'));
     }
     public function blog(){
@@ -40,48 +40,21 @@ class FrontendController extends Controller
 
         return view('faq');
     }
+    public function newsletter(Request $request){
+        $subscriber = new Newsletter();
+        $subscriber->email = $request->email;
+        $subscriber->save();
+        return redirect()->back();
+    }
     public function details(Product $product){
        // $specs = $product->specifications()->with( 'childspecs')->get();
         $specs = $product->specifications()->whereNull('parent_id')->with( 'childspecs')->get();
 
         return view('details', compact('product', 'specs'));
     }
-    public function speakers(){
-        $products = Product::with(['photos', 'colors'])->where('category_id' , 2)->paginate(25);
-        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
-        $categories = Category::all();
-        $types = Type::where('category_id' , 2)->get();
-        $product = null;
-        return view('speakers', compact('products', 'specs', 'categories', 'types', 'product'));
-    }
-    public function speakersPerType(Type $type){
-        //all speakers (cat 2) where type id = $id
-        $types = Type::where('category_id' , 2)->get();
-        $products = Type::findOrFail($type->id)->products()->with(['photos', 'colors'])->where('category_id' , 2)->paginate(25);
-        $product = null;
-        $categories = Category::all();
-        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
+    public function cart(){
 
-        return view('speakers', compact('products', 'types', 'specs', 'categories', 'product'));
-
-    }
-    public function headphones(){
-        $products = Product::with(['photos', 'colors'])->where('category_id' , 1)->paginate(25);
-        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
-        $categories = Category::all();
-        $types = Type::where('category_id' , 1)->get();
-        $product = null;
-        return view('headphones', compact('products', 'specs', 'categories', 'types', 'product'));
-    }
-    public function headphonesPerType(Type $type){
-        //all speakers (cat 2) where type id = $id
-        $types = Type::where('category_id' , 1)->get();
-        $products = Type::findOrFail($type->id)->products()->with(['photos', 'colors'])->where('category_id' , 1)->paginate(25);
-        $categories = Category::all();
-        $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
-        $product = null;
-        return view('headphones', compact('products', 'types', 'specs', 'categories', 'product'));
-
+        return view('cart');
     }
     public function checkout(){
         /** get cart **/
@@ -104,7 +77,6 @@ class FrontendController extends Controller
 
         return view('checkout', compact('cart', 'user', 'delivery_address', 'facturation_address' , 'delivery_date'));
     }
-
     public function order(Request $request)
     {
         /** getting cart to make orderdetails and get amount **/
@@ -215,11 +187,8 @@ class FrontendController extends Controller
                 /** empty cart **/
                 Session::forget('cart');//flushes all sessions why not only cart
             }
-
-
         }
         return redirect($payment->getCheckoutUrl(), 303);//to payment
-
     }
     public function paymentSuccess() {
         //echo 'payment has been received';
@@ -228,10 +197,6 @@ class FrontendController extends Controller
         Session::flash('payment_message', 'Your order has been placed successfully, we will start packing soon!');//put message in cart!!
 
         return redirect('cart');
-    }
-   public function cart(){
-
-        return view('cart');
     }
 
 

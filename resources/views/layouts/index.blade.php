@@ -30,8 +30,8 @@
                 <div class="navbar-nav me-auto mb-2 mb-lg-0 ">
                     <a aria-current="page" class="nav-link active text-uppercase" href="{{url('/')}}">Home</a>
                     <a class="nav-link text-uppercase" href="{{route('products')}}"> ALl Products</a>
-<!--                    <a class="nav-link text-uppercase" href="{{route('speakers')}}">Speakers</a>
-                    <a class="nav-link text-uppercase" href="{{route('headphones')}}"> headphones </a>-->
+<!--                    <a class="nav-link text-uppercase" href="{{route('products')}}">Speakers</a>
+                    <a class="nav-link text-uppercase" href="{{route('products')}}"> headphones </a>-->
 
 
                     <a class="nav-link text-uppercase" href="{{route('contact')}}">Contact</a>
@@ -105,10 +105,14 @@
             </div>
             <div class="row order-2 order-md-3 order-lg-2 col-md-8 col-lg-4 text-white fs-reg ">
                 <p class=" mb-1 text-uppercase ">Subscribe to our Newsletter !</p>
+                <form method="POST" enctype="multipart/form-data" action="{{route('newsletter')}}">
+                    @csrf
                     <div class="input-group mb-2 border-2 border-white br-none ">
-                        <input id="email" type="email" class="form-control shadow-none " placeholder="Your email" aria-label="Your email" aria-describedby="button-addon2">
-                        <button class="btn border-white text-white pt-2 pb-2 shadow-none" type="button" id="button-addon2">Subscribe</button>
+                        <input id="email" type="email" class="form-control shadow-none " name="email" placeholder="Your email" aria-label="Your email" aria-describedby="button-addon2">
+                        <button class="btn border-white text-white pt-2 pb-2 shadow-none" type="submit" id="button-addon2">Subscribe</button>
                     </div>
+                </form>
+
 
             </div>
             <div class="order-3 order-md-2 order-lg-3 col-md-4 col-lg-3  text-white fs-reg">

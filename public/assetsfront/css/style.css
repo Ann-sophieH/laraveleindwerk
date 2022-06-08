@@ -216,6 +216,14 @@ nav img{
     background-color: #000000;
     color: #FFFFFF;
 }
+.filtercard-input input:checked {
+    border-color: rgba(85, 81, 70,0.5);
+    background-color: rgba(85, 81, 70,0.9);
+}
+.filtercard-input:checked~.filtercard-label{
+    background-color: #000000;
+    color: #FFFFFF;
+}
 .carousel button{
     border: none;
     color: grey;

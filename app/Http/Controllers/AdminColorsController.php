@@ -18,8 +18,8 @@ class AdminColorsController extends Controller
     public function index()
     {
         //
-        $colors = Color::with(['products'])->withTrashed()->paginate(25);
-        return view('admin.colors.index', compact('colors'));
+       // $colors = Color::with(['products'])->withTrashed()->paginate(25); to livewire
+        return view('admin.colors.index',);
     }
 
     /**

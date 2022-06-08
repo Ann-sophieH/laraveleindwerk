@@ -36,15 +36,16 @@ Route::get('/contactformulier', 'App\Http\Controllers\ContactController@create')
 Route::post('/contactformulier', 'App\Http\Controllers\ContactController@store');
 /** product pages  **/
 //Route::get('/products', 'App\Http\Controllers\FrontendController@products')->name('products');
-Route::get('/speakers', 'App\Http\Controllers\FrontendController@speakers')->name('speakers');
-Route::get('/speakers/type/{type:slug}', '\App\Http\Controllers\FrontendController@speakersPerType')->name('speakersPerType');
-Route::get('/headphones', 'App\Http\Controllers\FrontendController@headphones')->name('headphones');
-Route::get('/headphones/type/{type:slug}', '\App\Http\Controllers\FrontendController@headphonesPerType')->name('headphonesPerType');
+//Route::get('/speakers', 'App\Http\Controllers\FrontendController@speakers')->name('speakers');
+//Route::get('/speakers/type/{type:slug}', '\App\Http\Controllers\FrontendController@speakersPerType')->name('speakersPerType');
+//Route::get('/headphones', 'App\Http\Controllers\FrontendController@headphones')->name('headphones');
+//Route::get('/headphones/type/{type:slug}', '\App\Http\Controllers\FrontendController@headphonesPerType')->name('headphonesPerType');
 
 Route::get('/products/{product:slug}', 'App\Http\Controllers\FrontendController@details')->name('details');
 Route::get('/products', Products::class)->name('products');
 //Route::post('/addtocart', 'App\Http\Controllers\FrontendController@addToCart')->name('addToCart');
 Route::get('/faq', '\App\Http\Controllers\FrontendController@faq' )->name('faq');
+Route::post('/newsletter', '\App\Http\Controllers\FrontendController@newsletter' )->name('newsletter');
 
 /** cart & checkout / payment  **/
 Route::get('/cart', '\App\Http\Controllers\FrontendController@cart' )->name('cart');
@@ -80,6 +81,8 @@ Route::group(['prefix' => 'admin', 'middleware'=> 'admin'], function (){
 
     Route::resource('specifications', App\Http\Controllers\AdminSpecificationsController::class);
     Route::get('specifications/restore/{id}', 'App\Http\Controllers\AdminSpecificationsController@restore')->name('specifications.restore');
+
+    Route::resource('orders', App\Http\Controllers\AdminOrdersController::class);
 
 
 });

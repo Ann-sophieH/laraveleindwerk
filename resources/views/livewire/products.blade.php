@@ -1,45 +1,49 @@
 <div class="container-fluid row mp-none ">
 
-<div class="bg-gray-100">
+<div class="bg-gray-100 d-none d-md-inline-block ">
 
-        <aside class="col-10 mx-auto my-5 d-flex justify-content-start ">
+        <aside class="col-10 mx-auto my-5 d-flex justify-content-start " id="filtertabs">
             @if($category == [])
             <div class="card filtercard border-0 br-none me-5" style="width: 15rem;height: 13rem;">
-
-                    <input wire:model="category.speakers" type="checkbox" value="2">
+                <label for="speakerstab" class=" fsize-1 text-uppercase">
                     <img src="{{asset('assetsfront/images/highlightpic.png')}}" class="card-img-top img-fluid" alt="..." style="height: 10rem;">
                     <div class="card-body">
-                        <p class="card-title fsize-1 text-uppercase"><strong> speakers</strong></p>
+                        <input wire:model="category.speakers" id="speakerstab" type="checkbox"  value="2">
+                      <strong> speakers</strong>
                     </div>
+                </label>
+
             </div>
             <div class="card filtercard border-0 br-none me-5" style="width: 15rem;height: 13rem;">
 
-
+                <label for="headphonestab" class=" fsize-1 text-uppercase">
                     <img src="{{asset('assetsfront/images/highlightpic.png')}}" class="card-img-top img-fluid" alt="..." style="height: 10rem;">
                     <div class="card-body">
-                        <p class="card-title fsize-1 text-uppercase"><strong> headphones</strong></p>
-                    </div>
-                <input wire:model="category.headphones" type="checkbox" value="1">
+                        <input wire:model="category.headphones" id="headphonestab" type="checkbox" value="1">
+                       <strong> headphones</strong>
+                    </div></label>
             </div>
             @endif
           @if($types->isNotEmpty())
               @foreach($category as $cat => $v)
                     <div class="card filtercard border-0 br-none me-5" style="width: 15rem;height: 13rem;">
-
+                        <label class=" fsize-1 text-uppercase" for="{{$cat}}tab">
                         <img src="{{asset('assetsfront/images/highlightpic.png')}}" class="card-img-top img-fluid" alt="..." style="height: 10rem;">
-                        <div class="card-body">
-                            <p class="card-title fsize-1 text-uppercase"><strong> {{$cat}}</strong></p>
-                        </div>
+                        <div class="card-body bg-gray-400">
+                            <input class="card-title fsize-1 text-uppercase" id="{{$cat}}tab" type="hidden"><strong> {{$cat}}</strong>
+                        </div></label>
                     </div>
                     @endforeach
             @foreach($types as $type)
-                <div class="card filtercard border-0 me-5 br-none" style="width: 15rem;height: 13rem;">
+                <div class="card border-0 me-5 br-none" style="width: 15rem;height: 13rem;">
+                    <label class=" filtercard-label fsize-1 text-uppercase" for="{{$type->name}}tab">
                         <img src="{{asset('assetsfront/images/highlightpic.png')}}" class="card-img-top img-fluid" alt="..." style="height: 10rem;" >
                         <div class="card-body ">
-                            <p class="card-title fsize-1 text-uppercase"><strong>{{$type->name}}</strong></p>
-                        </div>
-                    <input wire:model="type.{{$type->name}}" type="checkbox" value="{{$type->id}}">
+                            <input class="filtercard-input" wire:model="type.{{$type->name}}" id="{{$type->name}}tab" type="checkbox" value="{{$type->id}}">
 
+                         <strong>{{$type->name}}</strong>
+                        </div>
+                    </label>
                 </div>
             @endforeach
             @endif

@@ -16,7 +16,7 @@
                     <div class="card-img-overlay">
                         <div class="d-flex position-absolute pos-hero w-90 mb-5">
                             <h2 class="card-body p-0 fs-reg pt-3">Speakers</h2>
-                            <a href="{{route('speakers')}}" class="btn btn-outline-light br-none fs-li mt-3 p-3 ">SHOP NOW</a>
+                            <a href="{{route('products')}}" class="btn btn-outline-light br-none fs-li mt-3 p-3 ">SHOP NOW</a>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                     <div class="card-img-overlay">
                         <div class="d-flex position-absolute pos-hero w-90 mb-5">
                             <h2 class="card-body p-0 fs-reg pt-3">Headphones</h2>
-                            <a href="{{route('headphones')}}" class="btn btn-outline-light br-none fs-li mt-3 p-3 ">SHOP NOW</a>
+                            <a href="{{route('products')}}" class="btn btn-outline-light br-none fs-li mt-3 p-3 ">SHOP NOW</a>
                         </div>
                     </div>
                 </div>
@@ -90,7 +90,7 @@
         <div class="position-relative col-lg-10 offset-lg-1">
             <div class="position-absolute p-3 w-auto bg-white fs-reg">
                 <h4 class="mt-2"><span class="d-block ">Pair multiple </span>Stereos in the app</h4>
-                <a class="fs-li underlined text-muted" href="{{route('speakers')}}">Shop Now</a>
+                <a class="fs-li underlined text-muted" href="{{route('products')}}">Shop Now</a>
             </div>
         </div>
     </div>
@@ -105,7 +105,7 @@
             <h3 class="text-uppercase mb-3">Our most portable items </h3>
         </div>
         <div class="col-md-6 text-end ">
-            <a href="{{route('headphones')}}" class="text-muted">view more headphones</a>
+            <a href="{{route('products')}}" class="text-muted">view more headphones</a>
         </div>
     </div>
     <div id="carouselExampleControls" class="carousel  row" data-bs-ride="carousel">

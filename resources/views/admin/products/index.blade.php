@@ -66,18 +66,7 @@
 
         </div>
     </div>
-    @foreach($specs as $spec)
-    <div class="collapse" id="collapse-{{$spec->id}}">
-        <ul class="list-group flex-column sub-menu m-1">
-            @if(count($spec->childspecs))
-                @foreach($spec->childspecs as $childspecs)
-                    @include('includes.sub_specs',['sub_specs'=>$childspecs])
-                @endforeach
-            @endif
 
-        </ul>
-    </div>
-    @endforeach
     <div class="row p-0 m-0">
         <div class="col-12 mt-5">
             <div class="card my-4">
@@ -141,6 +130,7 @@
                                     </td>
 
                                     <td class="align-middle text-center">
+
                                         @foreach($product->specifications->whereNotNull('parent_id') as $spec)
                                             <span class="badge badge-sm bg-gradient-faded-success text-secondary text-xxs font-weight-bold">{{$spec->name}}</span>
                                         @endforeach

@@ -1,19 +1,14 @@
 <aside class="flex-lg-shrink-0 col-md-3 p-3 bg-white fs-reg">
-    <div class="accordion mt-2 mb-5" id="accordionExample">
+    <div class=" mt-2 mb-5 ">
         <p class="fsize-1 text-uppercase">filtered products: {{$products->total()}}  <br> </p>
         <p class="text-uppercase text-muted" style="font-size: 0.65rem">  {{$products->count()}} of {{$products->total()}} shown </p>
 
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingFour">
-                <button aria-controls="collapseFour" aria-expanded="false" class="accordion-button  collapsed shadow-none"
-                        data-bs-target="#collapseFour"
-                        data-bs-toggle="collapse" type="button"> Filter product specifications
-                </button>
+
+            <h2 class="fsize-2 text-uppercase fs-bo">
+                  specifications
             </h2>
-            <div aria-labelledby="headingFour" class="accordion-collapse collapse show "
-                 data-bs-parent="#accordionExample"
-                 id="collapseFour">
-                <div class="accordion-body mp-none p-2">
+            <div class="mt-3 mb-2 ">
+                <div class=" mp-none p-2">
                     <ul class="list-unstyled ps-0">
                         @foreach($specs as $spec)
                             <li class="mb-1">
@@ -39,18 +34,12 @@
 
                 </div>
             </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingTwo">
-                <button aria-controls="collapseTwo" aria-expanded="false" class="accordion-button collapsed shadow-none"
-                        data-bs-target="#collapseTwo" data-bs-toggle="collapse" type="button">
+
+        <div class="mt-3 mb-2 ">
+            <h2 class="fsize-2 text-uppercase fs-bo mb-4" >
                     Color
-                </button>
             </h2>
-            <div aria-labelledby="headingTwo" class="accordion-collapse collapse"
-                 data-bs-parent="#accordionExample"
-                 id="collapseTwo">
-                <div class="accordion-body">
+                <div class="mt-2 mb-2">
                         <section class="flex-wrap d-flex mb-0">
 
                             @foreach($colors  as $color)
@@ -65,7 +54,7 @@
                         </section>
                 </div>
             </div>
-        </div>
+
 <!--        <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
                 <button aria-controls="collapseOne" aria-expanded="false" class="accordion-button shadow-none"
@@ -150,17 +139,16 @@
         </div>-->
 
 
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingThree">
-                <button aria-controls="collapseThree" aria-expanded="false" class="accordion-button collapsed shadow-none mb-1"
-                        data-bs-target="#collapseThree" data-bs-toggle="collapse" type="button">
-                    Price (max.)
-                </button>
-            </h2>
-            <div aria-labelledby="headingThree" class="accordion-collapse collapse mt-1"
-                 data-bs-parent="#accordionExample"
-                 id="collapseThree">
-                <div class="accordion-body ">
+        <div class="mt-4 mb-2 ">
+            <div class="d-flex justify-content-between">
+                <h2 class="fsize-2 text-uppercase mb-5 fs-bo" >
+                    maximum price: <span class="ps-5"> &euro; {{$maxPrice}}</span>
+                </h2>
+
+            </div>
+
+            <div >
+                <div class=" ">
                     <div class="range-wrap position-relative" style="width: 90%">
                         <div class="range-value mx-auto mb-4 text-border" id="rangeV">
 
@@ -171,9 +159,9 @@
 
             </div>
         </div>
-<!--        <button class="btn btn-outline-secondary m-2" type="submit">
-            Apply filters
-        </button>-->
+        <button class="btn btn-outline-secondary m-2" type="submit">
+            Reset filters
+        </button>
 
     </div>
 
