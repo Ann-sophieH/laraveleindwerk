@@ -29,7 +29,7 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <div class="navbar-nav me-auto mb-2 mb-lg-0 ">
                     <a aria-current="page" class="nav-link active text-uppercase" href="{{url('/')}}">Home</a>
-                    <a class="nav-link text-uppercase" href="{{route('products')}}"> ALl Products</a>
+                    <a class="nav-link text-uppercase" href="{{route('products')}}">  Products</a>
 <!--                    <a class="nav-link text-uppercase" href="{{route('products')}}">Speakers</a>
                     <a class="nav-link text-uppercase" href="{{route('products')}}"> headphones </a>-->
 
@@ -38,10 +38,11 @@
                     <a class="nav-link text-uppercase" href="#">Blog</a>
                 </div>
                 <div class="nav-item dropdown d-flex justify-content-between">
-                    <a class="nav-link dropdown-toggle text-muted" href="" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-search text-muted" style="font-size: 1.3rem;"></i>
-                    </a>
-                    <a class="nav-link" href="{{asset('cart')}}"><i class="bi bi-bag fa-lg text-muted" style="font-size: 1.5rem;"></i></a>
+                    @if(Route::currentRouteName() === 'products')
+                    @livewire('searchbar')
+                    @endif
+
+                    @livewire('counter')
                     <a class="nav-link" href="{{asset('admin/')}}"><i class="bi bi-person fa-lg text-muted" style="font-size: 1.5rem;"></i></a>
 
                     <div class="dropdown-menu mt-0 br-none p-2 border-0" aria-labelledby="navbarDropdownMenuLink">
@@ -118,10 +119,11 @@
             <div class="order-3 order-md-2 order-lg-3 col-md-4 col-lg-3  text-white fs-reg">
                 <p class=" mb-1 text-uppercase ">Payment methods</p>
                 <ul class="list-unstyled d-flex mt-2 justify-content-between pt-3 ">
-                    <li><img src="{{asset('assetsfront/images/payment_icons/bancontact@2x.png')}}" class="img-fluid" alt="Image"></li>
-                    <li><img src="{{asset('assetsfront/images/payment_icons/paypal@2x.png')}}" class="img-fluid" alt="Image"></li>
-                    <li><img src="{{asset('assetsfront/images/payment_icons/ideal@2x.png')}}" class="img-fluid" alt="Image"></li>
-                    <li><img src="{{asset('assetsfront/images/payment_icons/creditcard@2x.png')}}" class="img-fluid" alt="Image"></li>
+                    <li>
+                        <img src="{{asset('assetsfront/images/payment_icons/bancontact@2x.png')}}" class="img-fluid" alt="bancontact"></li>
+                    <li><img src="{{asset('assetsfront/images/payment_icons/paypal@2x.png')}}" class="img-fluid" alt="paypal"></li>
+                    <li><img src="{{asset('assetsfront/images/payment_icons/ideal@2x.png')}}" class="img-fluid" alt="ideal"></li>
+                    <li><img src="{{asset('assetsfront/images/payment_icons/creditcard@2x.png')}}" class="img-fluid" alt="creditcard"></li>
 
                 </ul>
             </div>

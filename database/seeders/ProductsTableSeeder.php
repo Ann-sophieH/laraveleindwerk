@@ -22,7 +22,7 @@ class ProductsTableSeeder extends Seeder
         DB::table('products')->insert([
             'name' => 'Beosound level',
             //'color' => 'Purple heart',
-            'price' => 1899, //is process field moet er nog uit ->hoe normaliseren?
+            'price' => 1899,
             //'photo_id'=>1,
             'category_id'=>2,
             'details' => 'lorem ipsum',

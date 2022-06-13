@@ -123,16 +123,12 @@
         <div class="card-body">
           <h2 class="fsize-2 m-2 mt-4 text-uppercase ps-4 ">Payment</h2>
           <div class="ps-5">
-            <p>We accept</p>
-            <img class="me-2" width="45px"
-                 src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
-                 alt="Visa" />
-            <img class="me-2" width="45px"
-                 src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
-                 alt="American Express" />
-            <img class="me-2" width="45px"
-                 src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
-                 alt="Mastercard" />
+            <p class="pt-2">We accept:</p>
+
+              <img src="{{asset('assetsfront/images/payment_icons/bancontact@2x.png')}}" class="img-fluid " alt="bancontact">
+              <img src="{{asset('assetsfront/images/payment_icons/paypal@2x.png')}}" class="img-fluid ps-md-3" alt="paypal">
+              <img src="{{asset('assetsfront/images/payment_icons/ideal@2x.png')}}" class="img-fluid  ps-md-3" alt="ideal">
+              <img src="{{asset('assetsfront/images/payment_icons/creditcard@2x.png')}}" class="img-fluid  ps-md-3 mt-2 mt-md-1" alt="creditcard">
           </div>
 
         </div>

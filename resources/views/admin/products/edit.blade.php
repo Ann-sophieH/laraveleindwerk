@@ -27,11 +27,12 @@
                     </div>
                 </div>
                 <div class="card-body px-0 pb-2">
-                    <form action="{{route('products.update', $product->id)}}" method="post" enctype="multipart/form-data">
-                        @csrf
-                        @method('PATCH')
+
                         <div class="row mx-auto justify-content-evenly">
                             <div class="col-8  mb-3">
+                                <form action="{{route('products.update', $product->id)}}" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                    @method('PATCH')
                                 <div class="form-group mt-3">
                                     <label for="name">Product name:</label>
                                     <input type="text" class="form-control border ps-2 shadow-sm" id="name" name="name" value="{{$product->name}}" placeholder="Product name...">
@@ -119,11 +120,18 @@
                                         <button type="button" class="btn btn-success opacity-5 mt-2 ms-5 flex-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                             <i class="fa fa-plus"> Add new color </i>
                                         </button>
-                                        <select class="form-control shadow-sm " id="colors[]" name="colors[]" multiple>
-                                            @foreach($colors as $color)
-                                                <option value="{{$color->id}}" @if($product->colors->contains($color->id)) selected @endif>{{$color->name}}</option>
+                                        <section class="flex-wrap d-flex mb-0">
+
+                                            @foreach($colors  as $color)
+                                                <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
+                                                    <input type="checkbox" id="colour_sidebar_{{$color->name}}" name="colors[]" value="{{$color->id}}"
+                                                           class="form-check-input shadow-none d-none" @if($product->colors->contains($color->id)) checked @endif>
+                                                    <label class="btn-colour form-option-label rounded-circle p-1" for="colour_sidebar_{{$color->name}}"
+                                                           style="background-color: {{$color->hex_value}};"  ><span class="form-option-color rounded-circle" style="background-color:  rgb(84, 81, 66);"></span></label>
+
+                                                </div>
                                             @endforeach
-                                        </select>
+                                        </section>
 
 
                                     </div>
@@ -144,6 +152,7 @@
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-warning mt-5 opacity-8">Edit this product</button>
+                                </form>
                             </div>
                             <div class="col-3 ">
 
@@ -172,14 +181,14 @@
                         </div>
 
 
-                    </form>
+
                 </div>
             </div>
         </div>
     </div>
 
 
-    <!-- Modal -->
+    <!-- Modal COLOR CREATE -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -187,26 +196,29 @@
                     <h5 class="modal-title" id="exampleModalLabel">Add a new color to database</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <form action="" method="post" enctype="multipart/form-data">
-                        @csrf
+                <form action="{{route('colors.store')}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+
                         <div class="form-group">
                             <label for="name">Color name:</label>
-                            <input type="text" class="form-control border ps-2 shadow-sm" id="name" name="name" placeholder="Color name...">
+                            <input type="text" class="form-control border ps-2 shadow-sm" id="name" name="name"
+                                   placeholder="Color name...">
                         </div>
                         <div class="form-group mt-5 col-6 mx-auto p-2">
-                            <label for="color"><strong>Select your product color: </strong><br> tip: open the product photo and use the colorpicker</label>
-                            <input type="color" class="form-control " id="color" name="color" value="#ff0000">
+                            <label for="hex_value"><strong>Select your product color: </strong><br> tip: use the
+                                colorpicker on the product photo </label>
+                            <input type="color" class="form-control "  style="width:85%; " id="hex_value" name="hex_value" value="#ff0000">
 
                         </div>
 
 
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline-primary">Save changes</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary opacity-8">Save changes</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

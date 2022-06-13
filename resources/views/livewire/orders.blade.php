@@ -56,18 +56,17 @@
                                     <table class="table table-flush dataTable-table" id="datatable-search">
                                         <thead class="thead-light">
                                         <tr>
-                                            <th  style="width: 17.0778%;"><a href="#" class="dataTable-sorter">Id</a>
+                                            <th  ><a href="#" class="">Id</a>
                                             </th>
-                                            <th style="width: 15.9393%;"><a href="#" class="dataTable-sorter">Date</a>
+                                            <th ><a href="#" class="">Date</a>
                                             </th>
-                                            <th style="width: 15.4965%;"><a href="#" class="dataTable-sorter">Status</a>
+                                            <th ><a href="#" class="">Status</a>
                                             </th>
-                                            <th  style="width: 19.2916%;"><a href="#" class="dataTable-sorter">Customer</a>
+                                            <th  ><a href="#" class="">Customer</a>
                                             </th>
-                                            <th  style="width: 21.1891%;"><a href="#" class="dataTable-sorter">Details</a>
+                                            <th  ><a href="#" class="">Details</a>
                                             </th>
-                                            <th  style="width: 11.0057%;"><a href="#" class="dataTable-sorter">Cancel</a>
-                                            </th>
+
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -120,11 +119,7 @@
                                                 </button>
                                                 <a href=""> <span class="my-2 text-xs"> </span></a>
                                             </td>
-                                            <td class="text-xs font-weight-normal">
-                                                <button
-                                                    class="btn btn-icon-only btn-rounded btn-danger mb-0 me-2 btn-sm d-flex align-items-center justify-content-center"
-                                                    ><i class="material-icons text-sm"
-                                                                                 aria-hidden="true">clear</i></button>                                            </td>
+
                                         </tr>
 
                                         <!-- Modal orderdetails -->

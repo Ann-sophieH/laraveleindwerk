@@ -47,14 +47,14 @@
                 <img alt="" class="w-100 h-100" src="{{asset('assetsfront/images/desgn2.jpg')}}">
             </div>
             <div class="col-6 col-lg-3 gx-2  fsize-1">
-                <div class="mi position-relative mt-1">
+                <div class="mi position-relative mt-1 shadow">
                     <img alt="..." class="mi img-fluid" src="{{asset('assetsfront/images/highlightpic.png')}}">
                     <div class="kader position-absolute ps-1 d-none d-md-block">
                         <p class="text-uppercase mp-none ">beosound explore</p>
                         <p class="text-muted mp-none d-none d-md-block">cradle to cradle ceritfiedr</p>
                     </div>
                 </div>
-                <div class="mi position-relative mt-2">
+                <div class="mi position-relative mt-2 shadow">
                     <img alt="..." class="mi img-fluid " src="{{asset('assetsfront/images/all_sapekres.jpg')}}">
                     <div class="kader position-absolute ps-1 d-none d-md-block">
                         <p class="text-uppercase mp-none">beosound explore</p>
@@ -64,7 +64,7 @@
 
             </div>
             <div class="col-6 col-lg-3 gx-2  fsize-1">
-                <div class="mi position-relative mt-1">
+                <div class="mi position-relative mt-1 shadow">
                     <img alt="..." class="mi img-fluid" src="{{asset('assetsfront/images/bigdesign.jpg')}}" style="height: auto" id="highlightfix">
                     <div class="kader position-absolute ps-1 d-none d-md-block">
                         <p class="text-uppercase mp-none">beosound level</p>

@@ -30,7 +30,7 @@ class TypesTableSeeder extends Seeder
         DB::table('types')->insert([
             'name' => 'earphones',
             'category_id'=> 1,
-            'photo_id'=> 1,
+            'photo_id'=> 3,
             'slug'=>'earphones',
             'created_at'=>Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at'=>Carbon::now()->format('Y-m-d H:i:s'),
@@ -38,7 +38,7 @@ class TypesTableSeeder extends Seeder
         DB::table('types')->insert([
             'name' => 'noise-cancelling',
             'category_id'=> 1,
-            'photo_id'=> 1,
+            'photo_id'=> 2,
             'slug'=>'noise-cancelling',
             'created_at'=>Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at'=>Carbon::now()->format('Y-m-d H:i:s'),
@@ -47,7 +47,7 @@ class TypesTableSeeder extends Seeder
         DB::table('types')->insert([
             'name' => 'portable',
             'category_id'=> 2,
-            'photo_id'=> 1,
+            'photo_id'=> 4,
             'slug'=>'portable',
             'created_at'=>Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at'=>Carbon::now()->format('Y-m-d H:i:s'),
@@ -55,7 +55,7 @@ class TypesTableSeeder extends Seeder
         DB::table('types')->insert([
             'name' => 'home audio',
             'category_id'=> 2,
-            'photo_id'=> 1,
+            'photo_id'=> 5,
             'slug'=>'home-audio',
             'created_at'=>Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at'=>Carbon::now()->format('Y-m-d H:i:s'),
@@ -63,7 +63,7 @@ class TypesTableSeeder extends Seeder
         DB::table('types')->insert([
             'name' => 'speaker sets',
             'category_id'=> 2,
-            'photo_id'=> 1,
+            'photo_id'=> 6,
             'slug'=>'speaker-sets',
             'created_at'=>Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at'=>Carbon::now()->format('Y-m-d H:i:s'),

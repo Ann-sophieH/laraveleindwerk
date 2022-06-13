@@ -50,7 +50,7 @@ class AdminColorsController extends Controller
         $color->name = $request->name;
         $color->hex_value = $request->hex_value;
         $color->save();
-        return redirect('/admin/products/create');
+        return redirect()->back();
     }
 
     /**

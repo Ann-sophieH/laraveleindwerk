@@ -31,12 +31,15 @@
                 <ul class="mt-5 mb-5 mp-none">
                     @foreach($product->colors as $color)
                     <li class="list-inline-item">
-                        <label class="btn-colour form-label " for="colour_sidebar_Kaki"
-                               style="background-color: {{$color->hex_value}};"></label>
-                        <input name="colour" type="checkbox" id="colour_sidebar_Kaki"
+                        <label class="btn-colour form-option-label rounded-circle p-1" for="colour_sidebar_{{$color->name}}"
+                               style="background-color: {{$color->hex_value}};"  ><span class="form-option-color rounded-circle" style="background-color:  rgb(84, 81, 66);"></span></label>
+
+
+                        <input name="colour" type="checkbox" id="colour_sidebar_{{$color->name}}"
                                class="input-invisible form-control">
                     </li>
                     @endforeach
+
                {{--     <li class="list-inline-item">
                         <label class="btn-colour form-label" for="colour_sidebar_Blue"
                                style="background-color: rgb(38, 43, 51);"></label>

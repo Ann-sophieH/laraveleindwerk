@@ -35,7 +35,10 @@
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
+
     <link id="pagestyle" href="{{asset('./assets/css/material-dashboard.css?v=3.0.0')}}" rel="stylesheet" />
+    <link href="{{asset('assetsfront/css/style.css')}}" rel="stylesheet">
+
     @livewireStyles
 </head>
 

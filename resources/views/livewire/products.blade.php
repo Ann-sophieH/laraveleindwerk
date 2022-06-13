@@ -1,13 +1,13 @@
 <div class="container-fluid row mp-none ">
 
-<div class="bg-gray-100 d-none d-md-inline-block ">
+<div class="bg-gray-100 d-none d-lg-inline-block ">
 
         <aside class="col-10 mx-auto my-5 d-flex justify-content-start " id="filtertabs">
             @if($category == [])
             <div class="card filtercard border-0 br-none me-5" style="width: 15rem;height: 13rem;">
                 <label for="speakerstab" class=" fsize-1 text-uppercase">
-                    <img src="{{asset('assetsfront/images/highlightpic.png')}}" class="card-img-top img-fluid" alt="..." style="height: 10rem;">
-                    <div class="card-body">
+                    <img src="{{asset('assets/img/navtypes/speakers.png')}}" class="card-img-top img-fluid" alt="..." style="height: 10rem;">
+                    <div class="card-body filtercard">
                         <input wire:model="category.speakers" id="speakerstab" type="checkbox"  value="2">
                       <strong> speakers</strong>
                     </div>
@@ -16,10 +16,10 @@
             </div>
             <div class="card filtercard border-0 br-none me-5" style="width: 15rem;height: 13rem;">
 
-                <label for="headphonestab" class=" fsize-1 text-uppercase">
-                    <img src="{{asset('assetsfront/images/highlightpic.png')}}" class="card-img-top img-fluid" alt="..." style="height: 10rem;">
+                <label for="generaltab" class=" fsize-1 text-uppercase">
+                    <img src="{{asset('assets/img/navtypes/headphones.png')}}" class="card-img-top img-fluid" alt="..." style="height: 10rem;">
                     <div class="card-body">
-                        <input wire:model="category.headphones" id="headphonestab" type="checkbox" value="1">
+                        <input wire:model="category.headphones" id="generaltab" type="checkbox" value="1">
                        <strong> headphones</strong>
                     </div></label>
             </div>
@@ -28,18 +28,25 @@
               @foreach($category as $cat => $v)
                     <div class="card filtercard border-0 br-none me-5" style="width: 15rem;height: 13rem;">
                         <label class=" fsize-1 text-uppercase" for="{{$cat}}tab">
-                        <img src="{{asset('assetsfront/images/highlightpic.png')}}" class="card-img-top img-fluid" alt="..." style="height: 10rem;">
+                            @if($v === "1")
+                                <img src="{{asset('assets/img/navtypes/headphones.png')}}" class="card-img-top img-fluid" alt="..." style="height: 10rem;">
+
+                            @else
+                                <img src="{{asset('assets/img/navtypes/speakers.png')}}" class="card-img-top img-fluid" alt="..." style="height: 10rem;">
+
+                            @endif
                         <div class="card-body bg-gray-400">
-                            <input class="card-title fsize-1 text-uppercase" id="{{$cat}}tab" type="hidden"><strong> {{$cat}}</strong>
+                            <input class="card-title fsize-1 text-uppercase" id="{{$cat}}tab" type="hidden" onclick="changeColour();"><strong> {{$cat}}</strong>
                         </div></label>
                     </div>
                     @endforeach
             @foreach($types as $type)
-                <div class="card border-0 me-5 br-none" style="width: 15rem;height: 13rem;">
+                <div class="filtercard card border-0 me-5 br-none" style="width: 15rem;height: 13rem;">
                     <label class=" filtercard-label fsize-1 text-uppercase" for="{{$type->name}}tab">
-                        <img src="{{asset('assetsfront/images/highlightpic.png')}}" class="card-img-top img-fluid" alt="..." style="height: 10rem;" >
-                        <div class="card-body ">
-                            <input class="filtercard-input" wire:model="type.{{$type->name}}" id="{{$type->name}}tab" type="checkbox" value="{{$type->id}}">
+
+                        <img src="{{$type->photo ? $type->photo->file : 'http://via.placeholder.com/62x62'}}" class="card-img-top img-fluid" alt="..." style="height: 10rem;" >
+                        <div class="card-body filtercard-body">
+                            <input class="filtercard-input "  wire:model="type.{{$type->name}}" id="{{$type->name}}tab" type="checkbox" value="{{$type->id}}" >
 
                          <strong>{{$type->name}}</strong>
                         </div>
@@ -58,7 +65,7 @@
             <div class="row row-cols-md-2 row-cols-lg-3 g-4 gy-4 fs-reg my-auto mt-2" >
                 @foreach($products as $product)
                     <article class="card border-0 mb-4 ">
-                        <div id="carouselExampleControls" class="carousel  carousel-dark slide "  data-bs-interval="false" data-bs-ride="carousel">
+                        <div id="carousel{{$product->id}}Controls" class="carousel  carousel-dark slide "  data-bs-interval="false" data-bs-ride="carousel">
                             <a href="{{route('details', $product)}}" class="br-none">
                                 <div class="carousel-inner ">
                                     @if(($product->photos)->isNotEmpty())
@@ -66,13 +73,13 @@
                                             <div class="carousel-item @if ($loop->first) active @endif">
                                                 <img alt="product" class=" card-img-top d-block w-100" src="{{asset($photo->file) }}">
                                             </div>
-                                            <button class="carousel-control-prev " type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                            <button class="carousel-control-prev " type="button" data-bs-target="#carousel{{$product->id}}Controls" data-bs-slide="prev">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#381b52" class="bi bi-chevron-left" viewBox="0 0 16 16">
                                                     <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"></path>
                                                 </svg>
                                                 <span class="visually-hidden">Previous</span>
                                             </button>
-                                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                            <button class="carousel-control-next" type="button" data-bs-target="#carousel{{$product->id}}Controls" data-bs-slide="next">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#381b52" class="bi bi-chevron-right" viewBox="0 0 16 16">
                                                     <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
                                                 </svg>
@@ -122,4 +129,5 @@
     <div class="row col-3  mx-auto mt-5">
         {{$products->render()}}
     </div>
+
 </div>

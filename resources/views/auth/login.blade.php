@@ -80,7 +80,10 @@
                                     {{ __('Forgot Your Password?') }}
                                 </a>
                             @endif
-
+                            <a class="btn btn-link link-secondary mt-1"
+                               href="{{ route('register') }}">
+                                {{ __('Register a new user?') }}
+                            </a>
                         </div>
                     </form>
                 </div>

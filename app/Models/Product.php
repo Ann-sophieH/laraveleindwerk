@@ -29,7 +29,7 @@ class Product extends Model
 
     public function specifications()
     {
-        return $this->belongsToMany(Specification::class, 'product_specification');
+        return $this->belongsToMany(Specification::class, 'specification_product');
     }
     public function colors(){
         return $this->belongsToMany(Color::class, 'color_product');

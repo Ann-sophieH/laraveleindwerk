@@ -23,5 +23,8 @@ class Type extends Model
     {
         return $this->belongsToMany(Product::class, 'product_type');
     }
+    public function photo(){
+        return $this->belongsTo(Photo::class);
+    }
 
 }

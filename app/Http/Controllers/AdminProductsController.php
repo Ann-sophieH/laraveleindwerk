@@ -141,6 +141,9 @@ class AdminProductsController extends Controller
     {
         $product = Product::findOrFail($id);
         $input = $request->all();
+        /** edit many-relationships **/
+        $product->colors()->sync($request->colors, true);
+        $product->specifications()->sync($request->specifications, true);
 
         /** update photo **/
         $files = $request->file('photos');
@@ -155,20 +158,18 @@ class AdminProductsController extends Controller
                     // ->insert(public_path('/img/watermark.png'), 'bottom-right', 20, 20) //wtermark toevoegen
                     ->save(public_path('assets/img/products/' . 'md_' . $name)); //enkel thumbnail vn product
                 $mediumProduct = 'products/' . 'md_' . $name ;
-                $product->update($input);
+               // $product->update($input);
 
                 $photo = Photo::create(['file'=>$mediumProduct]);
                 $product->photos()->save($photo);
+            }
+        }
 
-            }}
+
 
         $product->update($input);
-        /** edit many-relationships **/
-        $product->colors()->sync($request->colors, true);
-        $product->specifications()->sync($request->specifications, true);
-        Session::flash('product_message', 'Product: ' . $product->name . 'was edited!');
+        Session::flash('product_message', 'Product: ' . $product->name . ' was edited!');
         return redirect('/admin/products');
-
 
 
     }
@@ -212,7 +213,7 @@ class AdminProductsController extends Controller
 
         return view('products', compact('products', 'specs', 'categories'));
     }*/
-    public function speakers(){
+ /*   public function speakers(){
         $products = Product::with(['photos', 'colors'])->where('category_id' , 2)->paginate(25);
         $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
         $categories = Category::all();
@@ -247,7 +248,7 @@ class AdminProductsController extends Controller
         $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
         return view('headphones', compact('products', 'types', 'specs', 'categories'));
 
-    }
+    }*/
 
     /*public function cart(){
 

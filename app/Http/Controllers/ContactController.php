@@ -14,9 +14,15 @@ class ContactController extends Controller
         return view('contactformulier');
     }
     public function store(Request $request){
-        $data = $request->all();
-        Mail::to(request('email'))->send(new Contact($data)); //??
-        return redirect()->back();
+        $data = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'message' => 'required'
+        ]);
+       // $data = $request->all();
+        Mail::to(request('email'))->send(new Contact($data));
+        return redirect()->back()->with('success_message', 'we received your message successfully and we will get back to you soon!');
+       // return redirect()->back();
     }
     public function contact(){
 

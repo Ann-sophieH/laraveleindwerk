@@ -17,6 +17,8 @@ class CartList extends Component
         $cart = new Cart($oldCart);
         $cart->down($id);
         Session::put('cart', $cart);
+        $this->emit('productRemoved');
+
         if($quantity < 0 ){
             $cart-> removeItem($id);
         }
@@ -25,6 +27,8 @@ class CartList extends Component
         $oldCart = Session::has('cart') ? Session::get('cart'):null;
         $cart = new Cart($oldCart);
         $cart->up($id, $cart->quantity);
+        $this->emit('productAdded');
+
         Session::put('cart', $cart);
     }
 
@@ -33,7 +37,10 @@ class CartList extends Component
         $cart = new Cart($oldCart);
         $cart->removeItem($id);
         Session::put('cart', $cart);
+        $this->emit('productRemoved');
+
         return redirect()->back();
+
     }
 
     public function render()

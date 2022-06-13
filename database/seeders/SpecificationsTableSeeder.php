@@ -91,14 +91,14 @@ class SpecificationsTableSeeder extends Seeder
             ]);
         DB::table('specifications')
             ->insert([
-                'name'=>'bluetooth 4.0',
+                'name'=>'bluetooth 4',
                 'parent_id'=>2,
                 'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
             ]);
         DB::table('specifications')
             ->insert([
-                'name'=>'bluetooth 3.0',
+                'name'=>'bluetooth 3',
                 'parent_id'=>2,
                 'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')
@@ -175,7 +175,7 @@ class SpecificationsTableSeeder extends Seeder
             ]);
         DB::table('specifications')
             ->insert([
-                'name'=>'bluetooth 4.0',
+                'name'=>'bluetooth 4',
                 'parent_id'=>6,
                 'created_at' =>Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' =>Carbon::now()->format('Y-m-d H:i:s')

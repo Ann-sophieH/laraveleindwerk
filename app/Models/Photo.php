@@ -23,5 +23,9 @@ class Photo extends Model
     public function products(){
         return $this->morphedByMany(Product::class, 'photoable');
     }
+    public function types(){
+        return $this->hasMany(Type::class);
+    }
+
 
 }

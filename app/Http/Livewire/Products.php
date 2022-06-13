@@ -26,13 +26,22 @@ class Products extends Component
     public $type;
     public $maxPrice;
 
+    protected $listeners = [
+    'search' => 'searchProduct',
 
+    ];
+    public function searchProduct($searchbar){
+     //   dd($searchbar);
+        $this->search = $searchbar;
+    }
 
     public function addToCart( $id){
         $product = Product::with(['specifications', 'colors', 'category', 'photos'])->where('id', $id)->first();
         $oldCart = Session::has('cart') ? Session::get('cart'): null;
         $cart = new Cart($oldCart);
         $cart->addItem($product, $id);
+        $this->emit('productAdded');
+
         Session::put('cart',$cart);
         //return redirect()->back();
     }
@@ -47,8 +56,8 @@ class Products extends Component
     {
         if (!is_array($this->specifications)) return;
 
-        $this->specifications = array_filter($this->specifications, function ($specification) {
-            return $specification != false;
+        $this->specifications = array_filter($this->specifications, function ($specifications) {
+            return $specifications != false;
         });
     }
     public function updatedColorsfilter()// to filter out all unchecked boxes (cause they dont go out of the array but are set to false!)
@@ -71,13 +80,21 @@ class Products extends Component
     {
             return view('livewire.products', [
                 'products'=>Product::with(['photos', 'colors'])
+                    ->where(function($query){ //dd($this->search);
+                        $query->where('name', 'like', '%' . $this->search .'%')
+                            ->orWhere('price','like', '%' . $this->search .'%')
+                            ->orWhere('details','like', '%' . $this->search .'%')
+                            ->orWhereHas('category', function ($query){ //query tussentabel
+                                $query->where('name', 'like', '%' . $this->search .'%');
+                            });
+                    })
                     ->when($this->maxPrice, function ($query) {
                          $query->where( 'price' , '<=',  $this->maxPrice);
                     })
                     ->when($this->specifications, function ($query){
                         foreach ($this->specifications as $k => $v){
-                         $query->whereHas('specifications', function($query) use ($v){
-                                $query->where('name', $v);
+                         $query->whereHas('specifications', function($query) use ($k){
+                                $query->where('name', $k);
                             });
                         }
                     })
@@ -102,7 +119,7 @@ class Products extends Component
 
                 'specs'=> Specification::whereNull('parent_id')->with( 'childspecs')->get(),
                 'product'=>null,
-                'types'=> Type::where('category_id' , $this->category)->get(),
+                'types'=> Type::with('photo')->where('category_id' , $this->category)->get(),
                 'colors'=>Color::all()
             ])->extends('layouts.index');
         }

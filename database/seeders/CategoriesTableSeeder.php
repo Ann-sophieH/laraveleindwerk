@@ -16,7 +16,17 @@ class CategoriesTableSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('categories')->insert(['name' => 'Headphones']);
-        DB::table('categories')->insert(['name' => 'Speakers']);
+        DB::table('categories')->insert([
+            'name' => 'Headphones',
+            'photo_id'=> 8,
+
+
+        ]);
+        DB::table('categories')->insert([
+            'name' => 'Speakers',
+            'photo_id'=> 7,
+
+
+        ]);
     }
 }
