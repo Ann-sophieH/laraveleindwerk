@@ -17,11 +17,11 @@ class ProductsSpecificationsTableSeeder extends Seeder
     public function run()
     {
         //$specs
-        $specs = Specification::whereNotNull('parent_id')->get();
-        $parentSpecs = Specification::whereNull('parent_id')->get();
+        $specs = Specification::whereNotNull('parent_id')->get(); //childspecs
+        $parentSpecs = Specification::whereNull('parent_id')->get(); //parentspecs
         Product::all()->each(function ($product) use ($parentSpecs){
             $product->specifications()->attach(
-                $parentSpecs->pluck('id')->toArray()
+                $parentSpecs->pluck('id')->toArray() //each product gets all parentspecs
             );
         });
 

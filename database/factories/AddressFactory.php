@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Address;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,6 +20,7 @@ class AddressFactory extends Factory
     public function definition()
     {
 
+  //      $order = Order::pluck('id')->toArray();
 
         return [
             //
@@ -25,6 +28,8 @@ class AddressFactory extends Factory
             'addressline_1' =>$this->faker->address() ,
             'addressline_2' => $this->faker->streetAddress(),
             'address_type'=> 1,
+//            'order_id' =>$this->faker->randomElement($order) ,
+
 
 
         ];

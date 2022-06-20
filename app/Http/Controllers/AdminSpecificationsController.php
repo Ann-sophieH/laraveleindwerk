@@ -18,9 +18,11 @@ class AdminSpecificationsController extends Controller
      */
     public function index()
     {
-        //
-        $specs = Specification::with([ 'childspecs', 'products'])->whereNull('parent_id')->withTrashed()->paginate(10);
+        //N+1 problem not solvable cause calling on products relation within page
+        $specs = Specification::with([ 'products','childspecs' ])->whereNull('parent_id')->withTrashed()->paginate(10);
+        //$specs->load(['products.specifications', 'childspecs.products']);
         //$sub_specs = Specification::with([ 'products','childspecs', 'specs'])->withTrashed()->whereNotNull('parent_id')->paginate(10);
+
 
         return view('admin.specifications.index', compact('specs'));
 
@@ -49,6 +51,17 @@ class AdminSpecificationsController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name' => 'required',
+            'parent_id' => 'required'
+        ]);
+        $specification = new Specification();
+        $specification->name = $request->name;
+        $specification->parent_id = $request->parent_id;
+        $specification->save();
+        Session::flash('spec_message', $specification->name . ' was stored!'); //naam om mess. op te halen, VOOR DELETE OFC
+
+        return redirect()->back();
     }
 
     /**
@@ -71,6 +84,9 @@ class AdminSpecificationsController extends Controller
     public function edit($id)
     {
         //
+        $specification = Specification::findOrFail($id);
+       // $childSpecs = Specification::whereNotNull('parent_id')->with([ 'childspecs'])->get(); //childspecs
+        return view('admin.specifications.edit', compact('specification'));
     }
 
     /**
@@ -83,6 +99,15 @@ class AdminSpecificationsController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'name' => 'required',
+        ]);
+        $spec = Specification::findOrFail($id);
+        $spec->name = $request->name;
+        $spec->update();
+        Session::flash('spec_message', $spec->name . ' was edited and saved!'); //naam om mess. op te halen, VOOR DELETE OFC
+
+        return redirect('/admin/specifications/');
     }
 
     /**
@@ -101,6 +126,8 @@ class AdminSpecificationsController extends Controller
     }
     public function restore( $id){
         Specification::onlyTrashed()->where('id', $id)->with('products')->restore();
+        Session::flash('spec_message', 'this specification was restored and is active again!'); //naam om mess. op te halen, VOOR DELETE OFC
+
         return redirect('/admin/specifications');
     }
 }

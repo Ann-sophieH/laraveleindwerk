@@ -1,3 +1,4 @@
+{{--
 @extends('layouts/index')
 @section('content')
 
@@ -5,9 +6,12 @@
         <livewire:products>
 
         </livewire:products>
-        {{--    filtercards home product page--}}
+        --}}
+{{--    filtercards home product page--}}{{--
 
-      {{--  <div class="bg-gray-100">
+
+      --}}
+{{--  <div class="bg-gray-100">
             <aside class="col-10 mx-auto my-5 d-flex justify-content-start ">
                 <div class="card filtercard border-0 br-none me-5" style="width: 15rem;height: 13rem;">
                     <a class="" href="{{route('products')}}">
@@ -106,12 +110,13 @@
         </div>
         <div class="row col-3  mx-auto mt-5">
             {{$products->render()}}
-        </div>--}}
+        </div>--}}{{--
+
 
     </div>
     <script>
         const
-            range = document.getElementById('range'),
+         //   range = document.getElementById('range'),
             rangeV = document.getElementById('rangeV'),
             setValue = ()=>{
                 const
@@ -125,3 +130,4 @@
 
     </script>
 @endsection
+--}}

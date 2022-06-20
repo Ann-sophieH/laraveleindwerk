@@ -16,14 +16,14 @@
         @endif
     </div>
 
-    <div class=" stretch-card mb-5 m-2 mt-5">
+    <div class="row stretch-card mb-5 m-2 mt-5">
         <div class="card">
                 <div class="d-flex justify-content-between p-3 mt-4">
                     <div>
                         <h4 class="card-title">Product reviews</h4>
-                        <p class="card-description m-4"> Click the eye to see all product info for which the review was left
+                        <p class="card-description m-4"> Click the product or users name for info on who left the review and for which product.
                         </p>
-                        <p class="card-description m-4">Display : {{$reviews->count()}} of {{$reviews->total()}}</p>
+                        <p class="card-description m-4">Display : {{$reviews->count()}} of {{$reviews->total()}} reviews</p>
                         <form>
                             <input type="text" name="search" class="form-control mb-3 border-1 small"
                                    placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
@@ -38,7 +38,7 @@
                 <th>Author</th>
                 <th>Product</th>
                 <th class="text-center">Stars</th>
-                <th>Review</th>
+                <th>Review <i><span class="text-xs">(click to read)</span></i></th>
                 <th>Created</th>
                 <th>Updated</th>
                 <th>Actions</th>
@@ -49,18 +49,29 @@
                     @foreach($reviews as $review)
                         <tr>
                             <td class="text-muted">{{$review->id}}</td>
-                            <td><p class="text-avatar">
-                                    {{$review->user->username}}
-                                </p><p class="text-small text-muted">
+                            <td><p class="text-avatar"> <a class="text-sm link-info" href="{{route('users.show', $review->user->id)}}">
+                                    {{$review->user->username}} </a>
+                                </p>
+                                <p class="text-sm">
 
                                     {{$review->user->first_name}}
                                     {{$review->user ->last_name}}
 
                                 </p>
                             </td>
-                            <td>{{$review->product->name}}</td>
+                            <td ><a class="fs-bo link-success " href="{{route('details', $review->product)}}">{{$review->product->name}}</a></td>
                             <td class=" text-center "><span class="badge badge-circle @if($review->stars >= 3 ) bg-success @elseif($review->stars == 2) bg-warning @else bg-danger @endif">{{$review->stars}}</span></td>
-                            <td>{{Str::limit($review->body, 35)}}</td>
+                            <td >
+                                <a class="btn btn-neutral shadow-none" data-bs-toggle="collapse" href="#collapse{{$review->id}}" role="button" aria-expanded="false" aria-controls="collapse{{$review->id}}">
+                                {{Str::limit($review->body, 35)}}
+                                </a>
+
+                                <div class="collapse  " id="collapse{{$review->id}}">
+                                    <div class="card card-body shadow-none ">
+                                        {{ $review->body }}
+                                    </div>
+                                </div>
+                            </td>
                             <td><p class="text-small text-muted">{{$review->created_at}}</p></td>
                             <td><p class="text-small text-muted">{{$review->updated_at}}</p></td>
                             <td>

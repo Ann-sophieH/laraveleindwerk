@@ -27,6 +27,7 @@ class Cart extends Model
         }
     }
     public function addItem($product, $product_id){
+
         $shopItems = [
             'quantity'=>0,
             'product_id'=>0,

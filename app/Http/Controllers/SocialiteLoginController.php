@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\SocialiteLogin;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialiteLoginController extends Controller
@@ -44,7 +45,10 @@ class SocialiteLoginController extends Controller
             ]
         );
         auth()->login($user);
-        return redirect(route('homebackend'));
+        return redirect(Request::session()->get('url.intended') ?? '/admin') ;
+
+
+
     }
     public function handleGitCallback(){
         $socialiteUser = Socialite::driver('github')->user();
@@ -65,28 +69,8 @@ class SocialiteLoginController extends Controller
             ]
         );
         auth()->login($user);
-        return redirect(route('homebackend'));
-    }
-/*    public function handleFacebookCallback(){
-        $socialiteUser = Socialite::driver('facebook')->user();
+        return redirect(Request::session()->get('url.intended') ?? '/admin') ;
 
-        $user = User::firstOrCreate(
-            ['email' => $socialiteUser->getEmail(),
-            ],
-            ['name' => $socialiteUser->getName(),
-            ]
-        );
-        SocialiteLogin::firstOrCreate(
-            [
-                'user_id' => $user->id,
-                'provider' => 'facebook',
-            ],
-            [
-                'provider_id' => $socialiteUser->getId()
-            ]
-        );
-        auth()->login($user);
-        return redirect(route('dashboard'));
-    }*/
+    }
 
 }

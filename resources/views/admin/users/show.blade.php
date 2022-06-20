@@ -53,8 +53,9 @@
                 @if($user->is_active === 1)
 
                     <input type="hidden" name="is_active" value="{{$user->is_active}}">
-                    <button href="{{route('users.status', $user->id)}}" type="submit" data-toggle="tooltip" data-placement="top" class="btn btn-outline-success text-success">
-                        <i class="fas fa-running"></i> active user
+                    <button href="{{route('users.status', $user->id)}}" type="submit" data-toggle="tooltip" data-placement="top" class="btn btn-outline-success text-success" >
+
+                        <i class="fas fa-running" data-bs-toggle="tooltip" data-bs-placement="top" title="" aria-hidden="true" data-bs-original-title="Deactivate user" aria-label="Deactivate user"></i><span class="sr-only">Deactivate user</span> active user
                     </button>
                 @else
                     <input type="hidden" name="is_active" value="{{$user->is_active}}">
@@ -80,7 +81,7 @@
                             </div>
                             <div class="col-md-4 text-end">
                                 <a href="{{route('users.edit', $user->id)}}">
-                                    <i class="fas fa-user-edit text-warning text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="" aria-hidden="true" data-bs-original-title="Edit Profile" aria-label="Edit Profile"></i><span class="sr-only">Edit Profile</span>
+                                    <i class="fas fa-user-edit text-warning fs-4 " data-bs-toggle="tooltip" data-bs-placement="top" title="" aria-hidden="true" data-bs-original-title="Edit Profile" aria-label="Edit Profile"></i><span class="sr-only">Edit Profile</span>
                                 </a>
                             </div>
                         </div>

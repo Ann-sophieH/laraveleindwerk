@@ -58,7 +58,7 @@
                                     <label class="form-label form-label" for="specifications[]">Product
                                                 specifications </label>
                                             <button type="button" class="btn btn-success opacity-5 mt-2 ms-5 flex-end "
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                    data-bs-toggle="modal" data-bs-target="#exampleModalspecs">
                                                 <i class="fa fa-plus"> Add new specification </i>
                                             </button>
 </div>
@@ -69,7 +69,7 @@
 
                                                             <div class="d-flex ">
                                                                 <input class="form-check-input" type="checkbox"
-                                                                       value="{{$spec->id}}" name="specifications[]"
+                                                                       value="{{$spec->id}}" checked name="specifications[]"
                                                                        id="flexCheck{{$spec->id}}">
                                                                 <label class="form-check-label ps-2"
                                                                        for="flexCheck{{$spec->id}}">
@@ -117,23 +117,18 @@
                                                 <i class="fa fa-plus"> Add new color </i>
                                             </button>
                                         </div>
-                                        <div class="form-check  " id="colors[]" multiple>
-                                            <ul class=" list-inline mb-0  row row-cols-4">
-                                                @foreach($colors as $color)
-                                                    <div class="p-2 col">
-                                                 <span
-                                                     class="text-secondary text-xs font-weight-bold  {{$color->name}}">
-                                            {{$color->name}}      </span>
-                                                        <div class="">
-                                                            <label class="btn-colour form-label " for="{{$color->name}}"
-                                                                   style="background-color: {{$color->hex_value}}; width: 2rem; height: 2rem;border-radius: 50%"></label>
-                                                            <input name="colors[] " type="checkbox"
-                                                                   id="{{$color->name}}"
-                                                                   class="input-invisible shadow-primary form-control form-check-input"
-                                                                   value="{{$color->id}}">
+                                        <div class="row mb-0  mt-5" id="colors[]" multiple>
+
+                                                    @foreach($colors  as $color)
+                                                        <div class="col m-1 form-check form-option text-center mb-2 mx-1" style="width: 7rem;">
+                                                            <input type="checkbox" id="colour_sidebar_{{$color->name}}" name="colors[]" value="{{$color->id}}"
+                                                                   class="form-check-input shadow-none d-none" >
+                                                            <label class="btn-colour form-option-label rounded-circle p-1" for="colour_sidebar_{{$color->name}}"
+                                                                   style="background-color: {{$color->hex_value}};"  ><span class="form-option-color rounded-circle" style="background-color:  rgb(84, 81, 66);"></span></label>
+                                                            <label class="d-block fs-xs text-muted mt-n1" for="color-{{$color->name}}">{{$color->name}}</label>
+
                                                         </div>
-                                                    </div>
-                                                @endforeach
+                                                    @endforeach
                                             </ul>
                                         </div>
                                     </div>
@@ -227,6 +222,46 @@
                             <input type="color" class="form-control "  style="width:85%; " id="hex_value" name="hex_value" value="#ff0000">
 
                         </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary opacity-8">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal SPEC CREATE -->
+    <div class="modal fade" id="exampleModalspecs" tabindex="-1" aria-labelledby="exampleModalLabelspecs" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabelspecs">Add a new specification to database</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{route('specifications.store')}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+
+                        <select class="form-select form-select-md mb-3 p-2" name="parent_id" aria-label=".form-select-lg example">
+                            <option selected disabled> Choose sort of specification </option>
+                            <option  value="1"> Wifi type </option>
+                            <option value="2"> Bluetooth </option>
+                            <option value="3"> Charging </option>
+                            <option value="4"> Size </option>
+                            <option value="5"> Noise cancelling </option>
+                            <option value="6"> Pairing options </option>
+
+
+                        </select>
+                        <div class="input-group input-group-dynamic mt-5">
+                            <input class="fs-5 form-control" type="text" onfocus="focused(this)" required
+                                   onfocusout="defocused(this)" control-id="ControlID-2" id="name" name="name" placeholder="Specification name...">
+                        </div>
+
+
 
 
                     </div>

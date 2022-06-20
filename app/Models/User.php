@@ -42,7 +42,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
     public function roles(){
-        return $this->belongsToMany(Role::class, 'user_role');
+        return $this->belongsToMany(Role::class, 'role_user');
     }
     public function photos()
     {
@@ -67,6 +67,20 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isAdmin(){
         foreach ($this->roles as $role){
             if($role->name == 'administrator' && $this->is_active == 1){
+                return true;
+            }
+        }
+    }
+    public function isAuthor(){
+        foreach ($this->roles as $role){
+            if($role->name == 'author' && $this->is_active == 1){
+                return true;
+            }
+        }
+    }
+    public function isClient(){
+        foreach ($this->roles as $role){
+            if($role->name == 'client' && $this->is_active == 1){
                 return true;
             }
         }

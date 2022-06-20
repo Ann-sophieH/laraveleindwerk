@@ -34,13 +34,13 @@ class Products extends Component
      //   dd($searchbar);
         $this->search = $searchbar;
     }
-
     public function addToCart( $id){
         $product = Product::with(['specifications', 'colors', 'category', 'photos'])->where('id', $id)->first();
         $oldCart = Session::has('cart') ? Session::get('cart'): null;
         $cart = new Cart($oldCart);
         $cart->addItem($product, $id);
         $this->emit('productAdded');
+        Session::flash('cart_message',  $product->name .'  has been added to the cart successfully!');//
 
         Session::put('cart',$cart);
         //return redirect()->back();
@@ -85,8 +85,15 @@ class Products extends Component
                             ->orWhere('price','like', '%' . $this->search .'%')
                             ->orWhere('details','like', '%' . $this->search .'%')
                             ->orWhereHas('category', function ($query){ //query tussentabel
-                                $query->where('name', 'like', '%' . $this->search .'%');
-                            });
+                                $query->where('name', 'like', '%' . $this->search .'%'); // add specs etc
+                            })
+                            ->orWhereHas('specifications', function ($query){ //query tussentabel
+                                $query->where('name', 'like', '%' . $this->search .'%'); // add specs etc
+                            })
+                            ->orWhereHas('colors', function ($query){ //query tussentabel
+                                $query->where('name', 'like', '%' . $this->search .'%'); // add specs etc
+                            })
+                        ;
                     })
                     ->when($this->maxPrice, function ($query) {
                          $query->where( 'price' , '<=',  $this->maxPrice);

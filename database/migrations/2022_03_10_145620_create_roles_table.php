@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->timestamps();
         });
-        Schema::create('user_role', function (Blueprint $table){
+        Schema::create('role_user', function (Blueprint $table){
             $table->id();
             $table->unsignedBigInteger('user_id'); //= samentrekking tabel (enkelvoud) en zijn id
             $table->unsignedBigInteger('role_id');

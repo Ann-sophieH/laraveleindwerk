@@ -43,8 +43,19 @@
                     @endif
 
                     @livewire('counter')
-                    <a class="nav-link" href="{{asset('admin/')}}"><i class="bi bi-person fa-lg text-muted" style="font-size: 1.5rem;"></i></a>
+                        @if(!Auth::user())
+                    <a class="nav-link"  href="{{asset('admin/')}} " ><i class="bi bi-person fa-lg text-muted" style="font-size: 1.5rem;"></i></a>
+                        @else
+                            @if(Auth::user()->isClient())
+                            <a class="nav-link" href="{{route('users.show', Auth::user()->id)}}" ><i class="bi bi-person fa-lg text-muted" style="font-size: 1.5rem;"></i></a>
+                            @elseif(Auth::user()->isAuthor())
+                                <a class="nav-link"  href="{{asset('admin/')}} " ><i class="bi bi-person fa-lg text-muted" style="font-size: 1.5rem;"></i></a>
 
+                            @elseif(Auth::user()->isAdmin())
+                                <a class="nav-link"  href="{{asset('admin/orders')}} " ><i class="bi bi-person fa-lg text-muted" style="font-size: 1.5rem;"></i></a>
+
+                            @endif
+                        @endif
                     <div class="dropdown-menu mt-0 br-none p-2 border-0" aria-labelledby="navbarDropdownMenuLink">
                         <div class="input-group mb-1">
                             <input  class="form-control fs-li text-center " type="search" placeholder="What are you looking for? ..." aria-label="Search" aria-describedby="button-addon3">
@@ -60,8 +71,24 @@
         </div>
     </nav>
 </header>
+@include('includes.form_error')
+
+@if(session('newsletter_message'))
+<div class="container-fluid row">
+    <div class="alert alert-success opacity-1 alert-dismissible text-muted mt-3 col-lg-10 offset-lg-1  fs-reg" role="alert">
+        <i class="bi bi-cart-check ps-3">
+
+        </i>
+        <span class="text-sm ps-4">{{session('newsletter_message')}} </span>
+        <button type="button" class="btn-close text-lg py-3 opacity-8" data-bs-dismiss="alert" aria-label="Close" >
+            <span aria-hidden="true"></span>
+        </button>
+    </div>
+</div>
 
 
+
+@endif
 
 @yield('content')
 

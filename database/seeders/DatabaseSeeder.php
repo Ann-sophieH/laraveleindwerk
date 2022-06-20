@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             //RDM
             UsersTableSeeder::class,
             RolesTableSeeder::class,
-            UsersRolesTableSeeder::class,
+            RolesUsersTableSeeder::class,
             AddressesTableSeeder::class,
             AddresstypesTableSeeder::class,
             //E-comm

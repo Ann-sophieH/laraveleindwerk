@@ -2,7 +2,23 @@
 @section('content')
 
  @include('includes.breadcrum_top')
+
+ @if(session('review_message'))
+
+
+     <div class="alert alert-success opacity-1 alert-dismissible text-muted mt-3 col-lg-10 offset-lg-1  fs-reg" role="alert">
+         <i class="bi bi-cart-check ps-3">
+
+         </i>
+         <span class="text-sm ps-4">{{session('review_message')}} </span>
+         <button type="button" class="btn-close text-lg py-3 opacity-8" data-bs-dismiss="alert" aria-label="Close" control-id="ControlID-6">
+             <span aria-hidden="true"></span>
+         </button>
+     </div>
+
+ @endif
 <section class="container-fluid">
+
     <article class="row col-10 offset-1 carousel slide carousel-thumbnails" id="carouselExampleIndicators" data-bs-ride="carousel">
         <div class="col-lg-7 row">
             <div class="col-lg-9 order-lg-2">
@@ -40,50 +56,13 @@
                     </li>
                     @endforeach
 
-               {{--     <li class="list-inline-item">
-                        <label class="btn-colour form-label" for="colour_sidebar_Blue"
-                               style="background-color: rgb(38, 43, 51);"></label>
-                        <input name="colour" type="checkbox" id="colour_sidebar_Blue"
-                               class="input-invisible form-control">
-                    </li>
-                    <li class="list-inline-item">
-                        <label class="btn-colour form-label" for="colour_sidebar_Beige"
-                               style="background-color: rgb(132, 99, 71);"></label>
-                        <input name="colour" type="checkbox" id="colour_sidebar_Beige"
-                               class="input-invisible form-control">
-                    </li>
-                    <li class="list-inline-item">
-                        <label class="btn-colour form-label" for="colour_sidebar_Pink"
-                               style="background-color: rgb(187, 144, 131);"></label>
-                        <input name="colour" type="checkbox" id="colour_sidebar_Pink"
-                               class="input-invisible form-control">
-                    </li>
-                    <li class="list-inline-item">
-                        <label class="btn-colour form-label" for="colour_sidebar_Bordeaux"
-                               style="background-color: rgb(85, 52, 43);"></label>
-                        <input name="colour" type="checkbox" id="colour_sidebar_Bordeaux"
-                               class="input-invisible form-control">
-                    </li>
-                    <li class="list-inline-item">
-                        <label class="btn-colour form-label" for="colour_sidebar_Grey"
-                               style="background-color: rgb(169, 169, 169);"></label>
-                        <input name="colour" type="checkbox" id="colour_sidebar_Grey"
-                               class="input-invisible form-control">
-                    </li>--}}
 
                 </ul>
             </form></div>
             <p class="fsize-3 fs-bo"> &#8364; {{$product->price}}</p>
-<!--
-            <form action="" method="post">
 
-                <button class="btn btn-dark text-uppercase text-center pt-2 mt-2 col-lg-6 br-none" type="submit">Add to bag </button>
-            </form>
 
-            <button  wire:click="addToCart()" class="btn btn-outline-dark mt-auto text-center" ><i class="bi bi-cart-plus fs-4"></i></button>
--->
             @livewire('add-to-cart', ['product' => $product])
-
             <div class="accordion mt-5 mb-5 fs-reg text-muted br-none" id="accordionExample">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
@@ -190,7 +169,7 @@
                                     <form action="{{route('reviews.store')}}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <select class="form-select" id="stars"  name="stars" aria-label="Default select example">
-                                            <option selected> Hoe vond u ons product?  </option>
+                                            <option selected > Hoe vond u ons product?  </option>
                                             <option value="1">★☆☆☆☆ (1/5)</option>
                                             <option value="2">★★☆☆☆ (2/5)</option>
                                             <option value="3">★★★☆☆ (3/5)</option>

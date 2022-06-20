@@ -44,7 +44,7 @@
                                         <div class="d-flex px-2 py-1">
                                             <div> {{$photo->id}}</div>
                                             <div>
-                                                <img style="height: 62px" class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="{{$photo->file ? asset($photo->file) : 'http://via.placeholder.com/62x62'}}" alt="{{$photo->name}}">
+                                                <img style="height: 62px; width:62px; " class="img-thumbnail img-fluid rounded-circle ms-2 me-2" src="{{$photo->file ? asset($photo->file) : 'http://via.placeholder.com/62x62'}}" alt="{{$photo->name}}">
 
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
@@ -59,9 +59,16 @@
                                         <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
                                     </td>
                                     <td class="align-middle">
-                                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                            Edit
-                                        </a>
+                                        @if($photo->id > 9 )
+                                            <div class="d-flex">
+                                                <form method="post" action="{{route('photos.destroy', $photo)}}" enctype="multipart/form-data">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn  text-danger" type="submit"><i
+                                                            class="fa fa-close "></i></button>
+                                                </form>
+                                            </div>
+                                            @endif
                                     </td>
                                 </tr>
                             @endforeach

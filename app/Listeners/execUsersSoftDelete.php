@@ -25,8 +25,8 @@ class execUsersSoftDelete
      */
     public function handle($event)
     {
-        // deletes all posts connected to th deleted users
+        // deletes all photos  connected to th deleted users
         $userId = $event->user->id;
-        $event->user->posts()->where('user_id', $userId)->delete();
+        $event->user->photos()->delete();
     }
 }

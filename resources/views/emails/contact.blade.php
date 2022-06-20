@@ -1,12 +1,12 @@
 @component('mail::message')
-    <h1>Message from website</h1>
-    <p>Name:</p>{{$data['name']}}
-    <p>Email:</p>{{$data['email']}}
-    <p>Message:</p>{{$data['message']}}
+    <h1>Message from {{$data['name']}}</h1>
+    <p>Name: <br>{{$data['name']}}</p>
+    <p>Email: <br>{{$data['email']}}</p>
+    <p>Message: <br> {{$data['message']}}</p>
 
 
-@component('mail::button', ['url' =>'https://www.syntrawest.be'])
-Button Text
+@component('mail::button', ['url' =>'http://localhost/laraveleindwerk/public/admin'])
+Go to homepage backend
 @endcomponent
 
 Thanks,<br>

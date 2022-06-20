@@ -1,11 +1,5 @@
 <div class=" py-4">
-            <div class="d-sm-flex justify-content-between">
-                <div>
-                    <a href="javascript:;" class="btn btn-icon bg-gradient-primary">
-                        New order
-                    </a>
-                </div>
-                <div class="d-flex">
+<!--            <div class="d-sm-flex ">
                     <div class="dropdown d-inline">
                         <a href="javascript:;" class="btn btn-outline-dark dropdown-toggle " data-bs-toggle="dropdown"
                            id="navbarDropdownMenuLink2">
@@ -22,9 +16,7 @@
                             <li><a class="dropdown-item border-radius-md text-danger" href="javascript:;">Remove Filter</a></li>
                         </ul>
                     </div>
-
-                </div>
-            </div>
+            </div>-->
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -58,11 +50,16 @@
                                         <tr>
                                             <th  ><a href="#" class="">Id</a>
                                             </th>
-                                            <th ><a href="#" class="">Date</a>
+                                            <th class="d-flex">
+                                                <i class="fa fa-sort me-3"></i>
+                                                <button wire:click="sortBy('created_at')" class="btn p-0 shadow-none"><strong>Date</strong></button>
                                             </th>
+
                                             <th ><a href="#" class="">Status</a>
                                             </th>
-                                            <th  ><a href="#" class="">Customer</a>
+                                            <th class="d-flex ">
+                                                <i class="fa fa-sort me-3"></i>
+                                                <button wire:click="sortBy('user_id')" class="btn p-0 shadow-none"><strong>Customer</strong></button>
                                             </th>
                                             <th  ><a href="#" class="">Details</a>
                                             </th>
@@ -115,7 +112,7 @@
                                             <td class="text-xs font-weight-normal">
                                                 <!-- Button trigger modal -->
                                                 <button type="button" class="btn btn-outline-primary opacity-7" data-bs-toggle="modal" data-bs-target="#modal{{$order->id}}">
-                                                   See what was ordered
+                                                   See orderdetails
                                                 </button>
                                                 <a href=""> <span class="my-2 text-xs"> </span></a>
                                             </td>
@@ -124,36 +121,60 @@
 
                                         <!-- Modal orderdetails -->
                                         <div class="modal fade" id="modal{{$order->id}}" tabindex="-1" aria-labelledby="modal{{$order->id}}Label" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
+                                            <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable">
+                                                <div class="modal-content mx-2">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="modal{{$order->id}}Label">Details for this order</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="material-icons text-sm"
+                                                        <h5 class="modal-title" id="modal{{$order->id}}Label">Details for order: {{$order->transaction_code}}</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="material-icons text-sm text-muted"
                                                                                                                                               aria-hidden="true">clear</i></button>
+
+
                                                     </div>
                                                     <div class="modal-body">
+
                                                         <ul class="list-group">
                                                             @foreach($order->orderdetails as $details )
-                                                                <li class="list-group-item">
+                                                                <li class="list-group-item py-5">
                                                                     <div class="d-flex justify-content-between">
                                                                         @if(($details->product->photos)->isNotEmpty())
                                                                             @foreach($details->product->photos as $photo)
 
-                                                                                <img  class=" avatar avatar-xs me-2" src="{{ empty($photo) ? 'http://via.placeholder.com/62x62' : asset($photo->file) }}" alt="{{$details->product->name}}">
+                                                                                <img  class=" avatar  me-2 @if(!$loop->first) d-none @endif" src="{{ empty($photo) ? 'http://via.placeholder.com/62x62' : asset($photo->file) }}" alt="{{$details->product->name}}">
                                                                             @endforeach
                                                                         @else
-                                                                            <img  class=" avatar avatar-xs me-2" src="http://via.placeholder.com/62x62" alt="{{$details->product->name}}">
+                                                                            <img  class=" avatar  me-2" src="http://via.placeholder.com/62x62" alt="{{$details->product->name}}">
 
                                                                         @endif
 
-                                                                        <span>{{$details->product->name}} </span>
-                                                                            <span class="ms-2 bolder">&euro; {{$details->product_price}} </span>
-                                                                            <span class="ms-2 ">x {{$details->amount}} </span>
+                                                                        <span class="fs-bo">{{$details->product->name}} </span>
+                                                                            <span class="ms-2 text-xs ">&euro; {{$details->product_price}} </span>
+                                                                            <span class="ms-2 text-primary fs-bo text-lg">x {{$details->amount}} </span>
 
+                                                                            <span class="ms-2 fs-bo">&euro; {{$details->product_price * $details->amount}} </span>
                                                                     </div>
                                                                 </li>
                                                             @endforeach
                                                         </ul>
+                                                    </div>
+                                                    <div class="modal-footer fs-li">
+
+                                                            <span class="fs-bo">Delivery address:  </span>
+                                                        @if($order->address())
+                                                         <p>{{$order->address->name_recipient}}</p>
+                                                            <p>{{$order->address->addressline_1}}</p>
+                                                            <p>{{$order->address->addressline_2}}</p>
+                                                       @endif
+
+                                                        <div class=" py-3 text-xs mt-3 border-top mt-2">
+
+                                                            <span class="fs-bo text-md ">Shipping time:  </span>
+
+                                                            <p class="mt-3">order placed:  <span class="text-info">{{$order->created_at->format('l, d F, Y')}} </span></p>
+                                                            <p> order to packaged and sent by <span class="text-danger">
+                                                            {{$order->created_at->addWeekdays(5)->format('l, d F, Y')}}</span>
+                                                            </p>  </div>
+
+
                                                     </div>
 
                                                 </div>

@@ -18,6 +18,7 @@ class AdminProductReviewsController extends Controller
     {
         //
         $reviews = Review::with(['user', 'product'])->latest()->paginate(10);
+
         return view('admin.reviews.index', compact( 'reviews'));
     }
 
@@ -41,6 +42,9 @@ class AdminProductReviewsController extends Controller
     {
         //only store reviews of logged users to avoid anon spam
            // dd($request->stars);
+        $request->validate([
+            'stars' => 'required|integer',
+        ]);
         if(Auth::user()){
             $user = Auth::user();
             $data = [
@@ -53,6 +57,8 @@ class AdminProductReviewsController extends Controller
             ];
             Review::create($data);
             Session::flash('productreview_message', 'Review submitted and awaits moderation');
+            Session::flash('review_message', 'Your review was sent our way, it will be posted after we have checked your orders! ');//put message in cart!!
+
         }
         return redirect()->back();
     }

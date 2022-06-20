@@ -37,8 +37,7 @@ class ProductsEditRequest extends FormRequest
         return[
 
             'name.required'=>'A product name is required! Please fill it in',
-            'details.required'=>'Please give the product a decription '
-
+            'details.required'=>'Please give the product a decription ',
         ];
     }
 }

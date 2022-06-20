@@ -22,7 +22,7 @@ return new class extends Migration
             $table->softDeletes();
 
         });
-        Schema::create('specification_product',  function (Blueprint $table){
+        Schema::create('product_specification',  function (Blueprint $table){
             $table->id();
             $table->unsignedBigInteger('product_id'); //= samentrekking tabel (enkelvoud) en zijn id
             $table->unsignedBigInteger('specification_id');
@@ -52,5 +52,6 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('specifications');
+
     }
 };

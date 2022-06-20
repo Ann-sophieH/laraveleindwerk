@@ -46,10 +46,16 @@ class AdminColorsController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name' => 'required',
+            'hex_value' => 'required|unique:colors'
+        ]);
         $color = new Color();
         $color->name = $request->name;
         $color->hex_value = $request->hex_value;
         $color->save();
+        Session::flash('color_message', $color->name . ' was stored!'); //naam om mess. op te halen, VOOR DELETE OFC
+
         return redirect()->back();
     }
 
@@ -72,11 +78,11 @@ class AdminColorsController extends Controller
      */
     public function edit($id)
     {
-        $colors = Color::with(['products'])->paginate(25);
+       // $colors = Color::with(['products'])->paginate(25);
         $color = Color::findOrFail($id);
         //https://devnote.in/how-to-inline-row-editing-using-laravel/
         //https://laracasts.com/discuss/channels/livewire/this-is-a-component-you-may-like-to-use-for-inline-editing
-        return view('admin.colors.edit', compact('colors', 'color'));
+        return view('admin.colors.edit', compact( 'color'));
     }
 
     /**
@@ -89,6 +95,10 @@ class AdminColorsController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'name' => 'required',
+            'hex_value' => 'required'
+        ]);
         $color = Color::findOrFail($id);
         $color->name = $request->name;
         $color->hex_value = $request->hex_value;
@@ -114,6 +124,8 @@ class AdminColorsController extends Controller
     }
     public function restore( $id){
         Color::onlyTrashed()->where('id', $id)->restore();
+        Session::flash('color_message', 'this color was restored and is active again!'); //naam om mess. op te halen, VOOR DELETE OFC
+
         return redirect('/admin/colors');
     }
 }

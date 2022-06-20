@@ -18,8 +18,8 @@ class ColorFactory extends Factory
     {
         return [
             //
-            'name'=>$this->faker->colorName(),
-            'hex_value'=>$this->faker->safeHexColor(),
+            'name'=>$this->faker->unique()->safeColorName(),
+            'hex_value'=>$this->faker->unique()->safeHexColor(),
         ];
     }
 }

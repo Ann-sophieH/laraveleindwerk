@@ -1,5 +1,6 @@
 <div class="container-fluid row mp-none ">
 
+
 <div class="bg-gray-100 d-none d-lg-inline-block ">
 
         <aside class="col-10 mx-auto my-5 d-flex justify-content-start " id="filtertabs">
@@ -56,12 +57,26 @@
             @endif
         </aside>
     </div>
+    @if(session('cart_message'))
+
+
+        <div class="alert alert-success opacity-1 alert-dismissible text-muted mt-3 col-lg-10 offset-lg-1  fs-reg" role="alert">
+            <i class="bi bi-cart-check ps-3">
+
+            </i>
+            <span class="text-sm ps-4">{{session('cart_message')}} </span>
+            <button type="button" class="btn-close text-lg py-3 opacity-8" data-bs-dismiss="alert" aria-label="Close" control-id="ControlID-6">
+                <span aria-hidden="true"></span>
+            </button>
+        </div>
+
+    @endif
     <div class="flex-column d-md-flex flex-md-row col-lg-11 mx-auto mt-5 ">
 
         @include('includes.filter_accordeon')
 
         <div class="ms-3 mt-3 " id="productOverzicht">
-            <h1 class=" fsize-3 text-uppercase mb-3">All Products</h1>
+            <h1 class=" fsize-3 text-uppercase mb-3"> Products found</h1>
             <div class="row row-cols-md-2 row-cols-lg-3 g-4 gy-4 fs-reg my-auto mt-2" >
                 @foreach($products as $product)
                     <article class="card border-0 mb-4 ">

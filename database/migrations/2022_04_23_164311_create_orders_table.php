@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('transaction_code')->nullable(); //temporary untill we see molli
+            $table->string('transaction_code');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('address_id'); // to know where the order needs to be sent
+
             $table->timestamps();
         });
     }

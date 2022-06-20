@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Address;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,11 +19,15 @@ class OrderFactory extends Factory
     public function definition()
     {
         $users = User::pluck('id')->toArray();
+        $address = Address::where('address_type', 1)->pluck('id')->toArray();
+
 
         return [
             //
-            'transaction_code' => NULL,
+            'transaction_code' => 'testtransaction',
             'user_id' =>$this->faker->randomElement($users) ,
+            'address_id' =>$this->faker->randomElement($address) ,
+
 
 
 

@@ -44,24 +44,23 @@
 
 <body class="g-sidenav-show  bg-gray-200">
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
-    <div class="sidenav-header">
-        <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-        <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
+    <div class="sidenav-header mt-3">
+        <a class=" p-3 m-2 " href="{{route('users.show', Auth::user()->id)}}" >
             @if((Auth::user()->photos)->isNotEmpty())
                 @foreach(Auth::user()->photos as $photo)
-
-                    <img  class="  rounded-circle ms-2 me-2" src="{{ empty($photo) ? 'http://via.placeholder.com/62x62' : asset($photo->file) }}" alt="{{Auth::user()->username}}">
+                    <img style="height: 45px" class="  rounded-circle ms-2 me-2" src="{{ empty($photo) ? 'http://via.placeholder.com/62x62' : asset($photo->file) }}" alt="{{Auth::user()->username}}">
                 @endforeach
             @else
-                <img style="height: 62px" class=" img-fluid rounded-circle ms-2 me-2" src="http://via.placeholder.com/62x62" alt="{{Auth::user()->username}}">
-
+                <img style="height: 45px" class=" img-fluid rounded-circle ms-2 me-2" src="http://via.placeholder.com/62x62" alt="{{Auth::user()->username}}">
             @endif
-            <span class="ms-1 font-weight-bold text-white"> {{Auth::user()->username}} CMS</span>
+            <span class="ms-1 font-weight-bold text-primary">CMS of <span class="text-white text-capitalize"> {{Auth::user()->username}} </span></span>
         </a>
+
     </div>
     <hr class="horizontal light mt-0 mb-2">
     <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
         <ul class="navbar-nav">
+            @if(!Auth::user()->isClient())
             <li class="nav-item">
                 <a class="nav-link text-white active bg-gradient-primary" href="{{url('admin/')}}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -70,6 +69,7 @@
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
             </li>
+
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">E-commerce </h6>
             </li>
@@ -83,14 +83,12 @@
                 <div class="collapse" id="sidebar-products">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item ps-3"> <a class="nav-link text-white  p-2" href="{{route('products.index')}}"><b>All products</b></a></li>
-                        <li class="nav-item ps-4  "> <a class="nav-link text-white p-2" href="{{route('products.create')}}"><i class="icon-xxs material-icons pe-2" style="font-size: 1.2rem">add</i>new product</a></li>
-                        <li class="nav-item ps-4   "> <a class="nav-link text-white p-2" href="{{route('reviews.index')}}"><i class="icon-xxs material-icons pe-2" style="font-size:  1.2rem">reviews</i>reviews</a></li>
+                        <li class="nav-item ps-5  "> <a class="nav-link text-white p-2" href="{{route('products.create')}}"><i class="icon-xxs material-icons pe-2" style="font-size: 1.2rem">add</i>new product</a></li>
+                        <li class="nav-item ps-5   "> <a class="nav-link text-white p-2" href="{{route('reviews.index')}}"><i class="icon-xxs material-icons pe-2" style="font-size:  1.2rem">reviews</i>reviews</a></li>
 
-                        <li class="nav-item ps-3"> <a class="nav-link text-white p-2" href="{{route('colors.index')}}"> Colors</a></li>
-                        <li class="nav-item ps-4 "> <a class="nav-link text-white p-2" href="{{route('colors.create')}}"><i class="icon-xxs material-icons pe-2" style="font-size: 1.2rem">add</i> color</a></li>
+                        <li class="nav-item ps-3"> <a class="nav-link text-white p-2" href="{{route('colors.index')}}"> <b>Colors</b></a></li>
 
-                        <li class="nav-item ps-3"> <a class="nav-link text-white p-2" href="{{route('specifications.index')}}">Specifications </a></li>
-                        <li class="nav-item ps-4 "> <a class="nav-link text-white p-2" href="{{route('specifications.create')}}"><i class="icon-xxs material-icons pe-2" style="font-size: 1.2rem">add</i> specifications</a></li>
+                        <li class="nav-item ps-3"> <a class="nav-link text-white p-2" href="{{route('specifications.index')}}"><b>Specifications </b></a></li>
 
 
                     </ul>
@@ -115,19 +113,19 @@
                     <span class="nav-link-text ms-1">Photos</span>
                 </a>
             </li>
-            <li class="nav-item">
+<!--            <li class="nav-item">
                 <a class="nav-link text-white " href="{{url('admin/photos/')}}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">receipt</i>
                     </div>
                     <span class="nav-link-text ms-1">Blogposts</span>
                 </a>
-            </li>
+            </li>-->
+
+
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Relation d management </h6>
             </li>
-
-
 
             <li class="nav-item">
                 <a class="nav-link text-white "  data-bs-toggle="collapse" href="#sidebar-users" aria-expanded="false" aria-controls="sidebar-users">
@@ -154,7 +152,7 @@
                     <span class="nav-link-text ms-1">Addresslist</span>
                 </a>
             </li>
-
+            @endif
 
 
 
@@ -193,6 +191,7 @@
                 </a>
             </li>
             <hr>
+            @if(Auth::user()->isAdmin())
             <li class="nav-item">
                 <a class="nav-link text-white " href="https://mailtrap.io/inboxes/1662721/messages">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -216,7 +215,7 @@
                     <span class="nav-link-text ms-1">Trello</span>
                 </a>
             </li>
-
+            @endif()
         </ul>
     </div>
     <div class="sidenav-footer  w-100 ">

@@ -160,7 +160,7 @@
             </div>
         </div>
         <button class="btn btn-outline-secondary m-2" type="submit">
-            Reset filters
+            <a href="{{route('products')}}"> Reset filters</a>
         </button>
 
     </div>

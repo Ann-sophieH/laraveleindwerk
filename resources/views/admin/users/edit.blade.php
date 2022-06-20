@@ -69,7 +69,8 @@
                         </div>
 
                             </div>
-                            <div class="col-6  mt-5 p-2 pb-3 mb-5 ">
+                            <div class="col-6  mt-2 p-2 pb-3 mb-5 ">
+                                <p>primary delivery address:</p>
                                 <div class="form-group">
                                     {!! Form::label('name_recipient', 'Name Recipient') !!}
                                     {!! Form::text('name_recipient', $user_address->name_recipient, ['class'=>'form-control shadow border' ]) !!}
@@ -116,7 +117,8 @@
                     @else
                         <img class=" img-fluid rounded-circle ms-2 me-2" src="http://via.placeholder.com/62x62" alt="{{$user->username}}">
 
-                    @endif                      </div>
+                    @endif
+                </div>
             </div>
         </div>
             </div>

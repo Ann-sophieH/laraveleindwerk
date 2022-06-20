@@ -29,17 +29,24 @@ class Orders extends Component
     public function render()
     {
         return view('livewire.orders',
-            ['orders'=>Order::with('user', 'orderdetails', 'user.photos', 'orderdetails.product', 'orderdetails.product.photos')
+            ['orders'=>Order::with('user', 'orderdetails', 'user.photos','address',  'orderdetails.product', 'orderdetails.product.photos')
 
             ->when($this->sortField,function($query){
                 $query->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc');
             })
-            /*  -> where(function($query){
+            -> where(function($query){
                    $query->where('transaction_code', 'like', '%' . $this->search .'%')
                        ->orWhereHas('user', function($query) {
-                            $query->where('username');
+                            $query->where('username', 'like', '%' . $this->search .'%')
+                                ->orWhere('first_name', 'like', '%' . $this->search .'%')
+                                ->orWhere('last_name', 'like', '%' . $this->search .'%');
+                       })
+                       ->orWhereHas('address', function($query) {
+                           $query->where('name_recipient', 'like', '%' . $this->search .'%')
+                               ->orWhere('addressline_1', 'like', '%' . $this->search .'%')
+                               ->orWhere('addressline_2', 'like', '%' . $this->search .'%');
                        });
-               })*/
+               })
            ->paginate(15)
 
         ]);

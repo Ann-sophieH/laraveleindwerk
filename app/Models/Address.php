@@ -26,13 +26,24 @@ class Address extends Model
     public function addresstype(){
         return $this->belongsTo(Addresstype::class);
     }
+    public function order(){
+        return $this->hasOne(Order::class);
+    }
 
 
     public function scopeFilter($query, array $filters){
         if($filters['search'] ?? false ){ //only works since php 8!! older project : if(isset($filters['search']) == false
             $query->where('name_recipient', 'like', '%' . request('search') . '%')
                 ->orWhere('addressline_1', 'like', '%' . request('search') . '%')
-                ->orWhere('addressline_2', 'like', '%' . request('search') . '%');
+                ->orWhere('addressline_2', 'like', '%' . request('search') . '%')
+                ->orWhereHas('users', function ($query){ //query tussentabel
+                    $query->where('username', 'like', '%' . request('search') .'%');
+                    $query->orWhere('first_name', 'like', '%'. request('search') .'%');
+                    $query->orWhere('last_name', 'like', '%' . request('search') .'%');
+
+                })
+
+            ;
 
 
         }

@@ -23,12 +23,12 @@
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 justify-content-between">
                     <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
                         <h6 class="text-white text-capitalize ps-3">Adresses table</h6>
-<!--                        <button class="btn bg-gradient-warning  mb-0  me-4" >
+                        <button class="btn bg-gradient-warning  mb-0  me-4" >
                             <div class=" me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">add</i> <a href="{{url('admin/users/create')}}" class="text-white text-center ps-2"> Add user</a>
+                                <i class="material-icons opacity-10">add</i> <a href="{{url('admin/users/create')}}" class="text-white text-center ps-2"> Add user | address</a>
 
                             </div>
-                        </button>-->
+                        </button>
 
                     </div>
                 </div>
@@ -41,9 +41,11 @@
                     @foreach($addresses as $address)
                     <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
                         <div class="d-flex flex-column">
+                            @if($address->users->first())
                             <a href="{{route('users.show', $address->users->first()->id)}}">
                                 <h6 class="mb-3 text-sm link-success"> {{$address->users->first()->first_name}} {{$address->users->first()->last_name}}</h6>
                             </a>
+                            @endif
 
                             <span class="mb-2 text-xs">Name recipient: <span class="text-dark font-weight-bold ms-sm-2">{{$address->name_recipient}}</span></span>
                             <span class="mb-2 text-xs">Address line 1 : <span class="text-dark ms-sm-2 font-weight-bold">{{$address->addressline_1}}</span></span>
@@ -58,8 +60,8 @@
                                 @csrf
                                 @method('DELETE')
                             <button class="btn btn-link text-danger text-gradient px-3 mb-0" type="submit"><i class="material-icons text-sm me-2">delete</i>Delete</button>
-                            <a class="btn btn-link text-dark px-3 mb-0" href="{{route('users.edit', $address->users->first()->id)}}"><i class="material-icons text-sm me-2">edit</i>Edit</a>
-
+                            <a class="btn btn-link text-dark px-3 mb-0" href="{{route('addresses.edit', $address->id)}}"><i class="material-icons text-sm me-2">edit</i>Edit</a>
+                            </form>
                         @endif
                         </div>
                     </li>

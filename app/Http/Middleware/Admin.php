@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class Admin
 {
@@ -21,9 +22,11 @@ class Admin
             if(Auth::user()->isAdmin()){ //is user admin?
                 return $next($request); //ok in
             }
+            Session::flash('message', 'You do not have access to go there!');//put message in cart!!
+            return redirect('/cart'); //go back to your cart as user
 
         }
-        return redirect('/'); //get out
+        return redirect('/'); //get out as guest
 
     }
 }

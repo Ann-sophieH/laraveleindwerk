@@ -17,6 +17,6 @@ class OrdersTableSeeder extends Seeder
     {
         //
 
-        Order::factory()->count(250)->create();
+        Order::factory()->count(50 )->create();
     }
 }

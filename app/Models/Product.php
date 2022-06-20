@@ -29,7 +29,7 @@ class Product extends Model
 
     public function specifications()
     {
-        return $this->belongsToMany(Specification::class, 'specification_product');
+        return $this->belongsToMany(Specification::class, 'product_specification');
     }
     public function colors(){
         return $this->belongsToMany(Color::class, 'color_product');
@@ -39,6 +39,9 @@ class Product extends Model
     }
     public function orderdetails(){
         return $this->hasMany(Orderdetail::class);
+    }
+    public function reviews(){
+        return $this->hasMany(Review::class);
     }
 
 

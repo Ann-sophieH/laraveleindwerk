@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\Addresstype;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -63,6 +64,7 @@ class AdminAddressesController extends Controller
     public function show($id)
     {
         //
+
     }
 
     /**
@@ -74,6 +76,9 @@ class AdminAddressesController extends Controller
     public function edit($id)
     {
         //
+        $address = Address::findOrFail($id);
+        $address_type = Addresstype::findOrFail($address->address_type);
+        return  view('admin.addresses.edit', compact('address', 'address_type'));
 
     }
 
@@ -92,8 +97,10 @@ class AdminAddressesController extends Controller
         $address->addressline_1 = $request['addressline_1'];
         $address->addressline_2 = $request['addressline_2'];
         $address->address_type = $request['address_type'];
-        Session::flash('address_message', 'address for '. $address->name_recipient . ' was edited!');
+        $address->update();
 
+        Session::flash('address_message', 'address for '. $address->name_recipient . ' was edited!');
+        return redirect('/admin/addresses/');
     }
 
     /**
@@ -106,12 +113,14 @@ class AdminAddressesController extends Controller
     {
         //
         $address = Address::findOrFail($id);
-        Session::flash('user_message', $address->name . ' was deleted!'); //naam om mess. op te halen, VOOR DELETE OFC
+        Session::flash('address_message', 'this address was was deleted!'); //naam om mess. op te halen, VOOR DELETE OFC
         $address->delete();
         return redirect()->back();
     }
     public function restore( $id){
         Address::onlyTrashed()->where('id', $id)->restore();
+        Session::flash('address_message','this address was restored and is active again !'); //naam om mess. op te halen, VOOR DELETE OFC
+
         return redirect('/admin/addresses');
     }
 }

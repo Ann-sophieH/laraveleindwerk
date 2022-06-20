@@ -180,13 +180,14 @@ class AdminUsersController extends Controller
         }
         $user->update($input);
 
-        /** adding to tussentabel rollen**/
+        /** adding to pivot roles**/
         $user->roles()->sync($request->roles, true);
         /** adding to address table **/
-        $address = $user->addresses->first();
+        $address = $user->addresses->where('address_type', 1)->first();
         $address->update([  'name_recipient' =>  $request['name_recipient'],
                         'addressline_1' => $request['addressline_1'],
                         'addressline_2' => $request['addressline_2'],
+                        'address_type' => 1,
 
             ]);
         Session::flash('user_message', $user->username . ' was edited!');
@@ -197,12 +198,8 @@ class AdminUsersController extends Controller
         if($user){
             $user->is_active = !$request->is_active;
             $user->save();
-
-
-
             return redirect()->back();
-
-    }
+        }
     }
     /**
      * Remove the specified resource from storage.

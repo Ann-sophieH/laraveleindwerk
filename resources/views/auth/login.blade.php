@@ -82,7 +82,7 @@
                             @endif
                             <a class="btn btn-link link-secondary mt-1"
                                href="{{ route('register') }}">
-                                {{ __('Register a new user?') }}
+                                {{ __('Are you new here? Register as a new user! ') }}
                             </a>
                         </div>
                     </form>

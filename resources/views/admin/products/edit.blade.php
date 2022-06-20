@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="form-group mt-4">
                                     <label for="details">Product description: add rich text editor!</label>
-                                    <input type="text" class="form-control border ps-2 shadow-sm" id="details" name="details" value="{{$product->details}}" placeholder="Product details...">
+                                    <textarea type="text" class="form-control border ps-2 shadow-sm" id="details" name="details" value="{{$product->details}}" placeholder="Product details..."></textarea>
                                 </div>
 
                                     <!--                                    <div class="form-group col">
@@ -49,9 +49,7 @@
                                                                         </div>-->
                                     <div class="form-group mt-3">
                                         <label class="col-form-label" for="specifications[]">Product specifications </label>
-                                        <button type="button" class="btn btn-success opacity-5 mt-2 ms-5 flex-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                            <i class="fa fa-plus"> Add new specification </i>
-                                        </button>
+
                                         <div class="form-check " id="specifications[]"  multiple>
                                             <ul class="list-group row">
                                                 @foreach($specs as $spec)
@@ -116,14 +114,13 @@
 
                                 <div class="row justify-content-between mt-5">
                                     <div class="form-group col ">
-                                        <label class="col-form-label" for="colors[]">Product colors (CRTL + CLICK multiple select)</label>
-                                        <button type="button" class="btn btn-success opacity-5 mt-2 ms-5 flex-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                            <i class="fa fa-plus"> Add new color </i>
-                                        </button>
+                                        <label class="col-form-label" for="colors[]">Product colors</label>
+
                                         <section class="flex-wrap d-flex mb-0">
 
                                             @foreach($colors  as $color)
                                                 <div class="form-check form-option text-center mb-2 mx-1" style="width: 4rem;">
+                                                    <label class="d-block fs-xs text-muted mt-n1" for="color-{{$color->name}}">{{$color->name}}</label>
                                                     <input type="checkbox" id="colour_sidebar_{{$color->name}}" name="colors[]" value="{{$color->id}}"
                                                            class="form-check-input shadow-none d-none" @if($product->colors->contains($color->id)) checked @endif>
                                                     <label class="btn-colour form-option-label rounded-circle p-1" for="colour_sidebar_{{$color->name}}"
@@ -188,38 +185,5 @@
     </div>
 
 
-    <!-- Modal COLOR CREATE -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add a new color to database</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{route('colors.store')}}" method="post" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body">
 
-                        <div class="form-group">
-                            <label for="name">Color name:</label>
-                            <input type="text" class="form-control border ps-2 shadow-sm" id="name" name="name"
-                                   placeholder="Color name...">
-                        </div>
-                        <div class="form-group mt-5 col-6 mx-auto p-2">
-                            <label for="hex_value"><strong>Select your product color: </strong><br> tip: use the
-                                colorpicker on the product photo </label>
-                            <input type="color" class="form-control "  style="width:85%; " id="hex_value" name="hex_value" value="#ff0000">
-
-                        </div>
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary opacity-8">Save changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 @endsection

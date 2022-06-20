@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Request;
 
 class LoginController extends Controller
 {
@@ -23,10 +24,13 @@ class LoginController extends Controller
 
     /**
      * Where to redirect users after login.
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+   // protected $redirectTo = RouteServiceProvider::HOME;
+    protected function redirectTo(){
+        return redirect(Request::session()->get('url.intended') ?? 'cart') ;
+    }
 
     /**
      * Create a new controller instance.

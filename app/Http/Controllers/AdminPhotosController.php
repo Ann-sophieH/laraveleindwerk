@@ -84,7 +84,7 @@ class AdminPhotosController extends Controller
     public function destroy(Photo $photo)
     {
         //$photo = Photo::findOrFail($photo);
-        Session::flash('product_message', $photo->name . ' was deleted!'); //naam om mess. op te halen, VOOR DELETE OFC
+        Session::flash('photo_message', $photo->name . ' was deleted!'); //naam om mess. op te halen, VOOR DELETE OFC
         unlink($photo->file);
         $photo->delete();
         return redirect()->back();

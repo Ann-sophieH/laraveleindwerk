@@ -39,7 +39,7 @@ class AdminProductsController extends Controller
     public function create()
     {
         //
-        $colors = Color::paginate(12); //see all knop maken!!
+        $colors = Color::all(); //see all knop maken!!
         $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
         $categories = Category::all();
         $product = null; // simply so i can use same sub_specs_filter in create as i used in edit.blade
