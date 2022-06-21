@@ -1,6 +1,5 @@
 @extends('layouts/index')
 @section('content')
-
 {{--    optional blog here  https://themes.getbootstrap.com/preview/?theme_id=59250--}}
 {{--    https://themes.getbootstrap.com/preview/?theme_id=59250 1 post--}}
 <!--
@@ -8,19 +7,9 @@ https://preview.colorlib.com/#magdesign
 -->
 
 
-    <section class="container">
+    <section class="container-fluid col-10 mx-auto">
             <div class="row mt-5 mb-5">
-                <div class="col-md-6">
-                    <h1 class="fs-1 fs-reg text-uppercase ">Blog</h1>
-                </div>
-                <div class="col-md-6 text-md-right ">
-                    <div class="nav nav-tabs lavalamp"><div class="d-block position-absolute  ease" style="transition-duration: 0.2s; width: 102.797px; height: 44px; transform: translate(0px, 0px);"></div>
-                        <a class="nav-item nav-link active shadow-none lavalamp-item" data-filter="all" style="z-index: 5; position: relative;">All articles</a>
-                        <a class="nav-item nav-link lavalamp-item" data-filter="1" style="z-index: 5; position: relative;">Fashion</a>
-                        <a class="nav-item nav-link lavalamp-item" data-filter="2" style="z-index: 5; position: relative;">Culture</a>
-                        <a class="nav-item nav-link lavalamp-item" data-filter="3" style="z-index: 5; position: relative;">News</a>
-                    </div>
-                </div>
+                    <h1 class="fs-1 fs-reg text-uppercase text-center">Blog</h1>
             </div>
 
         <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
@@ -32,23 +21,8 @@ https://preview.colorlib.com/#magdesign
         </div>
             <!-- posts -->
             <div class="row g-2 filtr-blog imagesloaded p-0 position-relative w-100" style="  width: 100%; display: flex; flex-wrap: wrap; height: 967.531px;">
-<!--
-                <div class="col-12 filtr-item" data-category="1" data-sort="value" style="opacity: 1; transform: scale(1) translate3d(0px, 0px, 0px); backface-visibility: hidden; perspective: 1000px; transform-style: preserve-3d; position: absolute; transition: all 0.5s ease-out 0ms;">
-                    <div class="card card-tile">
-                        <figure class="card-image equal vh-75">
-                            <span class="image" style="background-image: url({{asset('assetsfront/images/parallax.jpg')}})"></span>
-                        </figure>
-                        <div class="card-footer p-lg-5 text-white">
-                            <ul class="list list&#45;&#45;horizontal list&#45;&#45;separated text-uppercase fs-14 mb-1">
-                                <li><a href="" class="underline">News</a></li>
-                                <li><time datetime="2019-08-24 20:00" class="text-muted">24th Aug, 2019</time></li>
-                            </ul>
-                            <h2 class="card-title text-uppercase mb-2">Summer 2019 Release</h2>
-                            <a href="" class="btn btn-outline-white">Read More</a>
-                        </div>
-                    </div>
-                </div>
---><div class="col-lg-4">
+
+                <div class="col-lg-4">
         <div class="post-entry d-block small-post-entry-v">
             <div class="thumbnail">
                 <a href="single.html">
@@ -108,22 +82,50 @@ https://preview.colorlib.com/#magdesign
                 </div>
             </div>
 
-            <!-- pagination -->
-            <div class="row">
-                <div class="col">
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#!">Previous</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">1</a></li>
-                            <li class="page-item active"><a class="page-link" href="#!">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">5</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">Next</a></li>
-                        </ul>
-                    </nav>
+
+        <section class="catagory-welcome-post-area section_padding_100">
+            <div class="container">
+                <div class="row">
+
+                    @foreach($posts as $post )
+                        <div class="col-12 col-md-6 mt-auto">
+                            <!-- Gazette Welcome Post -->
+                            <div class="gazette-welcome-post">
+                                <!-- Post Tag -->
+                                <div class="gazette-post-tag">
+                                    @foreach($post->categories as $category)
+                                        <a href="{{route('category.posts', $category)}}">{{$category->name}}</a>
+                                    @endforeach
+                                </div>
+                                <h2 class="font-pt">{{Str::limit($post->title, 20, '...')}}</h2>
+                                <p class="gazette-post-date">{{$post->created_at->diffForHumans()}}by {{$post->user->first_name}}  {{$post->user->last_name}}</p>
+                                <!-- Post Thumbnail -->
+                                <div class="blog-post-thumbnail my-5">
+                                    <img style="height: 300px;" src="{{$post->photo ? asset($post->photo->file) : 'http://via.placeholder.com/800x600'}}" alt="{{$post->title}}">
+                                </div>
+                                <!-- Post Excerpt -->
+                                <p>{{Str::limit($post->body, 150, '...')}}</p>
+                                <!-- Reading More -->
+                                <div class="post-continue-reading-share mt-30">
+                                    <div class="post-continue-btn">
+                                        <a href="{{route('home.post', $post)}}" class="font-pt">Continue Reading <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+
+
                 </div>
+                <div>
+                    {{$posts->render()}}
+                </div>
+
+
             </div>
+        </section>
+
     </section>
 
 @endsection

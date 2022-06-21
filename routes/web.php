@@ -55,6 +55,8 @@ Route::get('/cart', '\App\Http\Controllers\FrontendController@cart' )->name('car
 Route::post('/discount/', 'App\Http\Controllers\AdminCouponController@coupon');
 /** payment **/
 Route::post('/checkout', 'App\Http\Controllers\FrontendController@order')->name('pay.order');
+Route::get('/received', 'App\Http\Controllers\FrontendController@orderReceived')->name('orderReceived');
+
 Route::get('payment-success','App\Http\Controllers\FrontendController@paymentSuccess')->name('payment.success');
 
 

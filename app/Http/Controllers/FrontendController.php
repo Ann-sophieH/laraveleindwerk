@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OrdersUserRequest;
+use App\Mail\Contact;
+use App\Mail\Newslettermail;
 use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Category;
@@ -18,6 +20,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Mollie\Laravel\Facades\Mollie;
@@ -55,6 +58,8 @@ class FrontendController extends Controller
         );
         $subscriber->email = $request->email;
         $subscriber->save();
+        $data = $request->email;
+        Mail::to(request('email'))->send(new Newslettermail($data));
 
         Session::flash('newsletter_message', 'You are subscribed to our newsletter now, ENJOY 20% OFF WITH CODE 12345678! Use it at checkout ');//put message in cart!!
 
@@ -71,6 +76,10 @@ class FrontendController extends Controller
     public function cart(){
 
         return view('cart');
+    }
+    public function orderReceived(){
+
+        return view('order_received');
     }
     public function checkout(){
         /** get cart **/
@@ -260,9 +269,9 @@ class FrontendController extends Controller
         //echo 'payment has been received';
         //$payment = Mollie::api()->payments()->get($payment->id);
         //dd( Mollie::api()->payments());
-        Session::flash('payment_message', 'Your order has been placed successfully, we will start packing soon!');
+        //Session::flash('payment_message', 'Your order has been placed successfully, we will start packing soon!');
 
-        return redirect('cart');
+        return redirect('/received');
     }
 
 

@@ -35,7 +35,7 @@
 
 
                     <a class="nav-link text-uppercase" href="{{route('contact')}}">Contact</a>
-                    <a class="nav-link text-uppercase" href="#">Blog</a>
+                    <a class="nav-link text-uppercase" href="{{route('blog')}}">Blog</a>
                 </div>
                 <div class="nav-item dropdown d-flex justify-content-between">
                     @if(Route::currentRouteName() === 'products')
