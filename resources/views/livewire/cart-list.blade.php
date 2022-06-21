@@ -82,10 +82,23 @@
                             <p>&#8364; {{Session::get('cart') ? Session::get('cart')->totalPrice : '0'}}</p>
                         </li>
                     </ul>
-                    <a href="{{route('checkout')}}"><button class="btn btn-outline-dark br-none  " type="button">
+                    @if(Session::has('cart'))
+                        @if(Session::get('cart')->totalPrice == 0 )
+
+                            @else
+
+                    <a href="{{route('checkout')}}"><button class="btn btn-outline-dark br-none  " @empty( Session::get('cart') ) disabled
+                      @endempty type="button" >
                             Go to checkout
                         </button>                    </a>
+                        @endif
+                    @else
+                        <button class="btn btn-outline-dark br-none  " @empty( Session::get('cart') ) disabled
+                                @endempty type="button" >
+                        Go to checkout
+                    </button>
 
+                    @endif
                 </div>
             </div>
         </div>

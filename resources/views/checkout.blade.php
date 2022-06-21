@@ -11,10 +11,66 @@
         </nav>
     </div>
     <div class="container-fluid col-lg-10 offset-lg-1 mt-5 fs-reg">
+        @if(Session::has('address_error'))
+            <div class="alert alert-danger alert-dismissible fade show fs-reg" role="alert">
+                <p class="alert-danger">Sorry! This is not a valid Coupon.</p>
+                <hr>
+                <button type="button" class="btn-close text-lg py-3 opacity-9" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+        @endif
+        @if(Session::has('coupon'))
+            @if(Session::has('coupon_succes'))
+                <div class="alert alert-success alert-dismissible fade show fs-reg" role="alert">
+                    <p class="alert-success">Discount from Coupon was succesfull</p>
+                    <p>You can only Validate One Coupon per Order</p>
+                    <hr>
+                    <button type="button" class="btn-close text-lg py-3 opacity-9" data-bs-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="card border-0  p-3">
+                    <span class="d-flex justify-content-between align-items-center"><p class="">New total price:</p><p class="me-5 fs-2">&euro; {{Session::get('cart')->totalPrice}}</p> </span>
+                </div>
+            @endif
+        @else
+            <section>
+                <div class="row">
+                    @if(Session::has('coupon_error'))
+                        <div class="alert alert-danger alert-dismissible fade show fs-reg" role="alert">
+                            <p class="alert-danger">Sorry! This is not a valid Coupon.</p>
+                            <hr>
+                            <button type="button" class="btn-close text-lg py-3 opacity-9" data-bs-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    @endif
+
+                    <p class="">Do you have a Coupon code? Please enter your code here and get your discount!</p>
+                    <form class="row mb-0" name="getcoupon" action="{{action('App\Http\Controllers\AdminCouponController@coupon')}}" method="post">
+                        @csrf
+                        <div class="row">
+                            <div>
+                                <input name="coupon" type="number" class="form-control my-2 shadow-none" placeholder="Your coupon code" aria-label="coupon" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="row">
+                                <div class="col-12 d-flex justify-content-center mb-5">
+                                    <button class="btn btn-outline-dark br-none mt-2 " @empty( Session::get('cart') ) disabled
+                                            @endempty type="submit">
+                                        Get my coupon <i class="bi bi-arrow-right"></i>
+                                    </button>                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </section>
+        @endif
         <h1 class=" m-2 mt-4">Checkout</h1>
+
         <form method="post" action="{{route('pay.order')}}">
             @csrf
-
             <section class="row d-flex justify-content-center my-4">
                 <div class="col-md-8">
                     <div class="card mb-4 br-none ">
@@ -63,7 +119,7 @@
                             @foreach($delivery_addresses as $delivery)
                                 <div class="border mt-4 ">
                                     <div class="form-floating offset-1 col-10 d-flex p-3">
-                                        <input name="delivery_address_id" value="{{$delivery->id}}" class="form-check-input" type="radio"
+                                        <input  name="delivery_address_id" value="{{$delivery->id}}" class="form-check-input" type="radio"
                                              id="flexRadioDefault{{$delivery->id}}">
                                         <div class="ms-1 ms-md-3">
                                             <p class="fs-li fsize-1">   {{$delivery->name_recipient}} <br>
@@ -238,7 +294,11 @@
                                 <hr>
                                 <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 ">
                                     Products
-                                    <span>&#8364; {{Session::get('cart') ? Session::get('cart')->totalPrice : '0'}}</span>
+                                    <span>&#8364; {{Session::get('cart') ? Session::get('cart')->totalPrice    : '0'}}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center  px-0">
+                                    Coupon
+                                    <span>  @if(Session::get('coupon') ) 	&#x25; @endif {{Session::get('coupon') ? Session::get('coupon')->discount : 'No coupon'}}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center  px-0">
                                     Shipping
@@ -253,120 +313,29 @@
                                 </li>
                             </ul>
 
+                            @if(Session::has('cart'))
+                                @if(Session::get('cart')->totalPrice == 0 )
+                                   <p class="fs-li text-danger">you cannot checkout without ordering anything</p>
+                                @else
+                                    <button class="btn btn-outline-dark br-none  "
+                                            @empty( Session::get('cart') ) disabled
+                                            @endempty type="submit">
+                                        Pay now <i class="bi bi-arrow-right"></i>
+                                    </button>
+                                @endif
+                            @endif
 
-                            <button class="btn btn-outline-dark br-none  " @empty( Session::get('cart') ) disabled
-                                    @endempty type="submit">
-                                Pay now <i class="bi bi-arrow-right"></i>
-                            </button>
                         </div>
                     </div>
                 </div>
             </section>
         </form>
+
     </div>
 
     <!--Login Modal -->
 
 
-    <div class="modal  fade" id="loginModal" tabindex="-1" aria-labelledby="loginModallLabel" aria-hidden="true">
-        <div class="row justify-content-center py-5 my-5">
-
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class=" modal-title" id="loginModalLabel">{{ __('Login') }}</div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
-
-                            <div class="row mb-3">
-                                <label for="email"
-                                       class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="email" type="email"
-                                           class="form-control @error('email') is-invalid @enderror" name="email"
-                                           value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                    @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label for="password"
-                                       class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="password" type="password"
-                                           class="form-control @error('password') is-invalid @enderror" name="password"
-                                           required autocomplete="current-password">
-
-                                    @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-md-6 offset-md-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="remember"
-                                               id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                        <label class="form-check-label" for="remember">
-                                            {{ __('Remember Me') }}
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row mb-0">
-
-                                <button type="submit" class="btn btn-outline-secondary col-3 mx-auto my-3"><i
-                                        class="bi bi-door-open"></i>
-                                    {{ __('Login') }}
-                                </button>
-                                <div class="d-flex justify-content-evenly mt-4">
-                                    {{-- Login with GitHub --}}
-                                    <div class="  ">
-                                        <a class="btn btn-outline-warning" href="{{ url('login/github') }}"
-                                        ><i class="bi bi-github"></i> <br>
-                                            Login with GitHub
-                                        </a>
-                                    </div>
-                                    {{-- Login with google --}}
-                                    <div class="  ">
-                                        <a class="btn btn-outline-primary" href="{{ url('/login/google') }}"
-                                        >
-                                            <i class="bi bi-google"></i> <br>Login with Google
-                                        </a>
-                                    </div>
-                                </div>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link link-secondary mt-3"
-                                       href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-
-                            </div>
-                        </form>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script>
         let myModal = document.getElementById('loginModal')

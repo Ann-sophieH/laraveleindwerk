@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('content')
+
     <div class="col-11 mx-auto">
         @include('includes.form_error')
         @if(session('user_message'))
@@ -264,4 +265,5 @@
         </div>
     </div>
 </div>
+
 @endsection

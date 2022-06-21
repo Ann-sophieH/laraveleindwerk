@@ -12,6 +12,7 @@ use App\Models\Photo;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Testing\Fluent\Concerns\Has;
 use Illuminate\Support\Facades\Session;
@@ -27,7 +28,10 @@ class AdminUsersController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+
+        $this->authorize('viewAny', $user);
+
         $roles = Role::all();
 
         $users = User::with(['photos', 'roles', 'addresses'])->withTrashed()->filter(request(['search']))->paginate(25);
@@ -44,7 +48,12 @@ class AdminUsersController extends Controller
     public function create()
     {
         //
+        $user = Auth::user();
+
+        $this->authorize('create', $user);
+
         $roles = Role::pluck('name', 'id')->all();
+
         return view('admin.users.create', compact('roles'));
     }
 
@@ -111,6 +120,7 @@ class AdminUsersController extends Controller
         //detailpage user
        // $orderdetails = [];
         //Session::flash('user_message', 'Here is all the info we have on ' . $user->username );
+        $this->authorize('view', $user);
         $orders = Order::with('user', 'orderdetails', 'orderdetails.product')->where('user_id' , $user->id)->latest()->get();
 
         return view('admin.users.show', compact('user', 'orders'));
@@ -126,7 +136,10 @@ class AdminUsersController extends Controller
     public function edit($id)
     {
         //
+
         $user = User::findOrFail($id);
+        $this->authorize('update', $user);
+
         $roles = Role::pluck('name', 'id')->all();
         $user_address = $user->addresses->first();//change to delivery adr
 
@@ -143,6 +156,7 @@ class AdminUsersController extends Controller
     public function update(UsersEditRequest $request, $id)
     {
         //
+
         $user = User::findOrFail($id);
         if(trim($request->password)==''){
             $input = $request->except('password');
@@ -184,12 +198,15 @@ class AdminUsersController extends Controller
         $user->roles()->sync($request->roles, true);
         /** adding to address table **/
         $address = $user->addresses->where('address_type', 1)->first();
-        $address->update([  'name_recipient' =>  $request['name_recipient'],
-                        'addressline_1' => $request['addressline_1'],
-                        'addressline_2' => $request['addressline_2'],
-                        'address_type' => 1,
+        if($address){
+            $address->update([  'name_recipient' =>  $request['name_recipient'],
+                'addressline_1' => $request['addressline_1'],
+                'addressline_2' => $request['addressline_2'],
+                'address_type' => 1,
 
             ]);
+        }
+
         Session::flash('user_message', $user->username . ' was edited!');
         return redirect('/admin/users');
     }
@@ -211,6 +228,8 @@ class AdminUsersController extends Controller
     {
         //
         $user = User::findOrFail($id);
+        $this->authorize('delete', $user);
+
         Session::flash('user_message', $user->username . 'was deleted!'); //naam om mess. op te halen, VOOR DELETE OFC
         UsersSoftDelete::dispatch($user);
         $user->delete();

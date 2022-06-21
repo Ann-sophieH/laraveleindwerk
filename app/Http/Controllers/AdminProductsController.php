@@ -9,8 +9,11 @@ use App\Models\Photo;
 use App\Models\Product;
 use App\Models\Specification;
 use App\Models\Type;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 class AdminProductsController extends Controller
@@ -23,6 +26,9 @@ class AdminProductsController extends Controller
     public function index()
     {
         //
+        $user = Auth::user();
+
+        $this->authorize('viewAny', $user);
         $categories = Category::all();
         $products = Product::with(['specifications', 'colors', 'category', 'photos'])->withTrashed()->filter(request(['search']))->paginate(15);
        // Session::flash('product_message', 'these are all the products found in database!');
@@ -39,6 +45,9 @@ class AdminProductsController extends Controller
     public function create()
     {
         //
+        $user = Auth::user();
+
+        $this->authorize('create', $user);
         $colors = Color::all(); //see all knop maken!!
         $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
         $categories = Category::all();
@@ -60,6 +69,8 @@ class AdminProductsController extends Controller
         $product = new Product();
         $product->name = $request->name;
         $product->details = $request->details;
+        $product->slug = Str::slug($product->name, '-');
+
         $product->price = $request->price;
         $product->category_id = $request->category;
         $product->save();
@@ -122,7 +133,10 @@ class AdminProductsController extends Controller
     public function edit($id)
     {
         //
+
         $product = Product::findOrFail($id);
+        $user = User::findOrFail($id);
+        $this->authorize('update', $product, $user);
         $specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
         $categories = Category::all();
         $colors = Color::all();
@@ -182,9 +196,13 @@ class AdminProductsController extends Controller
      */
     public function destroy($id)
     {
+        $user = Auth::user();
         //need to cascade delete something here?
         $product = Product::findOrFail($id);
+        $this->authorize('delete', $product, $user);
+
         Session::flash('product_message', $product->name . ' was deleted!'); //naam om mess. op te halen, VOOR DELETE OFC
+
 
         $product->delete();
         return redirect('/admin/products');
@@ -196,6 +214,9 @@ class AdminProductsController extends Controller
         return redirect('/admin/products');
     }
     public function productsPerCat($id){
+        $user = Auth::user();
+
+        $this->authorize('viewAny', $user);
         $categories = Category::all();
         //$specs = Specification::whereNull('parent_id')->with( 'childspecs')->get();
      //   $product = null;

@@ -132,7 +132,7 @@
                 </div>
             </div>
             <div class="row order-2 order-md-3 order-lg-2 col-md-8 col-lg-4 text-white fs-reg ">
-                <p class=" mb-1 text-uppercase ">Subscribe to our Newsletter !</p>
+                <p class=" mb-1 text-uppercase ">Subscribe to our Newsletter and get 20% off!</p>
                 <form method="POST" enctype="multipart/form-data" action="{{route('newsletter')}}">
                     @csrf
                     <div class="input-group mb-2 border-2 border-white br-none ">

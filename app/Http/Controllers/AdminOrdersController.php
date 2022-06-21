@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminOrdersController extends Controller
 {
@@ -14,6 +15,10 @@ class AdminOrdersController extends Controller
     public function index()
     {
         //
+        $user = Auth::user();
+
+        $this->authorize('viewAny', $user);
+
         return view('admin.orders.index');
     }
 

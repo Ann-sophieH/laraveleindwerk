@@ -6,6 +6,7 @@ use App\Http\Requests\OrdersUserRequest;
 use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Coupon;
 use App\Models\Newsletter;
 use App\Models\Order;
 use App\Models\Orderdetail;
@@ -18,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Mollie\Laravel\Facades\Mollie;
 
 class FrontendController extends Controller
@@ -43,13 +45,18 @@ class FrontendController extends Controller
     public function newsletter(Request $request){
         $subscriber = new Newsletter();
         $request->validate([
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:newsletters',
 
-        ]);
+        ],
+            $messages = [
+                'email.required' => 'Give us a correct email for exciting offers!',
+
+            ]
+        );
         $subscriber->email = $request->email;
         $subscriber->save();
 
-        Session::flash('newsletter_message', 'You are subscribed to our newsletter now, exciting offers coming your way! ');//put message in cart!!
+        Session::flash('newsletter_message', 'You are subscribed to our newsletter now, ENJOY 20% OFF WITH CODE 12345678! Use it at checkout ');//put message in cart!!
 
         return redirect()->back();
     }
@@ -84,6 +91,7 @@ class FrontendController extends Controller
     }
     public function order(Request $request)
     {
+
         /** getting cart to make orderdetails and get amount **/
         $currentCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($currentCart); //nieuw model cart vullen
@@ -104,11 +112,50 @@ class FrontendController extends Controller
 
         if ($payment->id != null ) { //$payment->id == transaction code
                 $user = Auth::user();
+            /** add NEW delivery address **/
+            if ($request['name_recipient'] && $request['addressline_1'] && $request['addressline_2']) {
+                $request->validate([
+                    'name_recipient' => 'required|string',
+                    'addressline_1' => 'required|string',
+                    'addressline_2' => 'required|string',
+                ], $messages = [
+                        'name_recipient.required' => 'We need to know which person to send your package to!',
+                        'addressline_1.required' => 'We need to know which address to send your package to!',
+                        'addressline_2.required' => 'We need to know which address to send your package to!',
+
+                    ]
+                );
+                $address = new Address();
+                $address->name_recipient = $request['name_recipient'];
+                $address->addressline_1 = $request['addressline_1'];
+                $address->addressline_2 = $request['addressline_2'];
+                $address->address_type = 1;
+                $address->save();
+                $user->addresses()->sync($address->id, false);
+            }
                 /** new order  **/
                 $order = new Order();
+                //if they add a new address it will be shipped there
+            if($request['name_recipient'] && $request['addressline_1'] && $request['addressline_2']){
+             //   dd($user->addresses()->where('address_type', 1)->latest()->first()->id);
+                $address_id = $user->addresses()->where('address_type', 1)->latest()->first()->id;
+                $order->address_id = $address_id;
+            }else{                //if they select an exisiting address it will be shipped there
+                $request->validate([
+                    'delivery_address_id' => 'required|',
+                ], $messages = [
+                        'delivery_address_id.required' => 'We need to know which address to send your package to!',
+                    ]
+                );
                 $order->address_id = $request->delivery_address_id;
+
+            }
                 $order->user_id = $user->id;
                 $order->transaction_code = $payment->id ;
+                if(Session::has('coupon')){
+                    $coupon =  Session::get('coupon');
+                    $order->coupon_id = $coupon->id;
+                }
                 $order->save();
                 /** add orderdetails for existing user  **/
                 $cart = $cart->products;
@@ -122,24 +169,26 @@ class FrontendController extends Controller
                     $orderdetail->save();
                 }
                 Session::forget('cart'); // empties only the cart var not entire session
-                /** add NEW delivery address **/
-                if ($request['name_recipient'] && $request['addressline_1'] && $request['addressline_2']) {
-                    $address = new Address();
-                    $address->name_recipient = $request['name_recipient'];
-                    $address->addressline_1 = $request['addressline_1'];
-                    $address->addressline_2 = $request['addressline_2'];
-                    $address->address_type = 1;
-                    $address->update();
-                    $user->addresses()->sync($address->id, false);
-                }
-                /** add NEW facturation address **/
+                Session::forget( 'coupon');
+            /** add NEW facturation address **/
                 if ($request['fname_recipient'] && $request['faddressline_1'] && $request['faddressline_2']) {
+                    $request->validate([
+                        'fname_recipient' => 'required|string',
+                        'faddressline_1' => 'required|string',
+                        'faddressline_2' => 'required|string',
+
+                    ], $messages = [
+                        'fname_recipient.required' => 'We need to know which person to send your package to!',
+                        'faddressline_1.required' => 'We need to know which address to send your package to!',
+                        'faddressline_2.required' => 'We need to know which address to send your package to!',
+
+                    ]);
                    // $address = new Address();
                     $address->name_recipient = $request['fname_recipient'];
                     $address->addressline_1 = $request['faddressline_1'];
                     $address->addressline_2 = $request['faddressline_2'];
                     $address->address_type = 2;
-                    $address->update();
+                    $address->save();
                     $user->addresses()->sync($address->id, false);
                 }
 

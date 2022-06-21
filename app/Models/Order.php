@@ -13,19 +13,28 @@ class Order extends Model
     protected $fillable = [
         'transaction_code',
         'user_id',
-        'address_id'
+        'address_id',
+        'coupon_id',
 
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
-    public function orderdetails(){
+    public function orderdetails()
+    {
         return $this->hasMany(Orderdetail::class);
     }
-    public function address(){
+    public function address()
+    {
         return $this->belongsTo(Address::class);
     }
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class);
+    }
+
 
 
 }

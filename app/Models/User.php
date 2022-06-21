@@ -80,7 +80,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function isClient(){
         foreach ($this->roles as $role){
-            if($role->name == 'client' && $this->is_active == 1){
+            if($role->name == 'client' ){
                 return true;
             }
         }

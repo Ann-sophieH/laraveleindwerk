@@ -49,7 +49,11 @@ class AdminColorsController extends Controller
         $request->validate([
             'name' => 'required',
             'hex_value' => 'required|unique:colors'
-        ]);
+        ], $messages = [
+        'name.required' => 'We need to know what you want to name the color!',
+        'hex_value.required' => 'We need to know which color you want to add to the database!',
+
+    ]);
         $color = new Color();
         $color->name = $request->name;
         $color->hex_value = $request->hex_value;
@@ -98,7 +102,11 @@ class AdminColorsController extends Controller
         $request->validate([
             'name' => 'required',
             'hex_value' => 'required'
-        ]);
+        ], $messages = [
+            'name.required' => 'We need to know what you want to name the color!',
+            'hex_value.required' => 'We need to know which color you want to add to the database!'
+        ]
+            );
         $color = Color::findOrFail($id);
         $color->name = $request->name;
         $color->hex_value = $request->hex_value;

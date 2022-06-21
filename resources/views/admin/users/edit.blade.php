@@ -34,33 +34,37 @@
                             <div class="col-6  mt-5 p-2 pb-3 mb-5 ">
                         <div class="form-group">
                             {!! Form::label('username', 'Username') !!}
-                            {!! Form::text('username',  $user->username, ['class'=>'form-control shadow border' ]) !!}
+                            {!! Form::text('username',  $user->username, ['class'=>'form-control  border' ]) !!}
                         </div>
                                 <div class="form-group">
                                     {!! Form::label('password', 'Password:') !!}
                                     {!! Form::password('password',['class' =>'form-control border']) !!}
                                 </div>
                                 <div class="form-group">
+                                    {!! Form::label('email', 'Email:') !!}
+                                    {!! Form::email('email',$user->email ,['class' =>'form-control border']) !!}
+                                </div>
+                                <div class="form-group">
                                     {!! Form::label('first_name', 'First Name') !!}
-                                    {!! Form::text('first_name',  $user->first_name, ['class'=>'form-control shadow border' ]) !!}
+                                    {!! Form::text('first_name',  $user->first_name, ['class'=>'form-control  border' ]) !!}
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('last_name','Last Name') !!}
-                                    {!! Form::text('last_name',  $user->last_name, ['class'=>'form-control shadow border' ]) !!}
+                                    {!! Form::text('last_name',  $user->last_name, ['class'=>'form-control  border' ]) !!}
                                 </div>
 
                         <div class="form-group">
                             {!! Form::label('Select roles: (CTRL + click multiple)') !!}
-                            {!! Form::select('roles[]', $roles, $user->roles->pluck('id')->toArray(), ['class'=>'form-control shadow ', 'multiple'=>'multiple'] ) !!}
+                            {!! Form::select('roles[]', $roles, $user->roles->pluck('id')->toArray(), ['class'=>'form-control  ', 'multiple'=>'multiple'] ) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::label('is_active', 'Status:') !!}
-                            {!! Form::select('is_active', array(1=>'active', 0=>'not active'), $user->is_active, ['class'=>'form-control shadow border'] ) !!}
+                            {!! Form::select('is_active', array(1=>'active', 0=>'not active'), $user->is_active, ['class'=>'form-control  border'] ) !!}
                         </div>
 
                         <div class="form-group mt-3">
                             {!! Form::label('photo_id', 'Photo:') !!}
-                            {!! Form::file('photo_id',null, ['class'=>'form-control shadow '] ) !!}
+                            {!! Form::file('photo_id',null, ['class'=>'form-control  '] ) !!}
                         </div>
                         <div class="form-group">
                             {!! Form::submit('Update user', ['class'=>'btn bg-gradient-info w-25  mb-0  mt-5'] ) !!}
@@ -71,31 +75,40 @@
                             </div>
                             <div class="col-6  mt-2 p-2 pb-3 mb-5 ">
                                 <p>primary delivery address:</p>
+                                @if($user_address)
                                 <div class="form-group">
                                     {!! Form::label('name_recipient', 'Name Recipient') !!}
-                                    {!! Form::text('name_recipient', $user_address->name_recipient, ['class'=>'form-control shadow border' ]) !!}
+                                    {!! Form::text('name_recipient', $user_address->name_recipient, ['class'=>'form-control  border' ]) !!}
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('addressline_1', 'Street + number') !!}
-                                    {!! Form::text('addressline_1', $user_address->addressline_1, ['class'=>'form-control shadow border']) !!}
+                                    {!! Form::text('addressline_1', $user_address->addressline_1, ['class'=>'form-control  border']) !!}
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('addressline_2', 'City + postalcode') !!}
-                                    {!! Form::text('addressline_2',  $user_address->addressline_2, ['class'=>'form-control shadow border']) !!}
+                                    {!! Form::text('addressline_2',  $user_address->addressline_2, ['class'=>'form-control  border']) !!}
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('email', 'Email') !!}
-                                    {!! Form::text('email', $user->email, ['class'=>'form-control shadow border']) !!}
+                                    {!! Form::text('email', $user->email, ['class'=>'form-control  border']) !!}
                                 </div>
                                 <div class="form-group">
                                     {!! Form::label('telephone', 'Phone') !!}
-                                    {!! Form::text('telephone',  $user->telephone, ['class'=>'form-control shadow border']) !!}
+                                    {!! Form::text('telephone',  $user->telephone, ['class'=>'form-control  border']) !!}
                                 </div>
 
+                                @endif
                             </div>
                         </div>
 
                         {!! Form::close() !!}
+                        @if(!$user_address)
+                            <button class="btn" >
+                                <a href="{{route('addresses.create', $user->id)}}" class="text-center" >
+                                    <i class="material-icons icon-sm pt-1">add</i> billing/delivery address
+                                </a>
+                            </button>
+                        @endif
                     </div>
                         </div>
                 </div>

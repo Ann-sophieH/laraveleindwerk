@@ -22,9 +22,9 @@ class RolesUsersTableSeeder extends Seeder
             if($user['id']==1){
                 $user->roles()->sync([1]);
             }elseif($user['id']==2){
-            $user->roles()->sync([3]);
+            $user->roles()->sync([2]);
             }elseif($user['id']==3){
-                $user->roles()->sync([2]);
+                $user->roles()->sync([3]);
             } else{
                 $user->roles()->attach(
                     $roles->random(rand(2,3))->pluck('id')->toArray()

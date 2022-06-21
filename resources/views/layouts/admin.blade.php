@@ -138,12 +138,12 @@
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item ps-3"> <a class="nav-link text-white" href="{{route('users.index')}}"><b>All users</b></a></li>
                         <li class="nav-item ps-4   "> <a class="nav-link text-white" href="{{route('users.create')}}"><i class="icon-xxs material-icons pe-2" style="font-size: 1.2rem">add</i>Add new user</a></li>
-                        <li class="nav-item ps-3   "> <a class="nav-link " href="{{route('users.index')}}">Roles & <br> managing site access</a></li>
 
 
                     </ul>
                 </div>
             </li>
+                @if(Auth::user()->isAdmin())
             <li class="nav-item">
                 <a class="nav-link text-white " href="{{route('addresses.index')}}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -152,6 +152,7 @@
                     <span class="nav-link-text ms-1">Addresslist</span>
                 </a>
             </li>
+                    @endif
             @endif
 
 

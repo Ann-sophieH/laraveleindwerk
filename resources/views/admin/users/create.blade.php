@@ -42,6 +42,10 @@
                                 {!! Form::label('password', 'Password:', ['class'=>'form-label ']) !!}
                                 {!! Form::password('password', ['class'=>'form-control ', 'aria-describedby'=>'emailHelp' ,'onfocus'=>'focused(this)' , 'onfocusout'=>'defocused(this)']) !!}
                             </div>
+                            <div class="form-group">
+                                {!! Form::label('email', 'Email:') !!}
+                                {!! Form::email('email', null ,['class' =>'form-control border']) !!}
+                            </div>
                             <div class="input-group input-group-dynamic mt-3">
                                 {!! Form::label('first_name', 'First Name', ['class'=>'form-label ']) !!}
                                 {!! Form::text('first_name', null, ['class'=>'form-control ', 'aria-describedby'=>'emailHelp' ,'onfocus'=>'focused(this)' , 'onfocusout'=>'defocused(this)']) !!}

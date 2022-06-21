@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('transaction_code');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('address_id'); // to know where the order needs to be sent
+            // cause there could be loads of delivery addresses
+            $table->integer('coupon_id')->index()->default(0);
 
             $table->timestamps();
         });
