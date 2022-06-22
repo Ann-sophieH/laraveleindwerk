@@ -86,7 +86,7 @@ class UserPolicy
     public function delete(User $user, User $model)
     {
         //
-        return $model->id === $user->id
+        return $model->id === $user->id // model is the account to be deleted / $user is the Auth usr
             ? Response::allow()
             : Response::deny('You do not own this account, you cannot delete this info.');
 

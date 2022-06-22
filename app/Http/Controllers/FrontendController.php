@@ -12,6 +12,7 @@ use App\Models\Coupon;
 use App\Models\Newsletter;
 use App\Models\Order;
 use App\Models\Orderdetail;
+use App\Models\Post;
 use App\Models\Product;
 use App\Models\Specification;
 use App\Models\Type;
@@ -34,8 +35,16 @@ class FrontendController extends Controller
         return view('index', compact('carr_products'));
     }
     public function blog(){
+        $posts = Post::with(['photos', 'category', 'user'])->filter(request(['search']))->paginate(10); //
+        $sticky_post = Post::with(['photos', 'category', 'user'])->where('sticky', 1)->get()->last();
+     // dd($sticky_post);
+        return view('blog', compact('posts', 'sticky_post'));
+    }
+    public function blogpost(Post $post){
+        // $post =Post::findOrFail($id);
+        $post->load(['postcomments.user']);
 
-        return view('blog');
+        return view('blogpost', compact('post'));
     }
 /*    public function products(){
 

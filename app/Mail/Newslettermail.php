@@ -21,7 +21,7 @@ class Newslettermail extends Mailable
     public function __construct($data)
     {
         //
-        $this->data = $data;
+        $this->data = $data; // no data used atm
 
     }
 

@@ -48,6 +48,7 @@ Route::get('/products', Products::class)->name('products');
 Route::get('/faq', '\App\Http\Controllers\FrontendController@faq' )->name('faq');
 Route::post('/newsletter', '\App\Http\Controllers\FrontendController@newsletter' )->name('newsletter');
 Route::get('/blog', '\App\Http\Controllers\FrontendController@blog' )->name('blog');
+Route::get('/blog/{post}', '\App\Http\Controllers\FrontendController@blogpost' )->name('blogpost');
 
 /** cart **/
 Route::get('/cart', '\App\Http\Controllers\FrontendController@cart' )->name('cart');
@@ -74,6 +75,11 @@ Route::group(['prefix' => 'admin', 'middleware'=> 'admin'], function (){
    // Route::get('addresses/create/{id}', 'App\Http\Controllers\AdminAddressesController@create')->name('addresses.create');
     Route::get('products/restore/{product}', 'App\Http\Controllers\AdminProductsController@restore')->name('products.restore');
     Route::get('products/delete/{product}', 'App\Http\Controllers\AdminProductsController@delete')->name('products.delete');
+
+    Route::resource('posts', App\Http\Controllers\AdminPostsController::class);
+    Route::get('posts/restore/{post}', 'App\Http\Controllers\AdminPostsController@restore')->name('posts.restore');
+
+    Route::resource('comments', \App\Http\Controllers\AdminPostCommentsController::class);
 
     Route::resource('reviews', \App\Http\Controllers\AdminProductReviewsController::class);
 

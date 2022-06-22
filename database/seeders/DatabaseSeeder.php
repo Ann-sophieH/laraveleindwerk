@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             OrdersTableSeeder::class,
             OrderdetailsTableSeeder::class,
             PhotosTableSeeder::class,
+            PostsTableSeeder::class,
 
 
 

@@ -3,128 +3,196 @@
 
 
 
-    <article>
-    <div class="container">
-        <div class="row justify-content-center gutter-1">
 
-            <!-- post -->
-            <div class="col-lg-8">
-                <div class="card card-post card-post-lg">
-                    <img class="card-image" src="assets/images/demo/image-1.jpg" alt="Image">
-                    <div class="card-body p-4">
-                        <ul class="list list--horizontal list--separated text-uppercase fs-14">
-                            <li><a href="" class="underline">News</a></li>
-                            <li><time datetime="2019-08-24 20:00" class="text-muted">24th Aug, 2019</time></li>
-                        </ul>
-                        <h2 class="card-title"><a href="">The Story Behind Shopy</a></h2>
-                        <p class="card-text">Leo and Violet is us, Leo Dominguez and Violette Polchi, two young Parisian lovers who have shared our lives for almost 10 years. We created this brand together in 2013, strong of the success encountered when launching our first project on Kickstarter. Our will has always been the same: to offer elegant, timeless and functional products. In deciding to cut the intermediaries, we wanted to create a brand of the 21st century: 100% transparent and in direct relationship with you, our customers.</p>
-                        <p class="card-text">Mrs. Darling first heard of Peter when she was tidying up her children’s minds. It is the nightly custom of every good mother after her children are asleep to rummage in their minds and put things straight for next morning, repacking into their proper places the many articles that have wandered during the day.</p>
-                        <blockquote class="blockquote">
-                            <p class="mb-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                            <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                        </blockquote>
-                    </div>
-                </div>
-            </div>
+    <section class="container-fluid  post-area fs-reg ">
+        <!-- Single Post Title -->
+        <article class="row  my-5">
+            <div class="col-10 mx-auto text-center">
+                <div class="row single-post-title bg-img background-overlay mt-5" >
 
-            <!-- share post -->
-            <div class="col-lg-8">
-                <div class="bg-white p-4">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <span class="eyebrow text-muted">Share this article</span>
-                        </div>
-                        <div class="col text-right">
-                            <ul class="list list--horizontal">
-                                <li><a href="#!" class="text-muted d-block text-hover-facebook"><i class="fs-28 icon-facebook-square-brands"></i></a></li>
-                                <li><a href="#!" class="text-muted d-block text-hover-instagram"><i class="fs-28 icon-instagram-square-brands"></i></a></li>
-                                <li><a href="#!" class="text-muted d-block text-hover-twitter"><i class="fs-28 icon-twitter-square-brands"></i></a></li>
-                                <li><a href="#!" class="text-muted d-block text-hover-pinterest"><i class="fs-28 icon-pinterest-square-brands"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        <div class="single-post-title-content">
+                            <!-- Post Tag -->
+                            <div class="gazette-post-tag">
 
-            <!-- post nav -->
-            <div class="col-lg-8">
-                <div class="bg-white">
-                    <div class="row gutter-0">
-                        <div class="col-md-6">
-                            <h4 class="interpost interpost-prev">
-                                <a href="#!">
-                                    Previous article
-                                </a>
-                            </h4>
-                        </div>
-                        <div class="col-md-6">
-                            <h4 class="interpost interpost-next">
-                                <a href="#!">
-                                    Next article
-                                </a>
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                <a href="">{{$post->category->name}}</a>
 
-
-            <!-- comments -->
-            <div class="col-lg-8">
-                <div class="bg-white p-4">
-                    <h3 class="mb-3 text-uppercase fs-20">2 Comments</h3>
-                    <div class="bubble">
-                        <a href="" class="bubble_avatar"><img class="avatar" src="assets/images/demo/user-1.jpg" alt="Avatar"></a>
-                        <div class="bubble_body">
-                            <ul class="list list--horizontal">
-                                <li><span class="text-uppercase font-weight-bold fs-14">Nicole Campbell</span></li>
-                                <li><time datetime="2019-08-24 11:00" class="text-uppercase fs-14">On AUG 24, 11:00AM</time></li>
-                            </ul>
-                            <blockquote>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                            </blockquote>
-                            <div>
-                                <a href="" class="underlined">Reply</a>
                             </div>
+                            <h1 class="py-3">{{$post->title}}</h1>
+                            <p><i>{{$post->created_at->diffForHumans()}} </i> by {{$post->user->first_name}}  {{$post->user->last_name}}</p>
                         </div>
+
+
+                </div>
+
+                <div class="row single-post-contents mb-5">
+                            <div class="single-post-text">
+                                <p>{{$post->body_short}}</p>
+                            </div>
+                            <div class="single-post-thumb">
+                                @if(($post->photos)->isNotEmpty())
+                                    @foreach($post->photos as $photo)
+                                        @if($loop->first)
+                                            <img style="height: 500px" class=" img-fluid  my-5" src="{{ empty($photo) ? 'http://via.placeholder.com/1000x600' : asset($photo->file) }}" alt="{{$post->title}}">
+                                        @endif
+                                    @endforeach
+                                @else
+                                    <img style="height: 500px" class=" img-fluid  my-5" src="http://via.placeholder.com/1000x600" alt="{{$post->title}}">
+                                @endif
+                            </div>
+                    @if(($post->blockquote) != '' OR NULL)
+                            <div class="single-post-blockquote">
+                                <blockquote class="fs-bo py-3"><i>
+                                        &#8220; {{$post->blockquote}}&#8221;
+                                    </i>   </blockquote>
+                            </div>
+                    @endif
+                            <div class="single-post-text">
+                                <p>{{$post->body_long}}</p>
+                            </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- compose -->
-            <div class="col-lg-8">
-                <div class="bg-white p-4">
-                    <h3 class="mb-3 text-uppercase fs-20">Add Comment</h3>
-                    <fieldset class="mb-2">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-label-group">
-                                    <input type="text" id="inputName2" class="form-control form-control-lg" placeholder="Name" required="" control-id="ControlID-5">
-                                    <label for="inputName2">Name</label>
+
+            </article>
+        <section class="gazette-post-discussion-area section_padding_100 bg-gray">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8">
+                        <!-- Comment Area Start -->
+                        <div class="comment_area section_padding_50 clearfix">
+                            @if(Session::has('postcomment_message'))
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong><i class="fa fa-check-circle"></i>Comment submitted!</strong>
+                                    Your comment is awaiting moderation
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
+                            <div class="gazette-heading">
+                                <h4 class="font-bold">Discussion</h4>
+                            </div>
+
+                            <ol>
+                                <!-- Single Comment Area -->
+
+                                @foreach($post->postcomments as $postcomm)
+                                    @if($postcomm->is_active == 1)
+                                        <li class="single_comment_area">
+                                            <div class="comment-wrapper d-md-flex align-items-start">
+                                                <!-- Comment Meta -->
+                                                <div class="comment-author">
+                                                    <img src="{{$postcomm->user->photo ? asset($postcomm->user->photo->file) : 'http://via.placeholder.com/70x70' }}" alt="{{$postcomm->user->first_name}}">
+                                                </div>
+                                                <!-- Comment Content -->
+                                                <div class="comment-content">
+                                                    <h5>{{$postcomm->user->first_name}}  {{$postcomm->user->last_name}}</h5>
+
+                                                    <span class="comment-date font-pt text-muted">{{$postcomm->created_at->diffForHumans()}}</span>
+                                                    <p>{{$postcomm->body}}</p>
+
+                                                    <div class="accordion">
+                                                        <a class="btn reply-btn" data-toggle="collapse" href="#collapse{{$postcomm->id}}" role="button" aria-expanded="false" aria-controls="collapse{{$postcomm->id}}">
+                                                            Reply <i class="fa fa-reply" aria-hidden="true"></i>
+                                                        </a>
+                                                        <div class="collapse" id="collapse{{$postcomm->id}}">
+                                                            <div class="card card-body">
+                                                                <form action="{{route('replies.store')}}" method="post">
+                                                                    @csrf
+
+                                                                    <input type="hidden" name="comment_id" value="{{$postcomm->id}}">
+
+                                                                    <div class="form-group">
+                                                                        <textarea class="form-control" name="body" id="body" cols="30" rows="10" placeholder="Leave reply here" required></textarea>
+                                                                    </div>
+                                                                    <button type="submit" class="btn reply-btn">SUBMIT <i class="fa fa-angle-right ml-2"></i></button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div> @can('update', $postcomm)
+                                                <ol class="children">
+                                                    @foreach($postcomm->replies as $reply)
+
+                                                        <li class="single_comment_area">
+                                                            <div class="comment-wrapper d-md-flex align-items-start">
+
+                                                                <!-- Comment Meta -->
+                                                                <div class="comment-author">
+                                                                    <img src="{{$reply->user->photo ? asset($reply->user->photo->file) : 'http://via.placeholder.com/70x70' }}" alt="{{$reply->user->first_name}}">
+
+                                                                </div>
+                                                                <!-- Comment Content -->
+                                                                <div class="comment-content">
+                                                                    <h5>{{$reply->user->first_name}}  {{$reply->user->last_name}}</h5>
+                                                                    <span class="comment-date text-muted">{{$reply->created_at->diffForHumans()}}</span>
+                                                                    @if($reply->id == $reply->comment->best_reply_id) <p class="badge badge-pill badge-success">Best reply</p>   @endif
+                                                                    <p>{{$reply->body}} </p>
+                                                                    @auth
+                                                                        <div class="d-flex justify-content-between">
+                                                                            <a class="btn reply-btn" data-toggle="collapse" href="#collapse{{$reply->id}}" role="button" aria-expanded="false" aria-controls="collapse{{$reply->id}}">
+                                                                                Reply <i class="fa fa-reply" aria-hidden="true"></i>
+                                                                            </a>
+                                                                            <form method="post" action="{{route('bestreply', $reply)}}">
+                                                                                @csrf
+                                                                                <button type="submit" class="btn text-muted p-0">Best reply</button>
+                                                                            </form></div>
+                                                                        <div class="collapse" id="collapse{{$reply->id}}">
+                                                                            <div class="card card-body">
+                                                                                <form action="" method="post">
+                                                                                    @csrf
+
+                                                                                    <input type="hidden" name="comment_id" value="{{$reply->id}}">
+
+                                                                                    <div class="form-group">
+                                                                                        <textarea class="form-control" name="body" id="body" cols="30" rows="10" placeholder="Leave reply here" required></textarea>
+                                                                                    </div>
+                                                                                    <button type="submit" class="btn reply-btn">SUBMIT <i class="fa fa-angle-right ml-2"></i></button>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    @endauth
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    @endforeach
+                                                </ol>  @endcan
+
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ol>
+                        </div>
+                    @auth
+                        <!-- Leave A Comment -->
+                            <div class="leave-comment-area clearfix">
+                                <div class="comment-form">
+                                    <div class="gazette-heading">
+                                        <h4 class="font-bold">leave a comment</h4>
+                                    </div>
+                                    <!-- Comment Form -->
+                                    <form action="{{route('comments.store')}}" method="post">
+                                        @csrf
+
+                                        <input type="hidden" name="post_id" value="{{$post->id}}">
+
+                                        <div class="form-group">
+                                            <textarea class="form-control" name="body" id="body" cols="30" rows="10" placeholder="Leave comment here" required></textarea>
+                                        </div>
+                                        <button type="submit" class="btn leave-comment-btn">SUBMIT <i class="fa fa-angle-right ml-2"></i></button>
+                                    </form>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-label-group">
-                                    <input type="email" id="inputEmail" class="form-control form-control-lg" placeholder="Email" required="" control-id="ControlID-6">
-                                    <label for="inputEmail">Email</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-label-group">
-                                    <textarea class="form-control form-control-lg" id="inputComment" rows="3" placeholder="Comment" control-id="ControlID-7"></textarea>
-                                    <label for="inputComment">Comment</label>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <a href="" class="btn btn-block btn-primary">Leave a comment</a>
+                        @endauth
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</article>
+        </section>
+
+
+
+    </section>
 @endsection
