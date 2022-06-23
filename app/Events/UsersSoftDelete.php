@@ -23,7 +23,7 @@ class UsersSoftDelete
     public $user;
     public function __construct(User $userFound)
     {
-        //when a user is softdeleted, their posts also go
+        //when a user is softdeleted, their blogposts also go
         $this->user = $userFound;
     }
 

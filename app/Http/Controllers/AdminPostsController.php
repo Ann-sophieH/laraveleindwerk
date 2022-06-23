@@ -21,7 +21,9 @@ class AdminPostsController extends Controller
     public function index()
     {
         //
-        Session::flash('user_message', 'No posts found in database!');
+        $user = Auth::user();
+        $this->authorize('viewAny', $user);
+
         $posts = Post::with(['photos', 'category', 'user'])->withTrashed()->filter(request(['search']))->paginate(30); //
         $categories = Category::all();
 
@@ -36,7 +38,10 @@ class AdminPostsController extends Controller
     public function create()
     {
         //
-        //$keywords = Keyword::all();
+
+        $user = Auth::user();
+        $this->authorize('create', $user);
+
        $categories = Category::all();
         return view('admin.posts.create', compact( 'categories'));
     }
@@ -68,14 +73,20 @@ class AdminPostsController extends Controller
         $post->category_id = $request->category_id;
         $slug = Str::slug($request->title, '-');
         $post->slug = $slug ;
-
+        if( $request->sticky){
+            $post->sticky = $request->sticky;
+        }else{
+            $post->sticky = 0;
+        }
         if ($request->blockquote){
             $post->blockquote = $request->blockquote;
         }
         $post->user_id = Auth::user()->id;
-        /**code opslaan blogpost foto's -> nu tijdelijk nog author photo **/
-        $files = $request->file('photos');
+        /**wegschrijven post table**/
+        $post->save();
 
+        /**code opslaan blogpost foto's  **/
+        $files = $request->file('photos');
         if($request->hasfile('photos')){
             foreach( $files as $file){
                 $name = time() . $file->getClientOriginalName();
@@ -83,15 +94,12 @@ class AdminPostsController extends Controller
                     ->resize(2650, 2650, function ($constraint){
                         $constraint->aspectRatio();
                     })
-                    //->crop(550, 550 )
-                    // ->insert(public_path('/img/watermark.png'), 'bottom-right', 20, 20) //wtermark toevoegen
-                    ->save(public_path('assets/img/posts/' . 'md_' . $name)); //enkel thumbnail vn product
+                    ->save(public_path('/assets/img/posts/' . 'md_' . $name)); //enkel thumbnail vn product
                 $mediumPost = 'posts/' . 'md_' . $name ;
                 $photo = Photo::create(['file'=>$mediumPost]);
                 $post->photos()->save($photo);
             }}
-        /**wegschrijven post table**/
-        $post->save();
+
         /**gekozen cats wegscrhiven nr tussentabel **/
         Session::flash('post_message', $post->title . ' was created!'); //naam om mess. op te halen,
 
@@ -107,10 +115,10 @@ class AdminPostsController extends Controller
      */
     public function show($id)
     {
-        //
+        //just go to the post in front end
 
-        $post = Post::findOrFail($id); //incl error en doorverwijzen ander pagina
-        return view('admin.posts.show', compact( 'post'));
+       // $post = Post::findOrFail($id); //incl error en doorverwijzen ander pagina
+        //return view('admin.posts.show', compact( 'post'));
 
     }
 
@@ -123,9 +131,13 @@ class AdminPostsController extends Controller
     public function edit($id)
     {
         //
+
         $categories = Category::all();
 
+
         $post = Post::findOrFail($id); //incl error en doorverwijzen ander pagina
+        $this->authorize('update', $post);
+
         return view('admin.posts.edit', compact( 'post', 'categories'));
 
     }
@@ -143,28 +155,38 @@ class AdminPostsController extends Controller
         $post = Post::findOrFail($id);
         $post->title = $request->title;
         $post->slug = Str::slug($post->title, '-');
-
-        $post->body = $request->body;
+        $post->body_long = $request->body_long;
+        $post->body_short = $request->body_short;
+        if( $request->sticky){
+            $post->sticky = $request->sticky;
+        }else{
+            $post->sticky = 0;
+        }
+        $post->category_id = $request->category;
+        $slug = Str::slug($request->title, '-');
+        $post->slug = $slug ;
         $input = $request->all();
+        $files = $request->file('photos');
 
         /**photo overschrijven**/
-        if($file = $request->file('photo_id')){
-            //ophalen oude foto eerst
-            $oldImage = Photo::find($post->photo_id);// GEEN FIND OR FAIL FAIL MAGNIE
-            if($oldImage){
-                unlink(public_path() . $oldImage->file); //fysiek uit img direc.
-                $oldImage->delete();//nooit softdelete in photo
-            }
-            //opslaan nieuwe foto
-            $name = time() . $file->getClientOriginalName();
-            $file->move('img', $name);
-            $photo = Photo::create(['file'=>$name]);
-            $post->photo_id = $input['photo_id'] = $photo->id;
-        }
+        if($request->hasfile('photos')){
+            foreach( $files as $file){
+                $name = time() . $file->getClientOriginalName();
+                Image::make($file)
+                    ->resize(2650, 2650, function ($constraint){
+                        $constraint->aspectRatio();
+                    })
+                    //->crop(550, 550 )
+                    // ->insert(public_path('/img/watermark.png'), 'bottom-right', 20, 20) //wtermark toevoegen
+                    ->save(public_path('/assets/img/posts/' . 'md_' . $name)); //enkel thumbnail vn product
+                $mediumPost = 'posts/' . 'md_' . $name ;
+                $photo = Photo::create(['file'=>$mediumPost]);
+                $post->photos()->save($photo);
+            }}
         $post->update();
 
        // $post->categories()->sync($request->categories, true); //eetrst alle cats wissen en overschrijvne
-        Session::flash('user_message', $post->title . ' was updated!'); //naam om mess. op te halen,
+        Session::flash('post_message', $post->title . ' was updated!'); //naam om mess. op te halen,
         return redirect()->route('posts.index');
     }
 
@@ -178,9 +200,11 @@ class AdminPostsController extends Controller
     {
         //
         $post = Post::findOrFail($id);
+        $this->authorize('delete', $post);
+
         foreach($post->photos as $photo){
             if($photo ){
-                unlink(public_path() . $photo->file); //fysiek weg
+                unlink(public_path() . '/' .$photo->file); //fysiek weg
                 $photo->delete(); //uit tabel
             }
         }
@@ -188,10 +212,15 @@ class AdminPostsController extends Controller
         return redirect()->route('posts.index');
     }
     public function restore($id){
+
+        $post = Post::withTrashed()->findOrFail($id);
+
+        $this->authorize('restore', $post);
+
         Post::onlyTrashed()->where('id', $id)->restore();
         Session::flash('post_message', 'Post was restored  !');
 
-        return redirect('/admin/post');
+        return redirect('/admin/posts');
     }
 
 }

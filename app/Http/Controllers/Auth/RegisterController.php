@@ -57,6 +57,16 @@ class RegisterController extends Controller
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ], $messages = [
+            'username.required' => 'We need to know what you want your username to be!',
+            'first_name.required' => 'We need to know what your first name is !',
+            'last_name.required' => 'We need to know what your last name is !',
+            'email.required' => 'We need to know where to send your verification email !',
+            'email.unique' => 'This email already exists, try to log in instead!',
+
+            'password.required' => 'We need to know what you want your password to be!',
+            'password.confirmed' => 'The passwords you gave us do not match each other, try again !',
+
         ]);
     }
 

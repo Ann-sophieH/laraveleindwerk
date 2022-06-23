@@ -166,10 +166,10 @@
                 <div class="col-md-4 text-md-right text-muted">
                     <ul class="list-unstyled d-flex justify-content-between">
                         <li>
-                            <a class="small  text-muted" href="#!">Privacy Policy</a>
+                            <a class="small  text-muted" href="{{route('faq')}}">Privacy Policy</a>
                         </li>
                         <li class="pe-3">
-                            <a class="small  text-muted" href="#!">Terms of Use</a>
+                            <a class="small  text-muted" href="{{route('faq')}}">Terms of Use</a>
                         </li>
                     </ul>
                 </div>

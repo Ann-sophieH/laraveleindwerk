@@ -83,10 +83,7 @@
                                 {!! Form::label('addressline_2', 'City + postalcode', ['class'=>'form-label ']) !!}
                                 {!! Form::text('addressline_2', null,  ['class'=>'form-control ', 'aria-describedby'=>'emailHelp' ,'onfocus'=>'focused(this)' , 'onfocusout'=>'defocused(this)']) !!}
                             </div>
-                            <div class="input-group input-group-dynamic mt-3">
-                                {!! Form::label('email', 'Email', ['class'=>'form-label ']) !!}
-                                {!! Form::text('email', null,  ['class'=>'form-control ', 'aria-describedby'=>'emailHelp' ,'onfocus'=>'focused(this)' , 'onfocusout'=>'defocused(this)']) !!}
-                            </div>
+
                             <div class="input-group input-group-dynamic mt-3">
                                 {!! Form::label('telephone', 'Phone', ['class'=>'form-label ']) !!}
                                 {!! Form::text('telephone', null,  ['class'=>'form-control ', 'aria-describedby'=>'emailHelp' ,'onfocus'=>'focused(this)' , 'onfocusout'=>'defocused(this)']) !!}

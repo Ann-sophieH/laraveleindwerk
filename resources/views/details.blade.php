@@ -43,7 +43,7 @@
         <div class="col-lg-4 fs-reg fsize-1 mt-5">
             <h1 class="fsize-5">{{$product->name}}</h1>
             <p class="text-muted fs-li">{{$product->details}}</p>
-            <div><form action="#" class=" mt-2">
+            <div>
                 <ul class="mt-5 mb-5 mp-none">
                     @foreach($product->colors as $color)
                     <li class="list-inline-item">
@@ -58,7 +58,7 @@
 
 
                 </ul>
-            </form></div>
+           </div>
             <p class="fsize-3 fs-bo"> &#8364; {{$product->price}}</p>
 
 

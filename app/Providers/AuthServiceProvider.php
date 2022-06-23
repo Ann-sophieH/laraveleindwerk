@@ -2,8 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\Comment;
+use App\Models\Order;
+use App\Models\Post;
 use App\Models\Product;
 use App\Models\User;
+use App\Policies\CommentPolicy;
+use App\Policies\OrderPolicy;
+use App\Policies\PostPolicy;
 use App\Policies\ProductPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -20,6 +26,11 @@ class AuthServiceProvider extends ServiceProvider
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
         User::class => UserPolicy::class,
         Product::class => ProductPolicy::class,
+        Order::class => OrderPolicy::class,
+        Post::class => PostPolicy::class,
+        Comment::class => CommentPolicy::class,
+
+
 
 
     ];
@@ -31,13 +42,13 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerPolicies(); //GATES OFF POLICIES
-        Gate::before(function (User $user){ // VOOR ELKE POLICY MOET uSER ADMIN ZIJN (kan per policy in functie policy zelf ook doen)
+        $this->registerPolicies();
+        //IF USER = ADMIN, the policy functions will all return TRUE and admin has access to everything
+        Gate::before(function (User $user){
             if($user->isAdmin()){
                 return true;
             }
         });
 
-        //
     }
 }

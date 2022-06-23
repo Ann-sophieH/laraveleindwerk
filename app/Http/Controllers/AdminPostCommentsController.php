@@ -16,8 +16,13 @@ class AdminPostCommentsController extends Controller
      */
     public function index()
     {
-        //
-        $comments = Comment::with(['user', 'post'])->latest()->paginate(10);
+        //passing the user because i want specific responses
+        $user = Auth::user();
+        $this->authorize('viewAny', $user);
+
+        //$comments = Comment::with([ 'user','post','childcomments' ])->whereNull('parent_id')->paginate(10);
+        $comments = Comment::with([ 'user','post','childcomments' ])->paginate(10);
+       // $comments = Comment::with(['user', 'post'])->latest()->paginate(10);
         return view('admin.comments.index', compact( 'comments'));
     }
 
@@ -42,14 +47,15 @@ class AdminPostCommentsController extends Controller
     {
         //
         if($user = Auth::user()){
-            $data = [
-                'post_id'=>$request->post_id,
-                'body'=>$request->body,
-                'user_id'=>$user->id,
-                'parent_id'=>$request->parent_id,
+            $comment = new Comment() ;
+            $comment->post_id = $request->post_id;
+            $comment->body = $request->body;
+            $comment->user_id = $user->id;
+            $request->post_id
+                ? $comment->parent_id = $request->parent_id
+                : $comment->parent_id = NULL;
 
-            ];
-            Comment::create($data);
+           $comment->save();
             Session::flash('postcomment_message', 'Message submitted and awaits moderation');
         }
         return redirect()->back();
@@ -64,6 +70,10 @@ class AdminPostCommentsController extends Controller
     public function show($id)
     {
         //
+      //  $replies = Comment::with([ 'user','post','childcomments' ])->where('parent_id', $id)->paginate(10);
+
+        // $comments = Comment::with(['user', 'post'])->latest()->paginate(10);
+        //return view('admin.comments.show', compact( 'replies'));
     }
 
     /**
@@ -87,6 +97,9 @@ class AdminPostCommentsController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $user = Auth::user();
+        $this->authorize('update', $user);
+
         $comment = Comment::findOrFail($id);
         if($comment){
             $comment->is_active = !$request->is_active;
@@ -105,7 +118,5 @@ class AdminPostCommentsController extends Controller
     {
         //
     }
-    public function setBestComment(Comment $comment){
-        $this->best_comment_id = $comment->id;
-    }
+
 }

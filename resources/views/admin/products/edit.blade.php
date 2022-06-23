@@ -38,8 +38,8 @@
                                     <input type="text" class="form-control border ps-2 shadow-sm" id="name" name="name" value="{{$product->name}}" placeholder="Product name...">
                                 </div>
                                 <div class="form-group mt-4">
-                                    <label for="details">Product description: add rich text editor!</label>
-                                    <textarea type="text" class="form-control border ps-2 shadow-sm" id="details" name="details" value="{{$product->details}}" placeholder="Product details..."></textarea>
+                                    <label for="details">Product description: </label>
+                                    <textarea type="text" class="form-control border ps-2 shadow-sm" id="details" name="details" placeholder="Product details...">{{$product->details}}</textarea>
                                 </div>
 
                                     <!--                                    <div class="form-group col">

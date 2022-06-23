@@ -121,7 +121,7 @@ class AdminProductsController extends Controller
      */
     public function show($id)
     {
-        //
+        //see page details frontend
     }
 
     /**

@@ -22,13 +22,12 @@
 
             <article class="card bg-light p-5  col-md-8 col-lg-4 m-1 m-xl-2">
                 <div class="card-body text-center br-none">
-                   <a {{-- href="mailto:info@test.be"--}} href="{{url('/contactformulier')}}">
+
                     <i class="bi bi-cart-check-fill text-muted" style="font-size: 3rem;"></i>
                     <h1 class="fsize-5 mt-4 mb-3">Order received </h1>
                     <p class="fsize-1 text-muted mt-2">Thank you for you order! </p>
                        <p class="fsize-1 text-muted mt-2">We will start packing soon  </p>
 
-                   </a>
                 </div>
 
             </article>

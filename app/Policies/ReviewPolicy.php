@@ -2,12 +2,12 @@
 
 namespace App\Policies;
 
-use App\Models\Product;
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
 
-class ProductPolicy
+class ReviewPolicy
 {
     use HandlesAuthorization;
 
@@ -19,7 +19,7 @@ class ProductPolicy
      */
     public function viewAny(User $user)
     {
-        //author can see the products
+        //
         foreach($user->roles as $role){
             return $role->name === 'author'
                 ? Response::allow()
@@ -31,13 +31,12 @@ class ProductPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Review  $review
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Product $product)
+    public function view(User $user, Review $review)
     {
         //
-
     }
 
     /**
@@ -48,75 +47,20 @@ class ProductPolicy
      */
     public function create(User $user)
     {
-        //author can add new products
-        foreach($user->roles as $role){
-            return $role->name === 'author'
-                ? Response::allow()
-                : Response::deny('You do not have this permission, you cannot make this info.');
-        }
+        //
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Review  $review
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Product $product)
-    {
-        //he can not edit existing products
-        foreach($user->roles as $role){
-            return $role->name === 'client' // only clients cannot edit products
-                ? Response::deny('You do not have this permission, you cannot edit this info.')
-                : Response::allow();
-        }
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function delete(User $user, Product $product)
-    {
-        //he can not delete existing products
-        foreach($user->roles as $role){
-            return $role->name ===  'author'  // only clients cannot edit products
-                ? Response::deny('You do not have this permission, you cannot delete this product.')
-                : Response::allow();
-        }
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user, Product $product)
+    public function update(User $user, Review $review)
     {
         //
-
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user, Product $product)
-    {
-        //
-    }
-    public function viewProductsPerCat(User $user)
-    {
-        //he can sort the existing products
+        //authors can make all reviews of all products visible/not
         foreach($user->roles as $role){
             return $role->name === 'author'
                 ? Response::allow()
@@ -124,4 +68,39 @@ class ProductPolicy
         }
     }
 
+    /**
+     * Determine whether the user can delete the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Review  $review
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function delete(User $user, Review $review)
+    {
+        //
+    }
+
+    /**
+     * Determine whether the user can restore the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Review  $review
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function restore(User $user, Review $review)
+    {
+        //
+    }
+
+    /**
+     * Determine whether the user can permanently delete the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Review  $review
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function forceDelete(User $user, Review $review)
+    {
+        //
+    }
 }

@@ -34,20 +34,20 @@
                                     @csrf
                                     @method('PATCH')
                                 <div class="form-group mt-3">
-                                    <label for="name">Post title:</label>
-                                    <input type="text" class="form-control border ps-2 shadow-sm" id="name" name="name" value="{{$post->title}}" placeholder="post title...">
+                                    <label for="title">Post title:</label>
+                                    <input type="text" class="form-control border ps-2 shadow-sm" id="name" name="title" value="{{$post->title}}" placeholder="post title...">
                                 </div>
                                     <div class="form-group mt-4">
-                                        <label for="details">Post body short:</label>
-                                        <textarea type="text" class="form-control border ps-2 shadow-sm" id="details" name="details" value="{{$post->body_short}}" placeholder="{{$post->body_short}}"></textarea>
+                                        <label for="body_short">Post body short:</label>
+                                        <textarea type="text" class="form-control border ps-2 shadow-sm" id="body_short" name="body_short"  placeholder="{{$post->body_short}}">{{$post->body_short}}</textarea>
                                     </div>
                                 <div class="form-group mt-4">
-                                    <label for="details">Post body long:</label>
-                                    <textarea type="text" class="form-control border ps-2 shadow-sm" id="details" name="details" value="{{$post->body_long}}" placeholder="{{$post->body_short}}"></textarea>
+                                    <label for="body_long">Post body long:</label>
+                                    <textarea type="text" class="form-control border ps-2 shadow-sm" id="body_long" name="body_long"  placeholder="{{$post->body_short}}">{{$post->body_long}}</textarea>
                                 </div>
                                     <div class="form-group mt-4">
-                                        <label for="details">Post blockquote (optional) :</label>
-                                        <input type="text" class="form-control border ps-2 shadow-sm" id="details" name="details" value="{{$post->blockquote}}" placeholder="post blockquote...">
+                                        <label for="blockquote">Post blockquote (optional) :</label>
+                                        <input type="text" class="form-control border ps-2 shadow-sm" id="blockquote" name="blockquote" value="{{$post->blockquote}}" placeholder="post blockquote...">
                                     </div>
 
                                     <div class="form-group mt-3">
@@ -56,7 +56,7 @@
                                     <div class="form-group col-6 mt-3">
                                         <label class="col-form-label" for="category">Kind of post: </label>
 
-                                        <div class="form-check " id="category"  multiple>
+                                        <div class="form-check " id="category"  >
                                             @foreach($categories as $category)
                                                 <input class="form-check-input" type="radio" name="category" value="{{$category->id}}" id="flexRadio{{$category->id}}"
                                                        @if($post->category_id == $category->id) checked @endif>
@@ -71,10 +71,21 @@
 
 
                                 </div>
-                                <div class="form-group  mt">
-                                    <label for="price">post sticky? :</label>
-                                    <input type="checkbox"  @if($post->sticky->contains(1)) checked @endif class="form-control border ps-2 shadow-sm" id="price" name="price" placeholder="post price...">
-                                </div>
+                                <div class="form-group  ">
+                                    <label class="col-form-label" for="sticky">Post highlighted at top?: </label>
+                                    <div class="form-check " id="sticky"  >
+                                            <input class="form-check-input" type="radio" name="sticky" value="1" id="flexRadioYes"
+                                                   >
+                                            <label class="form-check-label me-5" for="flexRadioYes">
+                                                yes
+                                            </label>
+                                        <input class="form-check-input" type="radio" name="sticky" value="0" id="flexRadioNo"
+                                                >
+                                        <label class="form-check-label" for="flexRadioNo">
+                                            no
+                                        </label>
+                                    </div>
+                                      </div>
                                 <div class="form-group  mt-3 col">
                                     <div class="pt-3 ps-5">
                                         <label class="form-control form-label text-muted mb-0" for="photos">post

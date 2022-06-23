@@ -40,6 +40,7 @@
                                             </select> entries per page</label></div>
 -->
                                     <form class="ms-5 mt-5 input-group-outline">
+                                        @csrf
                                         <input wire:model.debounce.200ms="search" type="text" name="searchLivewire" class="form-control  mb-3 border-1 small" onfocus="focused(this)" onfocusout="defocused(this)" control-id="ControlID-1"
                                                placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                                     </form>

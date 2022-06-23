@@ -16,6 +16,13 @@ class Comment extends Model
         'parent_id',
         'is_active'
     ];
+    public function comments(){
+        return $this->hasMany(Comment::class, 'parent_id');//reads id
+    }
+    //recursive function
+    public function childcomments(){ // only reads parent_id table to read records
+        return $this->hasMany(Comment::class, 'parent_id')->with('comments' );//->withTrashed();
+    }
     public function user(){
         return $this->belongsTo(User::class);
     }

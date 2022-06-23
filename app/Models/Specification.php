@@ -20,7 +20,6 @@ class Specification extends Model
     public function childspecs(){
         return $this->hasMany(Specification::class, 'parent_id')->with('specs' )->withTrashed(); //leest parent id ipv id
     }
-
     public function products(){
         return $this->belongsToMany(Product::class, 'product_specification');
     }
@@ -32,7 +31,6 @@ class Specification extends Model
         return $this->morphToMany(Photo::class, 'photoable');
         //acctually i only need 1 picture per spec but to keep all photo relations neatly in the
         //photoables pivot table ill make a many-relationship
-        //upon update ill delete old picture
-        //nice to have !!
+        //upon update ill delete old picture  ->>nice to have !!
     }
 }

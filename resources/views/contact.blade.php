@@ -44,7 +44,7 @@
 
             <article class="card bg-light p-5 col-md-8 col-lg-4 m-1 m-xl-2">
                 <div class="card-body text-center ">
-                    <a href="blog.html">
+                    <a href="{{route('blog')}}">
                     <i class="bi bi-chat text-muted" style="font-size: 3rem;"></i>
                     <h2 class="fsize-5 mt-4 mb-3">Blog</h2>
                     <a class="fsize-2 text-muted">Find your answer</a>

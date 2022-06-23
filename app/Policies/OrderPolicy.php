@@ -19,7 +19,7 @@ class OrderPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        //authors can see all orders 
         foreach($user->roles as $role){
             return $role->name === 'author'
                 ? Response::allow()

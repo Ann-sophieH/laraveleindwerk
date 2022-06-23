@@ -32,7 +32,8 @@
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Photo</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Updated</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Deleted</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Delete ( final !! )</th>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -55,11 +56,10 @@
 
                                     <td class="align-middle text-center"><span class="text-secondary text-xs font-weight-bold">{{$photo->created_at->diffForHumans()}}</span></td>
                                     <td class="align-middle text-center"><span class="text-secondary text-xs font-weight-bold">{{$photo->updated_at->diffForHumans()}}</span></td>
-                                    <td class="align-middle text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">23/04/18</span>
-                                    </td>
+
                                     <td class="align-middle">
-                                        @if($photo->id > 9 )
+{{--                                        we always need the first 8 photos for navigation so cannot be deleted --}}
+                                        @if($photo->id >= 9 )
                                             <div class="d-flex">
                                                 <form method="post" action="{{route('photos.destroy', $photo)}}" enctype="multipart/form-data">
                                                     @csrf
@@ -68,6 +68,8 @@
                                                             class="fa fa-close "></i></button>
                                                 </form>
                                             </div>
+                                        @else
+                                            <p class="text-muted" style="font-size: 0.7rem"><i>essential for navigation</i></p>
                                             @endif
                                     </td>
                                 </tr>

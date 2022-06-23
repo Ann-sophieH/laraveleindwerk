@@ -82,6 +82,7 @@
                     </div>
                 </div>
                 <form class="ms-5 mt-5">
+                    @csrf
                     <input type="text" name="search" class="form-control mb-3 border-1 small"
                            placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                 </form>

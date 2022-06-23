@@ -95,6 +95,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 ->orWhere('last_name', 'like', '%' . request('search') . '%')
                 ->orWhere('email', 'like', '%' . request('search') . '%');
 
+
         }
 
     }

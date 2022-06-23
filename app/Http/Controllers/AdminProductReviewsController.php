@@ -18,7 +18,8 @@ class AdminProductReviewsController extends Controller
     {
         //
         $reviews = Review::with(['user', 'product'])->latest()->paginate(10);
-
+        $user = Auth::user();
+        $this->authorize('viewAny', $user);
         return view('admin.reviews.index', compact( 'reviews'));
     }
 
@@ -44,6 +45,9 @@ class AdminProductReviewsController extends Controller
            // dd($request->stars);
         $request->validate([
             'stars' => 'required|integer',
+        ], $messages = [
+            'stars.required' => 'please select a rating for your review',
+            'stars.integer' => 'please select a rating for your review'
         ]);
         if(Auth::user()){
             $user = Auth::user();
@@ -95,6 +99,8 @@ class AdminProductReviewsController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $user = Auth::user();
+        $this->authorize('update', $user);
         $review = Review::findOrFail($id);
         if($review){
             $review->is_active = !$request->is_active;

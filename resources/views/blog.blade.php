@@ -5,14 +5,21 @@
 <!--
 https://preview.colorlib.com/#magdesign
 -->
-
+<div class="container-fluid col-lg-10 offset-lg-1 mt-4 ">
+    <aside aria-label="breadcrumb">
+        <ol class="breadcrumb fs-li">
+            <li class="breadcrumb-item"><a href="{{url('/')}}">Home</a></li>
+            <li aria-current="page" class="breadcrumb-item active">Blog</li>
+        </ol>
+    </aside>
+</div>
 
     <section class="container-fluid col-10 mx-auto fs-reg">
             <div class="row mt-5 mb-5">
                     <h1 class="fs-1 fs-reg text-uppercase text-center">Blog</h1>
             </div>
 
-        <div class="rowp-4 p-md-5 mb-4 text-white rounded bg-gray-600">
+        <div class="row p-4 p-md-5 mb-4 text-white rounded bg-gray-600">
             <div class="col-md-6 px-0">
                 <h1 class="display-4 fst-italic fs-bo">{{Str::limit($sticky_post->title, 20, '...')}}</h1>
                 <p class="gazette-post-date fs-li"><i>{{$sticky_post->created_at->diffForHumans()}}</i> by {{$sticky_post->user->first_name}}  {{$sticky_post->user->last_name}}</p>
@@ -46,11 +53,11 @@ https://preview.colorlib.com/#magdesign
                                     @if(($post->photos)->isNotEmpty())
                                         @foreach($post->photos as $photo)
                                             @if($loop->first)
-                                                <img style="height: 500px" class=" img-fluid  " src="{{ empty($photo) ? 'http://via.placeholder.com/1000x600' : asset($photo->file) }}" alt="{{$post->title}}">
+                                                <img  class=" img-fluid  " src="{{ empty($photo) ? 'http://via.placeholder.com/1000x600' : asset($photo->file) }}" alt="{{$post->title}}">
                                             @endif
                                         @endforeach
                                     @else
-                                        <img style="height: 500px" class=" img-fluid  " src="http://via.placeholder.com/1000x600" alt="{{$post->title}}">
+                                        <img  class=" img-fluid  " src="http://via.placeholder.com/1000x600" alt="{{$post->title}}">
 
                                     @endif
                                 </div>

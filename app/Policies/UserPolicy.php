@@ -69,7 +69,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        //
+        //model == user update thats tryna be accessed
         return $model->id === $user->id
             ? Response::allow()
             : Response::deny('You do not own this account, you cannot edit this info.');

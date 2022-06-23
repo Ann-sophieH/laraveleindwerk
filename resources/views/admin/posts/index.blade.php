@@ -33,6 +33,7 @@
                     </div>
                 </div>
                 <form class="ms-5 mt-5">
+                    @csrf
                     <input type="text" name="search" class="form-control mb-3 border-1 small"
                            placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                 </form>
@@ -68,11 +69,11 @@
                                                 @if(($post->photos)->isNotEmpty())
                                                 @foreach($post->photos as $photo)
                                                     @if($loop->first)
-                                                    <img style="height: 62px" class=" img-fluid rounded-circle ms-2 me-2" src="{{ empty($photo) ? 'http://via.placeholder.com/62x62' : asset($photo->file) }}" alt="{{$post->name}}">
+                                                    <img style="height: 62px; width: 62px" class=" img-fluid rounded-circle ms-2 me-2" src="{{ empty($photo) ? 'http://via.placeholder.com/62x62' : asset($photo->file) }}" alt="{{$post->name}}">
                                                         @endif
                                                     @endforeach
                                                 @else
-                                                    <img style="height: 62px" class=" img-fluid rounded-circle ms-2 me-2" src="http://via.placeholder.com/62x62" alt="{{$post->name}}">
+                                                    <img style="height: 62px; width: 62px" class=" img-fluid rounded-circle ms-2 me-2" src="http://via.placeholder.com/62x62" alt="{{$post->name}}">
 
                                                 @endif
                                             </div>

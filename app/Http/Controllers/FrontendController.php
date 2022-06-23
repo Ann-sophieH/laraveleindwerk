@@ -8,6 +8,7 @@ use App\Mail\Newslettermail;
 use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Coupon;
 use App\Models\Newsletter;
 use App\Models\Order;
@@ -43,8 +44,11 @@ class FrontendController extends Controller
     public function blogpost(Post $post){
         // $post =Post::findOrFail($id);
         $post->load(['postcomments.user']);
+        $comments = Comment::with([ 'user','post','childcomments',  ])->whereNull('parent_id')->where('post_id',$post->id )->paginate(10);
 
-        return view('blogpost', compact('post'));
+     //   $replies = Comment::with([ 'user','post','childcomments' ])->where('parent_id', $id)->paginate(10);
+
+        return view('blogpost', compact('post', 'comments'));
     }
 /*    public function products(){
 
@@ -109,7 +113,6 @@ class FrontendController extends Controller
     }
     public function order(Request $request)
     {
-
         /** getting cart to make orderdetails and get amount **/
         $currentCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($currentCart); //nieuw model cart vullen
@@ -127,7 +130,6 @@ class FrontendController extends Controller
                 "order_id" => "12345"
             ],*/
         ]);
-
         if ($payment->id != null ) { //$payment->id == transaction code
                 $user = Auth::user();
             /** add NEW delivery address **/

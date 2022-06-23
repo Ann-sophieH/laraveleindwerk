@@ -30,9 +30,7 @@
                         <span aria-hidden="true"></span>
                     </button>
                 </div>
-                <div class="card border-0  p-3">
-                    <span class="d-flex justify-content-between align-items-center"><p class="">New total price:</p><p class="me-5 fs-2">&euro; {{Session::get('cart')->totalPrice}}</p> </span>
-                </div>
+
             @endif
         @else
             <section>

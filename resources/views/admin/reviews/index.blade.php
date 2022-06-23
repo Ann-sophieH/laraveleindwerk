@@ -25,6 +25,7 @@
                         </p>
                         <p class="card-description m-4">Display : {{$reviews->count()}} of {{$reviews->total()}} reviews</p>
                         <form>
+                            @csrf
                             <input type="text" name="search" class="form-control mb-3 border-1 small"
                                    placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                         </form>

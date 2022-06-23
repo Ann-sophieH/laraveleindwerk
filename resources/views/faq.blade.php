@@ -46,10 +46,10 @@
                          id="collapseOne">
                         <div class="accordion-body  p-3">
                                 <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad atque consequatur
-                                    cupiditate eius, est eum excepturi explicabo harum ipsa iusto, maiores modi nam
+                                    cupiditate eius, est<br> eum excepturi explicabo harum ipsa iusto, maiores modi nam
                                     obcaecati optio quibusdam quod rerum, similique temporibus.
                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad atque consequatur
-                                    cupiditate eius, est eum excepturi explicabo harum ipsa iusto, maiores modi nam
+                                    cupiditate eius, est eum excepturi<br> explicabo harum ipsa iusto, maiores modi nam
                                     obcaecati optio quibusdam quod rerum, similique temporibus.
                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad atque consequatur
                                     cupiditate eius, est eum excepturi explicabo harum ipsa iusto, maiores modi nam
@@ -73,10 +73,10 @@
 
 
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad atque consequatur
-                                cupiditate eius, est eum excepturi explicabo harum ipsa iusto, maiores modi nam
+                                cupiditate eius, est eum excepturi explicabo haru<br>m ipsa iusto, maiores modi nam
                                 obcaecati optio quibusdam quod rerum, similique temporibus.
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad atque consequatur
-                                cupiditate eius, est eum excepturi explicabo harum ipsa iusto, maiores modi nam
+                                cupiditate eius, est eum excepturi expli<br>cabo harum ipsa iusto, maiores modi nam
                                 obcaecati optio quibusdam quod rerum, similique temporibus.
                             </p>
 
@@ -115,6 +115,74 @@
                     </div>
 
                 </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingFive">
+                        <button aria-controls="collapseFive" aria-expanded="false" class="accordion-button collapsed"
+                                data-bs-target="#collapseFive" data-bs-toggle="collapse" type="button"> Payment methods
+                        </button>
+
+                    </h2>
+                    <div aria-labelledby="headingFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample" id="collapseFive">
+                        <div class="accordion-body">
+                            <p >
+
+
+                            <p class=" mb-1 text-uppercase ">Payment methods</p>
+                            <ul class="list-unstyled d-flex mt-2 justify-content-between pt-3 ">
+                                <li>
+                                    <img src="{{asset('assetsfront/images/payment_icons/bancontact@2x.png')}}" class="img-fluid" alt="bancontact"></li>
+                                <li><img src="{{asset('assetsfront/images/payment_icons/paypal@2x.png')}}" class="img-fluid" alt="paypal"></li>
+                                <li><img src="{{asset('assetsfront/images/payment_icons/ideal@2x.png')}}" class="img-fluid" alt="ideal"></li>
+                                <li><img src="{{asset('assetsfront/images/payment_icons/creditcard@2x.png')}}" class="img-fluid" alt="creditcard"></li>
+
+                            </ul>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad atque consequatur
+                                cupiditate eius, est eum excepturi explicabo harum ipsa iusto, maiores modi nam
+                                obcaecati optio quibusdam quod rerum, similique temporibus.
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad atque consequatur
+                                cupiditate eius, est eum excepturi explicabo harum ipsa iusto, maiores modi nam
+                                obcaecati optio quibusdam quod rerum, similique temporibus.
+                            </p>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingSix">
+                        <button aria-controls="collapseSix" aria-expanded="false" class="accordion-button collapsed"
+                                data-bs-target="#collapseSix" data-bs-toggle="collapse" type="button"> Privacy policy
+                        </button>
+
+                    </h2>
+                    <div aria-labelledby="headingSix" class="accordion-collapse collapse" data-bs-parent="#accordionExample" id="collapseSix">
+                        <div class="accordion-body">
+                            <p >
+
+                                Privacy enzo zeker geen probleem niemand kan aan je adres geen zorgen jongens. wil je vergeten worden?
+                                Mail ons via het contactformulier !! Kan geregeld worden <br>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad atque consequatur
+                                cupiditate eius, est eum excepturi explicabo harum ipsa iusto, maiores modi nam
+                                obcaecati optio quibusdam quod rerum, similique temporibus. <br>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad atque consequatur
+                                cupiditate eius, est eum excepturi explicabo harum ipsa iusto, maiores modi nam
+                                obcaecati optio quibusdam quod rerum, similique temporibus.<br>
+
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad atque consequatur
+                                cupiditate eius, est eum excepturi explicabo harum ipsa iusto, maiores modi nam
+                                obcaecati optio quibusdam quod rerum, similique temporibus.
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad a<br>tque consequatur
+                                cupiditate eius, <br>est eum excepturi explicabo harum ipsa iusto, maiores modi nam
+                                obcaecati optio quibusdam quod rerum, similique temporibus.
+                            </p>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
             </div>
 
 
