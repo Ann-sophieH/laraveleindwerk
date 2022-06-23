@@ -260,21 +260,22 @@
 
                          <div class="row mb-0">
 
-                             <button type="submit" class="btn btn-outline-secondary col-3 mx-auto my-3"><i class="bi bi-door-open"></i>
+                             <button type="submit" class="btn btn-outline-secondary col-3 mx-auto py-2 my-3"><i
+                                     class="bi bi-door-open"></i>
                                  {{ __('Login') }}
                              </button>
                              <div class="d-flex justify-content-evenly mt-4">
                                  {{-- Login with GitHub --}}
                                  <div class="  ">
-                                     <a class="btn btn-outline-warning" href="{{ url('login/github') }}"
-                                     ><i class="bi bi-github"></i> <br>
+                                     <a class="btn btn-outline-warning" href="{{ url('login/github') }}">
+                                         <i class="bi bi-github"></i>
+                                         <br>
                                          Login with GitHub
                                      </a>
                                  </div>
                                  {{-- Login with google --}}
                                  <div class="  ">
-                                     <a class="btn btn-outline-primary" href="{{ url('/login/google') }}"
-                                     >
+                                     <a class="btn btn-outline-primary" href="{{ url('/login/google') }}">
                                          <i class="bi bi-google"></i> <br>Login with Google
                                      </a>
                                  </div>
@@ -286,7 +287,10 @@
                                      {{ __('Forgot Your Password?') }}
                                  </a>
                              @endif
-
+                             <a class="btn btn-link link-secondary mt-1"
+                                href="{{ route('register') }}">
+                                 {{ __('Are you new here? Register as a new user! ') }}
+                             </a>
                          </div>
                      </form>
                  </div>

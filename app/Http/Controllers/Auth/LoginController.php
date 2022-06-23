@@ -29,7 +29,7 @@ class LoginController extends Controller
      */
    // protected $redirectTo = RouteServiceProvider::HOME;
     protected function redirectTo(){
-        return redirect(Request::session()->get('url.intended') ?? 'cart') ;
+        return redirect(Request::session()->get('url.intended') ?? '/') ;
     }
 
     /**
